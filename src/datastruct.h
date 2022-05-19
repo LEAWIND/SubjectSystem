@@ -12,6 +12,7 @@ struct node_id {
 };
 typedef struct node_id* node_id;
 
+// 学生
 struct Student {
 	/*
 	前4位代表入学年份，其他代表标识
@@ -44,7 +45,7 @@ struct Course {
 	long long CourseClasses[16];  //课程班级们
 	int availableTime;			  // 开课时间 (1:大一上|2:大一下|3:大二上|4:大二下)
 };
-
+// 老师
 struct Teacher {
 	long long id;
 	char key[32];
@@ -52,6 +53,7 @@ struct Teacher {
 	char introduce[1024];
 	long long CourseClasses[10];
 };
+// 管理员
 struct Administrator {
 	long long id;
 	char key[32];

@@ -1,2 +1,6 @@
 *.exe
+*.ignored
+
 .vscode/
+bin/
+data/
