@@ -2,8 +2,8 @@
 
 选课系统（数据结构综合课程设计作业）
 
-项目结构 (# 代表添加进 gitignore)
-
+## 项目结构 (# 代表添加进 gitignore)
+```
 /root
 	|- #.vscode/
 	|- src/
@@ -18,3 +18,5 @@
 	|- # data/
 		|- blablabla.bin
 		|- blablabla.txt
+```
+
