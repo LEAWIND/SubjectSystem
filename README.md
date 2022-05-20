@@ -5,7 +5,7 @@
 ## 项目结构 (# 代表添加进 gitignore)
 
 ```
-/root
+|- root/
 	|- #.vscode/
 	|- src/
 		|- main.c

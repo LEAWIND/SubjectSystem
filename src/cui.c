@@ -9,27 +9,25 @@ void cui_printRect(int w, int h, char c) {
 }
 
 void cui_setCursorPos(int x, int y) {
+	x = x < 0 ? 0 : x;
+	y = y < 0 ? 0 : y;
 	printf("\033[%d;%dH", 1 + y, 1 + x);
 }
 
 void cui_moveCursor(int x, int y) {
-	char buff_fmt[25];
+	char buff_fmt[15];
 	char buff[64];
+	char* pbuff = buff;
 	if (y) {
-		if (y > 0)
-			strcat(buff_fmt, "\033[%dA");
-		else
-			strcat(buff_fmt, "\033[%dB");
-		sprintf(buff, buff_fmt, y > 0 ? y : -y);
+		strcpy(buff_fmt, y > 0 ? "\033[%dB" : "\033[%dA");
+		pbuff += sprintf(pbuff, buff_fmt, y > 0 ? y : -y);
 	}
 	if (x) {
-		if (x > 0)
-			strcat(buff_fmt, "\033[%dC");
-		else
-			strcat(buff_fmt, "\033[%dD");
-		sprintf(buff, buff_fmt, x > 0 ? x : -x);
+		strcpy(buff_fmt, x > 0 ? "\033[%dC" : "\033[%dD");
+		pbuff += sprintf(pbuff, buff_fmt, x > 0 ? x : -x);
 	}
-	printf(buff);
+	if (x | y)
+		printf(buff);
 }
 
 void cui_hideCursor() {
@@ -56,12 +54,16 @@ void cui_putStringCenterAt(int x, int y, char* c, int len) {
 }
 
 void cui_fillRect(int x, int y, int w, int h, char c) {
-	printf("\033[%d;%dH", 1 + y, 1 + x);
 	for (int i = 0; i < h; i++) {
+		printf("\033[%d;%dH", 1 + y + i, 1 + x);
 		for (int j = 0; j < w; j++)
 			putchar(c);
-		printf("\n\033[%dC", x - 1);
 	}
+}
+
+void cui_clearRect(int x, int y, int w, int h) {
+	for (int i = 0; i < h; i++)
+		printf("\033[%d;%dH\033[%dX", 1 + y + i, 1 + x, w);
 }
 
 void cui_strokeRect(int x, int y, int w, int h, char c) {

@@ -1,5 +1,6 @@
-#define NAMELEN 100
+#pragma once
 
+#define NAMELEN 100
 struct node_period {
 	struct node_period* next;
 	int d;	// 课程班级的一个时间段
