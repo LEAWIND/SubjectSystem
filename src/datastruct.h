@@ -1,11 +1,7 @@
 #pragma once
 
 #define NAMELEN 100
-struct node_period {
-	struct node_period* next;
-	int d;	// 课程班级的一个时间段
-};
-typedef struct node_period* node_period;
+#define HASH_LEN 32	 // 密码哈希值长度
 
 struct node_id {
 	struct node_id* next;
@@ -31,20 +27,21 @@ struct Student {
 
 // 课程班级
 struct CourseClass {
-	long long id;		  //班级id
-	int id_local;		  // 班级编号（XXX1班）
-	node_period periods;  // 上课时间段们的带头节点的单链表
+	long long id;		  // 班级id
+	int id_local;		  // 班级编号（某某某1班、某某某2班）
+	long long course;	  // 课程id
 	long long teacherID;  // 老师ID
-	node_id students;	  // 学生们
-	int size;			  // 班级容量
+	int periods[49];	  // 上课时间段们
+	long long students[100];  // 学生们ID
 };
 
 // 课程
 struct Course {
 	long long id;
 	char name[NAMELEN];
-	long long CourseClasses[16];  //课程班级们
-	int availableTime;			  // 开课时间 (1:大一上|2:大一下|3:大二上|4:大二下)
+	long long CourseClasses[16];  //课程班级们的id
+
+	int availableTime;	// 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
 };
 // 老师
 struct Teacher {
@@ -52,7 +49,7 @@ struct Teacher {
 	char key[32];
 	char name[NAMELEN];
 	char introduce[1024];
-	long long CourseClasses[10];
+	long long CourseClasses[10];  // 教授哪些课程
 };
 // 管理员
 struct Administrator {

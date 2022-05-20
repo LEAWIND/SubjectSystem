@@ -29,13 +29,30 @@ gcc -fdiagnostics-color=always -std=c11 -g %root%/src/main.c -o %root%/bin/main.
 		|- blablabla.h
 	|- # bin/
 		|- main.exe
-	|- # data/
+	|- data/
 		|- blablabla.bin
 		|- blablabla.txt
 ```
 
-### 界面
+## 功能划分
 
-使用[控制台虚拟终端序列](https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences)倾力打造。
+### 学生
+
+* 查看自己的已选课程
+* 查看自己的可选课程
+* 给自己选课
+* 查看自己任意课程班级的同学
+
+### 老师
+
+* 编辑自己的个人简介
+* 查看自己任意班级的学生
+
+### 管理员
+
+* 导入原始数据
+* 增删改查课程
+* 增删改查课程班级
+
 
 

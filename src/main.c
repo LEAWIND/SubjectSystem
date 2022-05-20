@@ -21,7 +21,6 @@ char page_getUserType() {
 	cui_showCursor();
 	return ut;
 }
-
 int main(int argc, char* argv[]) {
 	system("chcp 65001");  // 设置字符编码: UTF-8
 	char userType = page_getUserType();
