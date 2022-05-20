@@ -7,21 +7,23 @@ char page_getUserType() {
 	cui_strokeRect(0, 0, us_width, us_height, 0);
 
 	cui_putStringCenterAt(us_width / 2, 1, " 选 课 系 统 ", 0);
-	cui_putStringAt(us_width / 2 - 14, 4, "1. 学生");
-	cui_putStringAt(us_width / 2 - 14, 6, "2. 教师");
-	cui_putStringAt(us_width / 2 - 14, 8, "3. 管理员");
-	cui_putStringAt(us_width / 2 - 14, 10, "0. 退出");
-	cui_putStringCenterAt(us_width / 2, 13, "请选择:[ ]", 0);
-	cui_moveCursor(-2, 0);
-	char ut = getchar();
-
-	cui_fillRect(0, 0, us_width, us_height, ' ');
-
+	int y = 2;
+	cui_putStringAt(us_width / 2 - 18, y += 2, "请按键:");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "1. 学生");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "2. 教师");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "3. 管理员");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "Esc. 退出");
+	cui_hideCursor();
+	char ut;
+	do {
+		ut = getch();
+	} while (!strchr("123\033", ut));
+	cui_showCursor();
 	return ut;
 }
 
 int main(int argc, char* argv[]) {
-	system("chcp 65001");  // 字符编码: UTF-8
+	system("chcp 65001");  // 设置字符编码: UTF-8
 	char userType = page_getUserType();
 	switch (userType) {
 		case '1':
@@ -33,14 +35,11 @@ int main(int argc, char* argv[]) {
 		case '3':
 			startAdminModule();
 			break;
-		case '0':
+		case '\033':  // Esc
 			system("cls");
 			printf("拜拜了您嘞\n");
 			break;
-		default:
-			break;
 	}
-	printf("\n");
 	system("pause");
 	return 0;
 }

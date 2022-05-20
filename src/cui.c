@@ -10,9 +10,7 @@ void cui_printRect(int w, int h, char c) {
 
 // 设置光标位置
 void cui_setCursorPos(int x, int y) {
-	x = x < 0 ? 0 : x;
-	y = y < 0 ? 0 : y;
-	printf("\033[%d;%dH", 1 + y, 1 + x);
+	printf("\033[%d;%dH", y < 0 ? 1 : 1 + y, x < 0 ? 1 : 1 + x);
 }
 
 // 移动光标
@@ -29,17 +27,17 @@ void cui_moveCursor(int x, int y) {
 		pbuff += sprintf(pbuff, buff_fmt, x > 0 ? x : -x);
 	}
 	if (x | y)
-		printf(buff);
+		puts(buff);
 }
 
 // 隐藏光标
 void cui_hideCursor() {
-	printf("\033[?25l");
+	puts("\033[?25l");
 }
 
 // 显示光标
 void cui_showCursor() {
-	printf("\033[?25h");
+	puts("\033[?25h");
 }
 
 // 将字符串打印到指定位置

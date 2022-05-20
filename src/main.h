@@ -1,4 +1,5 @@
 #pragma once
+#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,11 +11,7 @@
 #include "teacher.h"
 
 // us: UI style settings
-const int us_width = 54;
-const int us_height = 23;
+static const int us_width = 72;
+static const int us_height = 32;
 
 char page_getUserType();
-
-int startStudentModule();
-int startTeatureModule();
-int startAdminModule();
