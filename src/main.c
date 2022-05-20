@@ -20,21 +20,6 @@ char page_getUserType() {
 	return ut;
 }
 
-int startStudentModule() {
-	system("cls");
-	printf("student module\n");
-}
-
-int startTeatureModule() {
-	system("cls");
-	printf("teacher module\n");
-}
-
-int startAdminModule() {
-	system("cls");
-	printf("administrator module\n");
-}
-
 int main(int argc, char* argv[]) {
 	system("chcp 65001");  // 字符编码: UTF-8
 	char userType = page_getUserType();
@@ -55,7 +40,7 @@ int main(int argc, char* argv[]) {
 		default:
 			break;
 	}
-
+	printf("\n");
 	system("pause");
 	return 0;
 }

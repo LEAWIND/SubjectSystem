@@ -8,12 +8,14 @@ void cui_printRect(int w, int h, char c) {
 	}
 }
 
+// 设置光标位置
 void cui_setCursorPos(int x, int y) {
 	x = x < 0 ? 0 : x;
 	y = y < 0 ? 0 : y;
 	printf("\033[%d;%dH", 1 + y, 1 + x);
 }
 
+// 移动光标
 void cui_moveCursor(int x, int y) {
 	char buff_fmt[15];
 	char buff[64];
@@ -30,18 +32,22 @@ void cui_moveCursor(int x, int y) {
 		printf(buff);
 }
 
+// 隐藏光标
 void cui_hideCursor() {
 	printf("\033[?25l");
 }
 
+// 显示光标
 void cui_showCursor() {
 	printf("\033[?25h");
 }
 
+// 将字符串打印到指定位置
 void cui_putStringAt(int x, int y, char* c) {
 	printf("\033[%d;%dH%s", 1 + y, 1 + x, c);
 }
 
+// 将字符串打印到指定位置，中心对齐
 void cui_putStringCenterAt(int x, int y, char* c, int len) {
 	if (!len)
 		len = strlen(c);
@@ -53,6 +59,7 @@ void cui_putStringCenterAt(int x, int y, char* c, int len) {
 	printf("\033[%d;%dH%s", 1 + y, 1 + x, c);
 }
 
+// 用字符填充矩形区域
 void cui_fillRect(int x, int y, int w, int h, char c) {
 	for (int i = 0; i < h; i++) {
 		printf("\033[%d;%dH", 1 + y + i, 1 + x);
@@ -61,11 +68,13 @@ void cui_fillRect(int x, int y, int w, int h, char c) {
 	}
 }
 
+// 清除矩形区域
 void cui_clearRect(int x, int y, int w, int h) {
 	for (int i = 0; i < h; i++)
 		printf("\033[%d;%dH\033[%dX", 1 + y + i, 1 + x, w);
 }
 
+// 描边
 void cui_strokeRect(int x, int y, int w, int h, char c) {
 	printf("\033[%d;%dH", 1 + y, 1 + x);
 

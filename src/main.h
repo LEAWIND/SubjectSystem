@@ -3,8 +3,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "administrator.h"
 #include "cui.h"
 #include "datastruct.h"
+#include "student.h"
+#include "teacher.h"
 
 // us: UI style settings
 const int us_width = 54;
