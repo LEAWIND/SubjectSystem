@@ -24,9 +24,9 @@ void page_login(long long account, char* passwd) {
 }
 int main(int argc, char* argv[]) {
 	system("chcp 65001");  // 设置字符编码: UTF-8
+
 	// 读取数据
-	Database database;
-	loadEntireDatabaseIfDare(&database, DATA_DIR);
+	Database database = loadEntireDatabaseIfDare(DATA_DIR);
 	system("cls");
 	char userType = page_getUserType();
 	switch (userType) {

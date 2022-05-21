@@ -2,7 +2,33 @@
 
 #define NAMELEN 100
 #define HASH_LEN 32	 // 密码哈希值长度
-#define PERIODS_PER_DAY	 // 一天几个上课时间段
+#define PERIODS_PER_DAY 7  // 一天几个上课时间段
+char* colleges[] = {
+	"图书馆",  //0
+	"教育",	   //1
+	"历史",	   //2
+	"政法",	   //3
+	"文学",	   //4
+	"音乐",	   //5
+	"美术",	   //6
+	"商学院",  //7
+	"数学",	   //8
+	"物理",	   //9
+	"化学",	   //10
+	"生命",	   //11
+	"体育",	   //12
+	"计算机",  //13
+	"城建",	   //14
+	"地理",	   //15
+	"传播",	   //16
+	"国教",	   //17
+	"心理",	   //18
+	"软件",	   //19
+	"科技",	   //20
+	"财政",	   //21
+	"初教",	   //22
+	"成教"	   //23
+};
 
 // 学生
 typedef struct Student {
@@ -17,7 +43,9 @@ typedef struct Student {
 	//专业班级
 	char class_pro[NAMELEN];
 	// 课表（元素为 课程班级id）
-	long long classSheet[7][11];
+	long long classSheet[7][PERIODS_PER_DAY];
+	// 学院
+	char college;
 } Student;
 
 // 课程班级
@@ -46,7 +74,7 @@ typedef struct Teacher {
 	char key[32];
 	char name[NAMELEN];
 	char introduce[1024];
-	long long CourseClasses[10];  // 教授哪些课程
+	long long CourseClasses[10];  // 教授哪些课程班级
 
 } Teacher;
 
