@@ -1,5 +1,50 @@
 #include "main.h"
 
+// TODO 加载数据
+int loadEntireDatabaseIfDare() {
+	FILE* fp;
+	{
+		students = (Student*)malloc(sizeof(Student) * studentCount);
+		fp = fopen(FPATH_STUDENT, "rb");
+		if (fp) {
+			studentCount = dc_loadArray(sizeof(Student), students, FPATH_STUDENT);
+		} else {
+			studentCount = 0;
+		}
+	}
+	{
+		teachers = (Teacher*)malloc(sizeof(Teacher) * teacherCount);
+		fp = fopen(FPATH_TEACHER, "rb");
+		if (fp) {
+			teacherCount = dc_loadArray(sizeof(Teacher), teachers, FPATH_TEACHER);
+		} else {
+			teacherCount = 0;
+		}
+	}
+	{
+		admins = (Admin*)malloc(sizeof(Admin) * adminCount);
+		fp = fopen(FPATH_ADMIN, "rb");
+		if (fp) {
+			adminCount = dc_loadArray(sizeof(Admin), admins, FPATH_ADMIN);
+		} else {
+			adminCount = 0;
+		}
+	}
+	{
+		courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * ccCount);
+		fp = fopen(FPATH_COURSECLASS, "rb");
+		if (fp) {
+			adminCount = dc_loadArray(sizeof(Admin), admins, FPATH_ADMIN);
+		} else {
+			adminCount = 0;
+		}
+	}
+}
+// 保存数据
+int saveEntireDatabase() {
+	if (!isDBModified)
+		return 1;
+}
 char page_getUserType() {
 	system("cls");
 
@@ -21,8 +66,11 @@ char page_getUserType() {
 	cui_showCursor();
 	return ut;
 }
+
 int main(int argc, char* argv[]) {
 	system("chcp 65001");  // 设置字符编码: UTF-8
+	// 读取数据
+	loadEntireDatabaseIfDare();
 	char userType = page_getUserType();
 	switch (userType) {
 		case '1':
@@ -39,6 +87,7 @@ int main(int argc, char* argv[]) {
 			printf("拜拜了您嘞\n");
 			break;
 	}
+	saveEntireDatabase();
 	system("pause");
 	return 0;
 }

@@ -3,14 +3,8 @@
 #define NAMELEN 100
 #define HASH_LEN 32	 // 密码哈希值长度
 
-struct node_id {
-	struct node_id* next;
-	long long d;
-};
-typedef struct node_id* node_id;
-
 // 学生
-struct Student {
+typedef struct Student {
 	/*
 	前4位代表入学年份，其他代表标识
 	*/
@@ -23,36 +17,37 @@ struct Student {
 	char class_pro[NAMELEN];
 	// 课表（元素为 课程班级id）
 	long long classSheet[7][11];
-};
+} Student;
 
 // 课程班级
-struct CourseClass {
-	long long id;		  // 班级id
-	int id_local;		  // 班级编号（某某某1班、某某某2班）
-	long long course;	  // 课程id
-	long long teacherID;  // 老师ID
-	int periods[49];	  // 上课时间段们
+typedef struct CourseClass {
+	long long id;			  // 班级id
+	int id_local;			  // 班级编号（某某某1班、某某某2班）
+	long long course;		  // 课程id
+	long long teacherID;	  // 老师ID
+	int periods[49];		  // 上课时间段们
 	long long students[100];  // 学生们ID
-};
+} CourseClass;
 
 // 课程
-struct Course {
+typedef struct Course {
 	long long id;
 	char name[NAMELEN];
 	long long CourseClasses[16];  //课程班级们的id
-
 	int availableTime;	// 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
-};
+} Course;
+
 // 老师
-struct Teacher {
+typedef struct Teacher {
 	long long id;
 	char key[32];
 	char name[NAMELEN];
 	char introduce[1024];
 	long long CourseClasses[10];  // 教授哪些课程
-};
+} Teacher;
+
 // 管理员
-struct Administrator {
+typedef struct Admin {
 	long long id;
 	char key[32];
-};
+} Admin;
