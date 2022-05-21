@@ -1,6 +1,6 @@
 #include "main.h"
 
-// TODO 加载数据
+// 加载数据
 int loadEntireDatabaseIfDare() {
 	FILE* fp;
 	{
@@ -34,17 +34,31 @@ int loadEntireDatabaseIfDare() {
 		courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * ccCount);
 		fp = fopen(FPATH_COURSECLASS, "rb");
 		if (fp) {
-			adminCount = dc_loadArray(sizeof(Admin), admins, FPATH_ADMIN);
+			ccCount = dc_loadArray(sizeof(Admin), admins, FPATH_ADMIN);
 		} else {
-			adminCount = 0;
+			ccCount = 0;
+		}
+	}
+	{
+		courses = (Course*)malloc(sizeof(Course) * courseCount);
+		fp = fopen(FPATH_COURSE, "rb");
+		if (fp) {
+			courseCount = dc_loadArray(sizeof(Course), courses, FPATH_COURSE);
+		} else {
+			courseCount = 0;
 		}
 	}
 }
+
 // 保存数据
 int saveEntireDatabase() {
-	if (!isDBModified)
-		return 1;
+	dc_saveArray(sizeof(Student), students, studentCount, FPATH_STUDENT);
+	dc_saveArray(sizeof(Teacher), teachers, teacherCount, FPATH_TEACHER);
+	dc_saveArray(sizeof(Admin), admins, adminCount, FPATH_ADMIN);
+	dc_saveArray(sizeof(CourseClass), courseClasses, ccCount, FPATH_COURSECLASS);
+	dc_saveArray(sizeof(Course), courses, courseCount, FPATH_COURSE);
 }
+
 char page_getUserType() {
 	system("cls");
 
