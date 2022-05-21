@@ -26,9 +26,9 @@ typedef struct CourseClass {
 	int id_local;			  // 班级编号（某某某1班、某某某2班）
 	long long course;		  // 课程id
 	long long teacherID;	  // 老师ID
-	char room[10];
 	int periods[49];		  // 上课时间段们
 	long long students[100];  // 学生们ID
+	char room[10];//上课的教室
 } CourseClass;
 
 // 课程
