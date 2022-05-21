@@ -20,9 +20,8 @@ char page_getUserType() {
 	return ut;
 }
 
-int page_login(char* account, char* passwd) {
+void page_login(long long account, char* passwd) {
 }
-
 int main(int argc, char* argv[]) {
 	system("chcp 65001");  // 设置字符编码: UTF-8
 	// 读取数据
