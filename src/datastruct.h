@@ -2,6 +2,7 @@
 
 #define NAMELEN 100
 #define HASH_LEN 32	 // 密码哈希值长度
+#define PERIODS_PER_DAY	 // 一天几个上课时间段
 
 // 学生
 typedef struct Student {
@@ -25,6 +26,7 @@ typedef struct CourseClass {
 	int id_local;			  // 班级编号（某某某1班、某某某2班）
 	long long course;		  // 课程id
 	long long teacherID;	  // 老师ID
+	char room[10];
 	int periods[49];		  // 上课时间段们
 	long long students[100];  // 学生们ID
 } CourseClass;
@@ -44,6 +46,7 @@ typedef struct Teacher {
 	char name[NAMELEN];
 	char introduce[1024];
 	long long CourseClasses[10];  // 教授哪些课程
+
 } Teacher;
 
 // 管理员

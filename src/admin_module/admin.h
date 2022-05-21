@@ -2,4 +2,4 @@
 
 int startAdminModule();
 
-#include "administrator.c"
+#include "admin.c"

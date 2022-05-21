@@ -4,27 +4,18 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "administrator.h"
+#include "admin_module/admin.h"
 #include "cui.h"
 #include "dataControler.h"
 #include "datastruct.h"
-#include "student.h"
-#include "teacher.h"
+#include "student_module/student.h"
+#include "teacher_module/teacher.h"
 
-#define FPATH_STUDENT "data/student.dat"
-#define FPATH_TEACHER "data/teacher.dat"
-#define FPATH_ADMIN "data/admin.dat"
-#define FPATH_COURSE "data/course.dat"
-#define FPATH_COURSECLASS "data/courseClass.dat"
+#define DATA_DIR "./data"
 
 // us: UI style settings
 static const int us_width = 72;
 static const int us_height = 32;
-
-static int studentCount = 1000, teacherCount = 100, adminCount = 100, ccCount = 1000, courseCount = 300;
-
-int loadEntireDatabaseIfDare();
-int saveEntireDatabase();
 
 // 首页：选择用户类别
 char page_getUserType();
