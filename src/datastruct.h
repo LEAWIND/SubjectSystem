@@ -66,6 +66,7 @@ typedef struct Course {
 	long long CourseClasses[16];  //课程班级们的id
 	int availableTime;	// 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
 	int college;//所属的学院，-1代表公选
+	int point;	// 学分
 } Course;
 
 // 老师

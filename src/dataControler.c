@@ -99,7 +99,7 @@ void saveEntireDatabase(Database db, char* dir) {
 	dc_saveArray(sizeof(Course), db.courses, db.courseCount, buff);
 }
 
-//TODO 导入原始数据
+// 导入原始数据
 void dc_importRawData(Database* db, char* dirPath) {
 	char buff[64];
 	FILE* fp;
@@ -108,92 +108,103 @@ void dc_importRawData(Database* db, char* dirPath) {
 	{
 		sprintf(buff, "%s/%s", dirPath, "student.txt");
 		fp = fopen(buff, "r");
-		fscanf(fp, "%d", &(db->studentCount));
-		db->students = (Student*)malloc(sizeof(Student) * db->studentCount);
-		for (int i = 0; i < db->studentCount; i++) {
-			fscanf(fp, "%lld", &(db->students[i].id));
-			fscanf(fp, "%s", &(db->students[i].key));
-			fscanf(fp, "%s", &(db->students[i].name));
-			fscanf(fp, "%s", &(db->students[i].class_pro));
-			fscanf(fp, "%d", &(db->students[i].college));
-			// printf("%lld\n", db->students[i].id);
+		if (fp) {
+			fscanf(fp, "%d", &(db->studentCount));
+			db->students = (Student*)malloc(sizeof(Student) * db->studentCount);
+			for (int i = 0; i < db->studentCount; i++) {
+				fscanf(fp, "%lld", &(db->students[i].id));
+				fscanf(fp, "%s", &(db->students[i].key));
+				fscanf(fp, "%s", &(db->students[i].name));
+				fscanf(fp, "%s", &(db->students[i].class_pro));
+				fscanf(fp, "%d", &(db->students[i].college));
+				// printf("%lld\n", db->students[i].id);
+			}
+			fclose(fp);
 		}
-		fclose(fp);
 	}
 	// Teacher
 	{
 		sprintf(buff, "%s/%s", dirPath, "teacher.txt");
 		fp = fopen(buff, "r");
-		fscanf(fp, "%d", &(db->teacherCount));
-		db->teachers = (Teacher*)malloc(sizeof(Teacher) * db->teacherCount);
-		for (int i = 0; i < db->teacherCount; i++) {
-			fscanf(fp, "%lld", &(db->teachers[i].id));
-			fscanf(fp, "%s", &(db->teachers[i].key));
-			fscanf(fp, "%s", &(db->teachers[i].name));
-			fscanf(fp, "%s", &(db->teachers[i].introduce));
-			fscanf(fp, "%lld", db->teachers[i].CourseClasses);
-			for (int j = 0; j < db->teachers[i].CourseClasses[0]; j++)
-				fscanf(fp, "%lld", db->teachers[i].CourseClasses + j + 1);
-			// printf("%s\n", db->teachers[i].introduce);
-			// printf("%lld\n", db->teachers[i].CourseClasses[0]);
+		if (fp) {
+			fscanf(fp, "%d", &(db->teacherCount));
+			db->teachers = (Teacher*)malloc(sizeof(Teacher) * db->teacherCount);
+			for (int i = 0; i < db->teacherCount; i++) {
+				fscanf(fp, "%lld", &(db->teachers[i].id));
+				fscanf(fp, "%s", &(db->teachers[i].key));
+				fscanf(fp, "%s", &(db->teachers[i].name));
+				fscanf(fp, "%s", &(db->teachers[i].introduce));
+				fscanf(fp, "%lld", db->teachers[i].CourseClasses);
+				for (int j = 0; j < db->teachers[i].CourseClasses[0]; j++)
+					fscanf(fp, "%lld", db->teachers[i].CourseClasses + j + 1);
+				// printf("%s\n", db->teachers[i].introduce);
+				// printf("%lld\n", db->teachers[i].CourseClasses[0]);
+			}
+			fclose(fp);
 		}
-		fclose(fp);
 	}
 	// Admin
 	{
 		sprintf(buff, "%s/%s", dirPath, "admin.txt");
 		fp = fopen(buff, "r");
-		fscanf(fp, "%d", &(db->adminCount));
-		db->admins = (Admin*)malloc(sizeof(Admin) * db->adminCount);
-		for (int i = 0; i < db->adminCount; i++) {
-			fscanf(fp, "%lld", &(db->admins[i].id));
-			fscanf(fp, "%s", &(db->admins[i].key));
-			// printf("%lld\n", db->admins[i].id);
+		if (fp) {
+			fscanf(fp, "%d", &(db->adminCount));
+			db->admins = (Admin*)malloc(sizeof(Admin) * db->adminCount);
+			for (int i = 0; i < db->adminCount; i++) {
+				fscanf(fp, "%lld", &(db->admins[i].id));
+				fscanf(fp, "%s", &(db->admins[i].key));
+				// printf("%lld\n", db->admins[i].id);
+			}
+			fclose(fp);
 		}
-		fclose(fp);
 	}
 	// Course
 	{
 		sprintf(buff, "%s/%s", dirPath, "course.txt");
 		fp = fopen(buff, "r");
-		fscanf(fp, "%d", &(db->courseCount));
-		db->courses = (Course*)malloc(sizeof(Course) * db->courseCount);
-		for (int i = 0; i < db->courseCount; i++) {
-			fscanf(fp, "%lld", &(db->courses[i].id));
-			fscanf(fp, "%s", &(db->courses[i].name));
-			fscanf(fp, "%lld", &(db->courses[i].CourseClasses));
-			for (int j = 0; j < db->courses[i].CourseClasses[0]; j++)
-				fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);
-			fscanf(fp, "%d", &(db->courses[i].availableTime));
-			fscanf(fp, "%d", &(db->courses[i].college));
-			// printf("%lld\n", db->courses[i].id);
-			// printf("%s\n", db->courses[i].name);
+		if (fp) {
+			fscanf(fp, "%d", &(db->courseCount));
+			db->courses = (Course*)malloc(sizeof(Course) * db->courseCount);
+			for (int i = 0; i < db->courseCount; i++) {
+				fscanf(fp, "%lld", &(db->courses[i].id));
+				fscanf(fp, "%s", &(db->courses[i].name));
+				fscanf(fp, "%lld", &(db->courses[i].CourseClasses));
+				for (int j = 0; j < db->courses[i].CourseClasses[0]; j++)
+					fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);
+				fscanf(fp, "%d", &(db->courses[i].availableTime));
+				fscanf(fp, "%d", &(db->courses[i].college));
+				fscanf(fp, "%d", &(db->courses[i].point));
+				// printf("%lld\n", db->courses[i].id);
+				// printf("%s\n", db->courses[i].name);
+			}
+			fclose(fp);
 		}
-		fclose(fp);
 	}
 	// Course Class
 	{
 		sprintf(buff, "%s/%s", dirPath, "courseClass.txt");
 		fp = fopen(buff, "r");
-		fscanf(fp, "%d", &(db->ccCount));
-		db->courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * db->ccCount);
-		for (int i = 0; i < db->ccCount; i++) {
-			fscanf(fp, "%lld", &(db->courseClasses[i].id));
-			fscanf(fp, "%d", &(db->courseClasses[i].id_local));
-			fscanf(fp, "%lld", &(db->courseClasses[i].course));
-			fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));
+		if (fp) {
+			fscanf(fp, "%d", &(db->ccCount));
+			db->courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * db->ccCount);
+			for (int i = 0; i < db->ccCount; i++) {
+				fscanf(fp, "%lld", &(db->courseClasses[i].id));
+				fscanf(fp, "%d", &(db->courseClasses[i].id_local));
+				fscanf(fp, "%lld", &(db->courseClasses[i].course));
+				fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));
 
-			fscanf(fp, "%d", db->courseClasses[i].periods);
-			for (int j = 0; j < db->courseClasses[i].periods[0]; j++)
-				fscanf(fp, "%d", db->courseClasses[i].periods + j + 1);
+				fscanf(fp, "%d", db->courseClasses[i].periods);
+				for (int j = 0; j < db->courseClasses[i].periods[0]; j++)
+					fscanf(fp, "%d", db->courseClasses[i].periods + j + 1);
 
-			fscanf(fp, "%lld", db->courseClasses[i].students);
-			for (int j = 0; j < db->courseClasses[i].students[0]; j++)
-				fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);
-			fscanf(fp, "%s", db->courseClasses[i].room);
+				fscanf(fp, "%lld", db->courseClasses[i].students);
+				for (int j = 0; j < db->courseClasses[i].students[0]; j++)
+					fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);
+				fscanf(fp, "%s", db->courseClasses[i].room);
 
-			printf("%s\n", db->courseClasses[i].room);
+				printf("%s\n", db->courseClasses[i].room);
+			}
+			fclose(fp);
 		}
-		fclose(fp);
 	}
 };
