@@ -22,11 +22,12 @@ void cui_inputSecret(char* s, int maxLen, char replaceChar) {
 		c = getch();
 		switch (c) {
 			case '\r':
-				doLoop = 0;
+				if (len)
+					doLoop = 0;
 				break;
 			case '\b':
 				if (len) {
-					len--;
+					s[--len] = '\0';
 					printf("\033[1D_\033[1D");
 				}
 				break;

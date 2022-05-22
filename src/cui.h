@@ -14,6 +14,7 @@ void cui_moveCursor(int x, int y);
 /**
  * @brief 设置文本格式
  * @param n 格式代码 参考https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting
+ *@author LEAWIND
  */
 void cui_setFontStyle(int n);
 
@@ -22,6 +23,7 @@ void cui_setFontStyle(int n);
  * @param s 将输入的密文保存到此地址
  * @param maxLen 密文最大长度
  * @param replaceChar 在屏幕上显示的替代字符，'\0' 表示默认 '*'
+ * @author LEAWIND
  */
 void cui_inputSecret(char* s, int maxLen, char replaceChar);
 

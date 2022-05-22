@@ -1,5 +1,7 @@
+#pragma once
 
 char page_getUserType() {
+	printf("\033[?1049h");
 	cui_clearRect(0, 0, us_width, us_height);
 	cui_strokeRect(0, 0, us_width, us_height, 0);
 
@@ -17,12 +19,15 @@ char page_getUserType() {
 	} while (!strchr("123\033", ut));
 	cui_showCursor();
 	return ut;
+	printf("\033[?1049l");
 }
 
 void page_login(long long* account, char* passwd) {
+	printf("\033[?1049h");
 	cui_clearRect(0, 0, us_width, us_height);
 	cui_strokeRect(0, 0, us_width, us_height, 0);
 	int y = 3;
+	char buff[50];
 
 	cui_putStringAt(3, y += 2, "账号:________________");
 	cui_moveCursor(-16, 0);
@@ -33,6 +38,7 @@ void page_login(long long* account, char* passwd) {
 	cui_putStringAt(3, y += 2, "密码:________________");
 	cui_moveCursor(-16, 0);
 	cui_setFontStyle(4);
-	cui_inputSecret(passwd, 32, 0);
+	cui_inputSecret(passwd, 32, '*');
 	cui_setFontStyle(24);
+	printf("\033[?1049l");
 }

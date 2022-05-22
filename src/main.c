@@ -19,7 +19,6 @@ int main(int argc, char* argv[]) {
 			startAdminModule();
 			break;
 		case '\033':  // Esc
-			system("cls");
 			printf("拜拜了您嘞\n");
 			break;
 	}

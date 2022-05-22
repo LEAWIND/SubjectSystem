@@ -46,7 +46,7 @@ typedef struct Student {
 	long long classSheet[7][PERIODS_PER_DAY];
 	// 学院
 	char college;
-	char totCredit;//可选总学分
+	char totPoint;//可选总学分
 } Student;
 
 // 课程班级
@@ -67,7 +67,7 @@ typedef struct Course {
 	long long CourseClasses[16];  //课程班级们的id
 	int availableTime;	// 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
 	int college;//所属的学院，-1代表公选
-	int credit;//需要的学分
+	int point;	// 学分
 } Course;
 
 // 老师
