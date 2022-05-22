@@ -11,5 +11,5 @@ int startTeatureModule(Database db) {
 		}
 		printf("Account: %lld\nPasswd: %s\n", account, passwd);
 	}
-	printf("teacher module\n");
+	printf("Successfully login: teacher module\n");
 }

@@ -20,7 +20,6 @@ gcc -fdiagnostics-color=always -std=c11 -g %WORKDIR%/src/main.c -o %WORKDIR%/mai
 
 ```
 |- root/
-	|- #.vscode/
 	|- src/
 		|- main.c
 		|- main.h

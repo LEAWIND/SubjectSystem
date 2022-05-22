@@ -1,15 +1,10 @@
 #pragma once
-// https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences
+// [控制台虚拟终端序列](https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences)
 
-void cui_printRect(int w, int h, char c) {
-	for (int i = 0; i < w; i++) {
-		for (int j = 0; j < h; j++)
-			putchar(c);
-		putchar('\n');
-	}
-}
-
-// 设置文本格式
+/**
+ * @brief 设置文本格式，n 的值参考[https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting]
+ * @param n
+ */
 void cui_setFontStyle(int n) {
 	printf("\033[%dm", n);
 };
@@ -19,16 +14,16 @@ void cui_inputSecret(char* s, int maxLen, char replaceChar) {
 	int len = 0;
 	char c, doLoop = 1;
 	while (doLoop) {
-		c = getch();
+		c = getch();  // 无缓冲输入
 		switch (c) {
-			case '\r':
+			case '\r':	// 回车 \r\n 代表输入结束
 				if (len)
 					doLoop = 0;
 				break;
-			case '\b':
+			case '\b':	// 退格
 				if (len) {
 					s[--len] = '\0';
-					printf("\033[1D_\033[1D");
+					printf("\033[1D_\033[1D");	// 补一个下划线
 				}
 				break;
 			default:
@@ -48,8 +43,8 @@ void cui_setCursorPos(int x, int y) {
 
 // 移动光标
 void cui_moveCursor(int x, int y) {
-	char buff_fmt[15];
-	char buff[64];
+	char buff_fmt[15];	// 格式缓存
+	char buff[64];		// 控制字符缓存
 	char* pbuff = buff;
 	if (y) {
 		strcpy(buff_fmt, y > 0 ? "\033[%dB" : "\033[%dA");
@@ -105,29 +100,32 @@ void cui_clearRect(int x, int y, int w, int h) {
 		printf("\033[%d;%dH\033[%dX", 1 + y + i, 1 + x, w);
 }
 
-// 描边
+// 绘制矩形边框
 void cui_strokeRect(int x, int y, int w, int h, char c) {
+	// 移动光标
 	printf("\033[%d;%dH", 1 + y, 1 + x);
-
-	putchar('*' | c);  // LT
-
+	// 左上
+	putchar('*' | c);
+	// 上
 	for (int i = 2; i < w; i++)
 		putchar('-' | c);
-
-	putchar('*' | c);  // RT
-
+	// 右上
+	putchar('*' | c);
+	// 移动光标
 	printf("\033[%d;%dH", 2 + y, 1 + x);
+	// 左
 	for (int i = 2; i < h; i++)
 		printf("%c\033[1B\033[1D", '|' | c);
-
-	putchar('*' | c);  //LB
-
+	// 左下
+	putchar('*' | c);
+	// 下
 	for (int i = 2; i < w; i++)
 		putchar('-' | c);
-
-	putchar('*' | c);  //RB
-
+	// 右下
+	putchar('*' | c);
+	// 移动光标
 	printf("\033[%d;%dH", 2 + y, x + w);
+	// 右
 	for (int i = 2; i < h; i++)
 		printf("%c\033[1B\033[1D", '|' | c);
 }
