@@ -21,6 +21,7 @@ void dc_saveArray(int elementSize, void* p, int plen, char* fpath) {
 Database dc_loadEntireDatabaseIfDare(char* dir) {
 	FILE* fp;
 	Database db;
+	int flag_fileNotFound;
 	char buff[50];
 	{
 		sprintf(buff, "%s/%s", dir, "student.dat");

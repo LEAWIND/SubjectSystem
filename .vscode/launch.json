@@ -5,8 +5,10 @@
 			"name": "Build and run:public main",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}\\bin\\main.exe",
-			"args": [],
+			"program": "${workspaceFolder}\\main.exe",
+			"args": [
+				"${workspaceFolder}"
+			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
