@@ -30,6 +30,8 @@ char* colleges[] = {
 	"成教"	   //23
 };
 
+
+
 // 学生
 typedef struct Student {
 	/*
@@ -77,7 +79,6 @@ typedef struct Teacher {
 	char name[NAMELEN];
 	char introduce[1024];
 	long long CourseClasses[10];  // 教授哪些课程班级
-
 } Teacher;
 
 // 管理员
