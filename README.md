@@ -11,8 +11,9 @@
 ### 编译参数
 
 ```bat
-cd %root%
-gcc -fdiagnostics-color=always -std=c11 -g %root%/src/main.c -o %root%/bin/main.exe
+set WORKDIR=.
+cd %WORKDIR%
+gcc -fdiagnostics-color=always -std=c11 -g %WORKDIR%/src/main.c -o %WORKDIR%/main.exe
 ```
 
 ## 项目结构 (# 代表添加进 gitignore)
@@ -27,11 +28,10 @@ gcc -fdiagnostics-color=always -std=c11 -g %root%/src/main.c -o %root%/bin/main.
 		|- student.h
 		|- administrator.h
 		|- blablabla.h
-	|- # bin/
-		|- main.exe
 	|- data/
 		|- blablabla.bin
 		|- blablabla.txt
+	|- main.exe
 ```
 
 ## 功能划分
