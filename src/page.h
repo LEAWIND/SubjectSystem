@@ -19,8 +19,9 @@ char page_getUserType();
  * @brief 登录页面：获取用户输入的账号和密码原文(参考page_getUserType)
  * @param account 账号变量保存地址
  * @param passwd 密码原文保存地址
+ * @param info 提示信息
  * @author LEAWIND
  */
-void page_login(long long* account, char* passwd);
+void page_login(long long* account, char* passwd, char* info);
 
 #include "page.c"

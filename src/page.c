@@ -22,12 +22,13 @@ char page_getUserType() {
 	printf("\033[?1049l");
 }
 
-void page_login(long long* account, char* passwd) {
+void page_login(long long* account, char* passwd, char* info) {
 	printf("\033[?1049h");
 	cui_clearRect(0, 0, us_width, us_height);
 	cui_strokeRect(0, 0, us_width, us_height, 0);
 	int y = 3;
 	char buff[50];
+	cui_putStringCenterAt(us_width / 2, y += 2, info, strlen(info));
 
 	cui_putStringAt(3, y += 2, "账号:________________");
 	cui_moveCursor(-16, 0);

@@ -17,7 +17,7 @@ void dc_saveArray(int elementSize, void* p, int plen, char* fpath) {
 }
 
 // 加载数据
-Database loadEntireDatabaseIfDare(char* dir) {
+Database dc_loadEntireDatabaseIfDare(char* dir) {
 	FILE* fp;
 	Database db;
 	char buff[50];
@@ -85,7 +85,7 @@ Database loadEntireDatabaseIfDare(char* dir) {
 }
 
 // 保存数据
-void saveEntireDatabase(Database db, char* dir) {
+void dc_saveEntireDatabase(Database db, char* dir) {
 	char buff[50];
 	sprintf(buff, "%s/%s", dir, "student.dat");
 	dc_saveArray(sizeof(Student), db.students, db.studentCount, buff);
@@ -209,3 +209,29 @@ void dc_importRawData(Database* db, char* dirPath) {
 		}
 	}
 };
+
+int dc_checkAdminLogin(Database db, long long account, char* passwd) {
+	for (int i = 0; i < db.adminCount; i++) {
+		Admin adm = db.admins[i];
+		if (adm.id == account && !strcmp(passwd, adm.key))
+			return 1;
+	}
+	return 0;
+}
+
+int dc_checkStudentLogin(Database db, long long account, char* passwd) {
+	for (int i = 0; i < db.studentCount; i++) {
+		Student stu = db.students[i];
+		if (stu.id == account && !strcmp(passwd, stu.key))
+			return 1;
+	}
+	return 0;
+}
+int dc_checkTeacherLogin(Database db, long long account, char* passwd) {
+	for (int i = 0; i < db.teacherCount; i++) {
+		Teacher tea = db.teachers[i];
+		if (tea.id == account && !strcmp(passwd, tea.key))
+			return 1;
+	}
+	return 0;
+}

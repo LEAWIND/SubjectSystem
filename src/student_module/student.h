@@ -1,5 +1,5 @@
 #pragma once
 
-int startStudentModule();
+int startStudentModule(Database db);
 
 #include "student.c"

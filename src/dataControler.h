@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "datastruct.h"
 
@@ -23,7 +24,7 @@ typedef struct Database {
  * @return Database 数据库结构体
  * @author LEAWIND
  */
-Database loadEntireDatabaseIfDare(char* dir);
+Database dc_loadEntireDatabaseIfDare(char* dir);
 
 /**
  * @brief 保存数据
@@ -32,7 +33,7 @@ Database loadEntireDatabaseIfDare(char* dir);
  * @param dir 目录路径
  * @author LEAWIND
  */
-void saveEntireDatabase(Database db, char* dir);
+void dc_saveEntireDatabase(Database db, char* dir);
 
 /**
  * @brief 从文件读取结构体数组
@@ -61,5 +62,23 @@ void dc_saveArray(int elementSize, void* p, int plen, char* fpath);
  * @author LEAWIND
  */
 void dc_importRawData(Database* db, char* dirPath);
+
+/**
+ * @brief 检查管理员账号密码是否正确
+ * @param db Database 结构体
+ * @param account 账号
+ * @param passwd 密码
+ * @return 1:匹配成功|0:账号或密码错误
+ */
+int dc_checkAdminLogin(Database db, long long account, char* passwd);
+
+/**
+ * @brief 检查学生账号密码是否正确
+ * @param db Database 结构体
+ * @param account 账号
+ * @param passwd 密码
+ * @return 1:匹配成功|0:账号或密码错误
+ */
+int dc_checkStudentLogin(Database db, long long account, char* passwd);
 
 #include "dataControler.c"

@@ -50,9 +50,5 @@ gcc -fdiagnostics-color=always -std=c11 -g %root%/src/main.c -o %root%/bin/main.
 
 ### 管理员
 
-* 导入原始数据
 * 增删改查课程
 * 增删改查课程班级
-
-
-

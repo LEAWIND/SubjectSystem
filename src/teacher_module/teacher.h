@@ -1,5 +1,5 @@
 #pragma once
 
-int startTeatureModule();
+int startTeatureModule(Database db);
 
 #include "teacher.c"

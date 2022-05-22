@@ -38,6 +38,7 @@ void cui_inputSecret(char* s, int maxLen, char replaceChar) {
 				}
 		}
 	}
+	s[len++] = 0;
 }
 
 // 设置光标位置
