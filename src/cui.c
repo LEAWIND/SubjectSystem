@@ -1,10 +1,41 @@
 #pragma once
+// https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences
 
 void cui_printRect(int w, int h, char c) {
 	for (int i = 0; i < w; i++) {
 		for (int j = 0; j < h; j++)
 			putchar(c);
 		putchar('\n');
+	}
+}
+
+// 设置文本格式
+void cui_setFontStyle(int n) {
+	printf("\033[%dm", n);
+};
+
+// 输入密码
+void cui_inputSecret(char* s, int maxLen, char replaceChar) {
+	int len = 0;
+	char c, doLoop = 1;
+	while (doLoop) {
+		c = getch();
+		switch (c) {
+			case '\r':
+				doLoop = 0;
+				break;
+			case '\b':
+				if (len) {
+					len--;
+					printf("\033[1D_\033[1D");
+				}
+				break;
+			default:
+				if (len < maxLen) {
+					s[len++] = c;
+					putchar(replaceChar ? replaceChar : '*');
+				}
+		}
 	}
 }
 
@@ -27,17 +58,17 @@ void cui_moveCursor(int x, int y) {
 		pbuff += sprintf(pbuff, buff_fmt, x > 0 ? x : -x);
 	}
 	if (x | y)
-		puts(buff);
+		printf(buff);
 }
 
 // 隐藏光标
 void cui_hideCursor() {
-	puts("\033[?25l");
+	printf("\033[?25l");
 }
 
 // 显示光标
 void cui_showCursor() {
-	puts("\033[?25h");
+	printf("\033[?25h");
 }
 
 // 将字符串打印到指定位置

@@ -11,6 +11,20 @@ void cui_setCursorPos(int x, int y);
 // 移动光标
 void cui_moveCursor(int x, int y);
 
+/**
+ * @brief 设置文本格式
+ * @param n 格式代码 参考https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting
+ */
+void cui_setFontStyle(int n);
+
+/**
+ * @brief 输入密文
+ * @param s 将输入的密文保存到此地址
+ * @param maxLen 密文最大长度
+ * @param replaceChar 在屏幕上显示的替代字符，'\0' 表示默认 '*'
+ */
+void cui_inputSecret(char* s, int maxLen, char replaceChar);
+
 // 隐藏光标
 void cui_hideCursor();
 // 显示光标

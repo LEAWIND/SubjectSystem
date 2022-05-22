@@ -26,6 +26,7 @@ Database dc_createDatabase();
 /**
  * @brief 加载数据
  * @param dir 目录路径
+ * @return Database 数据库结构体
  */
 Database loadEntireDatabaseIfDare(char* dir);
 
