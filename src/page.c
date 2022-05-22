@@ -1,10 +1,13 @@
 #pragma once
 
+// 首页：选择用户类别
 char page_getUserType() {
-	printf("\033[?1049h");
-	cui_clearRect(0, 0, us_width, us_height);
-	cui_strokeRect(0, 0, us_width, us_height, 0);
-
+	// printf("\033[?1049h");
+	cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
+	cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
+	// 隐藏光标
+	cui_hideCursor();
+	// 放置一些文本
 	cui_putStringCenterAt(us_width / 2, 1, " 选 课 系 统 ", 0);
 	int y = 2;
 	cui_putStringAt(us_width / 2 - 18, y += 2, "请按键:");
@@ -12,34 +15,36 @@ char page_getUserType() {
 	cui_putStringAt(us_width / 2 - 14, y += 2, "2. 教师");
 	cui_putStringAt(us_width / 2 - 14, y += 2, "3. 管理员");
 	cui_putStringAt(us_width / 2 - 14, y += 2, "Esc. 退出");
-	cui_hideCursor();
+	// 监听用户输入
 	char ut;
 	do {
-		ut = getch();
+		ut = getch();  // 无缓冲输入
 	} while (!strchr("123\033", ut));
-	cui_showCursor();
+	cui_showCursor();  // 显示光标
+	// printf("\033[?1049l");
 	return ut;
-	printf("\033[?1049l");
 }
 
+// 登录页面：获取用户输入的账号和密码原文
 void page_login(long long* account, char* passwd, char* info) {
-	printf("\033[?1049h");
-	cui_clearRect(0, 0, us_width, us_height);
-	cui_strokeRect(0, 0, us_width, us_height, 0);
+	// printf("\033[?1049h");
+	cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
+	cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
+
 	int y = 3;
-	char buff[50];
+	// 放置文本
 	cui_putStringCenterAt(us_width / 2, y += 2, info, strlen(info));
 
 	cui_putStringAt(3, y += 2, "账号:________________");
 	cui_moveCursor(-16, 0);
-	cui_setFontStyle(4);
+	cui_setFontStyle(4);  // 带下划线
 	scanf("%lld", account);
-	cui_setFontStyle(24);
+	cui_setFontStyle(24);  // 不带下划线
 
 	cui_putStringAt(3, y += 2, "密码:________________");
 	cui_moveCursor(-16, 0);
 	cui_setFontStyle(4);
-	cui_inputSecret(passwd, 32, '*');
+	cui_inputSecret(passwd, 32, '*');  // 输入密码
 	cui_setFontStyle(24);
-	printf("\033[?1049l");
+	// printf("\033[?1049l");
 }
