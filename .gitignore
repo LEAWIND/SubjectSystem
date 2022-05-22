@@ -1,6 +1,6 @@
-*.exe
-*.ignored
-*.o
+# *.exe
+# *.ignored
+# *.o
 
-.vscode/
-bin/
+# .vscode/
+# bin/

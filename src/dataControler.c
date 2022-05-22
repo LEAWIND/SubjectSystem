@@ -1,3 +1,4 @@
+#pragma once
 
 int dc_loadArray(int elementSize, void* p, char* fpath) {
 	FILE* fp = fopen(fpath, "rb");
