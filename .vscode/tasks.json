@@ -10,7 +10,7 @@
 				"-g",
 				"${workspaceFolder}\\src\\main.c",
 				"-o",
-				"${workspaceFolder}\\main.exe"
+				"${workspaceFolder}\\bin\\main.exe"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}\\src"

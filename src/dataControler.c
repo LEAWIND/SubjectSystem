@@ -19,6 +19,7 @@ void dc_saveArray(int elementSize, void* p, int plen, char* fpath) {
 
 // 加载数据
 Database dc_loadEntireDatabaseIfDare(char* dir) {
+	// TODO 确保文件夹存在
 	FILE* fp;
 	Database db;
 	int flag_fileNotFound;
@@ -103,27 +104,28 @@ void dc_saveEntireDatabase(Database db, char* dir) {
 
 // 导入原始数据
 void dc_importRawData(Database* db, char* dirPath) {
+	// TODO 确保文件夹存在
 	char buff[64];
-	FILE* fp;
-	int d;
-	// Student
-	{
-		sprintf(buff, "%s/%s", dirPath, "student.txt");
-		fp = fopen(buff, "r");
-		if (fp) {
-			fscanf(fp, "%d", &(db->studentCount));
-			db->students = (Student*)malloc(sizeof(Student) * db->studentCount);
-			for (int i = 0; i < db->studentCount; i++) {
-				fscanf(fp, "%lld", &(db->students[i].id));
-				fscanf(fp, "%s", &(db->students[i].key));
-				fscanf(fp, "%s", &(db->students[i].name));
-				fscanf(fp, "%s", &(db->students[i].class_pro));
-				fscanf(fp, "%d", &(db->students[i].college));
-				fscanf(fp, "%d", &(db->students[i].points));
-				// printf("%lld\n", db->students[i].id);
+		FILE* fp;
+		int d;
+		// Student
+		{
+			sprintf(buff, "%s/%s", dirPath, "student.txt");
+			fp = fopen(buff, "r");
+			if (fp) {
+				fscanf(fp, "%d", &(db->studentCount));
+				db->students = (Student*)malloc(sizeof(Student) * db->studentCount);
+				for (int i = 0; i < db->studentCount; i++) {
+					fscanf(fp, "%lld", &(db->students[i].id));
+					fscanf(fp, "%s", &(db->students[i].key));
+					fscanf(fp, "%s", &(db->students[i].name));
+					fscanf(fp, "%s", &(db->students[i].class_pro));
+					fscanf(fp, "%d", &(db->students[i].college));
+					fscanf(fp, "%d", &(db->students[i].points));
+					// printf("%lld\n", db->students[i].id);
+				}
+				fclose(fp);
 			}
-			fclose(fp);
-		}
 	}
 	// Teacher
 	{
