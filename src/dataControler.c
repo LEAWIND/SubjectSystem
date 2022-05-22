@@ -117,6 +117,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%s", &(db->students[i].name));
 				fscanf(fp, "%s", &(db->students[i].class_pro));
 				fscanf(fp, "%d", &(db->students[i].college));
+				fscanf(fp, "%d", &(db->students[i].points));
 				// printf("%lld\n", db->students[i].id);
 			}
 			fclose(fp);
