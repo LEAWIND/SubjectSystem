@@ -27,8 +27,8 @@ char* colleges[] = {
 
 // 学生
 typedef struct Student {
-	long long id;  // ID 前4位代表入学年份
-	char key[32];  // 密码哈希值
+	long long id;							   // ID 前4位代表入学年份
+	char key[32];							   // 密码哈希值
 	char name[NAMELEN];						   // 名字
 	char class_pro[NAMELEN];				   //专业班级
 	long long classSheet[7][PERIODS_PER_DAY];  // 课表（元素为 课程班级id）
@@ -46,15 +46,16 @@ typedef struct CourseClass {
 	int periods[49];		  // 上课时间段们
 	long long students[100];  // 学生们ID
 	char room[10];			  // 上课的教室
+	int capacity;			  // 容纳最大学生数
 } CourseClass;
 
 // 课程
 typedef struct Course {
-	long long id;				  // 课程 ID
-	char name[NAMELEN];			  // 课程名称
-	int availableTime;			  // 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
-	int college;				  // 所属的学院，-1代表公选
-	int point;					  // 学分
+	long long id;		 // 课程 ID
+	char name[NAMELEN];	 // 课程名称
+	int availableTime;	 // 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
+	int college;		 // 所属的学院，-1代表公选
+	int point;			 // 学分
 } Course;
 
 // 老师

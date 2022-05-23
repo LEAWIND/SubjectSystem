@@ -181,14 +181,14 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fscanf(fp, "%d", &(db->courseCount));							  // 课程数量
 			db->courses = (Course*)malloc(sizeof(Course) * db->courseCount);  // 申请内存
 			for (int i = 0; i < db->courseCount; i++) {
-				fscanf(fp, "%lld", &(db->courses[i].id));			  // 课程 ID
-				fscanf(fp, "%s", &(db->courses[i].name));			  // 课程名称
+				fscanf(fp, "%lld", &(db->courses[i].id));  // 课程 ID
+				fscanf(fp, "%s", &(db->courses[i].name));  // 课程名称
 				// fscanf(fp, "%lld", &(db->courses[i].CourseClasses));  // 该课程对应的课程班级数量
 				// for (int j = 0; j < db->courses[i].CourseClasses[0]; j++)
 				// 	fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);  // 课程班级
-				fscanf(fp, "%d", &(db->courses[i].availableTime));			   // 可以选该课的学期
-				fscanf(fp, "%d", &(db->courses[i].college));				   // 所属学院
-				fscanf(fp, "%d", &(db->courses[i].point));					   // 课程学分
+				fscanf(fp, "%d", &(db->courses[i].availableTime));	// 可以选该课的学期
+				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学院
+				fscanf(fp, "%d", &(db->courses[i].point));			// 课程学分
 
 				// printf("%lld\n", db->courses[i].id);
 				// printf("%s\n", db->courses[i].name);
@@ -217,6 +217,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				for (int j = 0; j < db->courseClasses[i].students[0]; j++)
 					fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);	// 学生 ID
 				fscanf(fp, "%s", db->courseClasses[i].room);					// 教室
+				fscanf(fp, "%d", &(db->courseClasses[i].capacity));				//  容纳最大学生数
 
 				// printf("%s\n", db->courseClasses[i].room);
 			}
