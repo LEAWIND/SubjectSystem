@@ -1,3 +1,4 @@
 *.exe
 *.ignored
 *.o
+.vscode/
