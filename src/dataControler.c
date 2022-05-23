@@ -1,4 +1,5 @@
 #pragma once
+#include "dataControler.h"
 
 // 加载数据
 int dc_loadArray(int elementSize, void* p, char* fpath) {
@@ -123,12 +124,19 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fscanf(fp, "%d", &(db->studentCount));								  // 学生数量
 			db->students = (Student*)malloc(sizeof(Student) * db->studentCount);  // 申请内存
 			for (int i = 0; i < db->studentCount; i++) {
-				fscanf(fp, "%lld", &(db->students[i].id));		 // 学生 ID
-				fscanf(fp, "%s", &(db->students[i].key));		 // 密码
-				fscanf(fp, "%s", &(db->students[i].name));		 // 名字
-				fscanf(fp, "%s", &(db->students[i].class_pro));	 // 专业班级
-				fscanf(fp, "%d", &(db->students[i].college));	 // 学院
-				fscanf(fp, "%d", &(db->students[i].points));	 // 已修学分
+				fscanf(fp, "%lld", &(db->students[i].id));		 // 1. 学生 ID
+				fscanf(fp, "%s", &(db->students[i].key));		 // 2. 密码
+				fscanf(fp, "%s", &(db->students[i].name));		 // 3. 名字
+				fscanf(fp, "%s", &(db->students[i].class_pro));	 // 4. 专业班级
+				// 5.$课表
+				for (int i = 0; i < 7; i++) {	   // 一天 7 节课
+					for (int j = 0; j < 7; j++) {  // 一周 7 天
+						fscanf(fp, "%d", &(db->students[i].classSheet[j][i]));
+					}
+				}
+				// fscanf()
+				fscanf(fp, "%d", &(db->students[i].college));  // 学院
+				fscanf(fp, "%d", &(db->students[i].points));   //$已修学分
 
 				// printf("%lld\n", db->students[i].id);
 			}

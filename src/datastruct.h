@@ -33,8 +33,7 @@ typedef struct Student {
 	char class_pro[NAMELEN];				   //专业班级
 	long long classSheet[7][PERIODS_PER_DAY];  // 课表（元素为 课程班级id）
 	char college;							   // 学院
-	char totPoint;							   // 可选总学分
-	int points;								   // 当前总学分
+	int points;								   // 当前已修学分
 } Student;
 
 // 课程班级
