@@ -81,4 +81,13 @@ int dc_checkAdminLogin(Database db, long long account, char* passwd);
  */
 int dc_checkStudentLogin(Database db, long long account, char* passwd);
 
+/**
+ * @brief 检查教师账号密码是否正确
+ * @param db Database 结构体
+ * @param account 账号
+ * @param passwd 密码
+ * @return 1:匹配成功|0:账号或密码错误
+ */
+int dc_checkTeacherLogin(Database db, long long account, char* passwd);
+
 #include "dataControler.c"

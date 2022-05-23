@@ -16,7 +16,7 @@ const int us_height = 32;
 char page_getUserType();
 
 /**
- * @brief 登录页面：获取用户输入的账号和密码原文(参考page_getUserType)
+ * @brief 登录页面：获取用户输入的账号和密码原文
  * @param account 账号变量保存地址
  * @param passwd 密码原文保存地址
  * @param info 提示信息

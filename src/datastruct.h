@@ -1,8 +1,9 @@
 #pragma once
 
-#define NAMELEN 100
+#define NAMELEN 100		   // 名字最大长度
 #define HASH_LEN 32		   // 密码哈希值长度
 #define PERIODS_PER_DAY 7  // 一天几个上课时间段
+
 char* colleges[] = {
 	"-1,"				   // 0
 	"中国语言文学系",	   // 1
@@ -24,27 +25,16 @@ char* colleges[] = {
 	"英语语言文学系"	   // 7
 };
 
-
-
 // 学生
 typedef struct Student {
-	/*
-	前4位代表入学年份，其他代表标识
-	*/
-	long long id;
-
+	long long id;  // ID 前4位代表入学年份
 	char key[32];  // 密码哈希值
-
-	char name[NAMELEN];
-	//专业班级
-	char class_pro[NAMELEN];
-	// 课表（元素为 课程班级id）
-	long long classSheet[7][PERIODS_PER_DAY];
-	// 学院
-	char college;
-	char totPoint;	//可选总学分
-	// 当前总学分
-	int points;
+	char name[NAMELEN];						   // 名字
+	char class_pro[NAMELEN];				   //专业班级
+	long long classSheet[7][PERIODS_PER_DAY];  // 课表（元素为 课程班级id）
+	char college;							   // 学院
+	char totPoint;							   // 可选总学分
+	int points;								   // 当前总学分
 } Student;
 
 // 课程班级
@@ -55,30 +45,30 @@ typedef struct CourseClass {
 	long long teacherID;	  // 老师ID
 	int periods[49];		  // 上课时间段们
 	long long students[100];  // 学生们ID
-	char room[10];			  //上课的教室
+	char room[10];			  // 上课的教室
 } CourseClass;
 
 // 课程
 typedef struct Course {
-	long long id;
-	char name[NAMELEN];
-	long long CourseClasses[16];  //课程班级们的id
+	long long id;				  // 课程 ID
+	char name[NAMELEN];			  // 课程名称
+	long long CourseClasses[16];  // 课程班级们的id
 	int availableTime;			  // 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
-	int college;				  //所属的学院，-1代表公选
+	int college;				  // 所属的学院，-1代表公选
 	int point;					  // 学分
 } Course;
 
 // 老师
 typedef struct Teacher {
-	long long id;
-	char key[32];
-	char name[NAMELEN];
-	char introduce[1024];
+	long long id;				  // ID
+	char key[32];				  // 密码
+	char name[NAMELEN];			  // 名字
+	char introduce[1024];		  // 简介
 	long long CourseClasses[10];  // 教授哪些课程班级
 } Teacher;
 
 // 管理员
 typedef struct Admin {
-	long long id;
-	char key[32];
+	long long id;  // ID
+	char key[32];  // 密码
 } Admin;
