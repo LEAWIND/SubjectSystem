@@ -8,7 +8,10 @@ int startAdminModule(Database db) {
 		// 让用户输入账号和密码
 		page_login(&account, passwd, "管理员登录");
 		while (!dc_checkAdminLogin(db, account, passwd)) {	// 检查账号和密码是否正确
-			page_login(&account, passwd, "管理员登录: 账号或密码错误，请重新输入");
+			system("cls");
+			printf("账号或密码错误，请重新输入!\n按任意键继续");
+			getch();
+			page_login(&account, passwd, "管理员登录");
 		}
 		printf("Account: %lld\nPasswd: %s\n", account, passwd);
 	}

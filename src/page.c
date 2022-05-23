@@ -1,4 +1,5 @@
 #pragma once
+#include "page.h"
 
 // 首页：选择用户类别
 char page_getUserType() {
@@ -37,9 +38,9 @@ void page_login(long long* account, char* passwd, char* info) {
 
 	cui_putStringAt(3, y += 2, "账号:________________");
 	cui_moveCursor(-16, 0);
-	cui_setFontStyle(4);  // 带下划线
-	scanf("%lld", account);
-	cui_setFontStyle(24);  // 不带下划线
+	cui_setFontStyle(4);	 // 带下划线
+	scanf("%lld", account);	 // 改成 %s
+	cui_setFontStyle(24);	 // 不带下划线
 
 	cui_putStringAt(3, y += 2, "密码:________________");
 	cui_moveCursor(-16, 0);
