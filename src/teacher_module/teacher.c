@@ -1,9 +1,9 @@
 #pragma once
 
-int startTeatureModule(Database db) {
+int startTeacherModule(Database db) {
 	system("cls");
-	long long account;
-	char passwd[HASH_LEN];
+	long long account;//教师输入的账号
+	char passwd[HASH_LEN];//输入的密码
 	{
 		page_login(&account, passwd, "教师登录");
 		while (!dc_checkTeacherLogin(db, account, passwd)) {

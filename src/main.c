@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 				startStudentModule(database);  // 学生
 				break;
 			case '2':
-				startTeatureModule(database);  //教师
+				startTeacherModule(database);  //教师
 				break;
 			case '3':
 				startAdminModule(database);	 // 管理员
