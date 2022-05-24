@@ -28,13 +28,13 @@ void cui_moveCursor(int x, int y);
 void cui_setFontStyle(int n);
 
 /**
- * @brief 输入密文
- * @param s 将输入的密文保存到此地址
- * @param maxLen 密文最大长度
- * @param replaceChar 在屏幕上显示的替代字符，'\0' 表示默认 '*'
+ * @brief 获取用户输入字符串
+ * @param s 将输入的字符串保存到此地址
+ * @param maxLen 字符串最大长度
+ * @param replaceChar 回显的替代字符，'\0' 表示输入的真实字符
  * @author LEAWIND
  */
-void cui_inputSecret(char* s, int maxLen, char replaceChar);
+void cui_inputs(char* s, int maxLen, char replaceChar);
 
 // 隐藏光标
 void cui_hideCursor();

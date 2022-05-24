@@ -1,5 +1,4 @@
 #pragma once
-#include "page.h"
 
 // 首页：选择用户类别
 char page_getUserType() {
@@ -28,24 +27,29 @@ char page_getUserType() {
 
 // 登录页面：获取用户输入的账号和密码原文
 void page_login(long long* account, char* passwd, char* info) {
-	// printf("\033[?1049h");
-	cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
-	cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
+	while (1) {
+		system("cls");
+		cui_setFontStyle(0);						   // 默认样式
+		cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
+		cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
 
-	int y = 3;
-	// 放置文本
-	cui_putStringCenterAt(us_width / 2, y += 2, info, strlen(info));
+		int y = 3;
+		// 放置文本
+		cui_putStringCenterAt(us_width / 2, y += 2, info, strlen(info));
 
-	cui_putStringAt(3, y += 2, "账号:________________");
-	cui_moveCursor(-16, 0);
-	cui_setFontStyle(4);	 // 带下划线
-	scanf("%lld", account);	 // 改成 %s
-	cui_setFontStyle(24);	 // 不带下划线
+		cui_putStringAt(3, y += 2, "账号:________________");
+		cui_moveCursor(-16, 0);
+		cui_setFontStyle(4);  // 带下划线
+		char buff[50];
+		cui_inputs(buff, 49, 0);
+		sscanf(buff, "%lld", account);
+		cui_setFontStyle(24);  // 不带下划线
 
-	cui_putStringAt(3, y += 2, "密码:________________");
-	cui_moveCursor(-16, 0);
-	cui_setFontStyle(4);
-	cui_inputSecret(passwd, 32, '*');  // 输入密码
-	cui_setFontStyle(24);
-	// printf("\033[?1049l");
+		cui_putStringAt(3, y += 2, "密码:________________");
+		cui_moveCursor(-16, 0);
+		cui_setFontStyle(4);
+		cui_inputs(passwd, 32, '*');  // 输入密码
+		cui_setFontStyle(24);
+		break;
+	}
 }

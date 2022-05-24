@@ -9,10 +9,11 @@ void cui_setFontStyle(int n) {
 	printf("\033[%dm", n);
 };
 
-// 输入密码
-void cui_inputSecret(char* s, int maxLen, char replaceChar) {
+// 获取用户输入字符串
+void cui_inputs(char* s, int maxLen, char replaceChar) {
 	int len = 0;
 	char c, doLoop = 1;
+	int flag;
 	while (doLoop) {
 		c = getch();  // 无缓冲输入
 		switch (c) {
@@ -23,13 +24,13 @@ void cui_inputSecret(char* s, int maxLen, char replaceChar) {
 			case '\b':	// 退格
 				if (len) {
 					s[--len] = '\0';
-					printf("\033[1D_\033[1D");	// 补一个下划线
+					printf("\033[1D \033[1D");
 				}
 				break;
 			default:
 				if (len < maxLen) {
 					s[len++] = c;
-					putchar(replaceChar ? replaceChar : '*');
+					putchar(replaceChar ? replaceChar : c);
 				}
 		}
 	}

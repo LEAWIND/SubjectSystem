@@ -1,6 +1,6 @@
 import os
 
-SOURCE_DIR = "src"
+SOURCE_DIR = "../"
 
 SRC_EXT = {
     "python": ('py', ),
