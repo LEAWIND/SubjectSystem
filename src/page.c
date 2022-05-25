@@ -25,6 +25,17 @@ char page_getUserType() {
 	return ut;
 }
 
+void getVerificationCode(char verificationCode[],int n)
+{
+    char str[]="2323456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //0,1易与字母‘o’与‘l'混消，不用
+    int i;
+    srand(time(NULL));
+    for (i=0;i<n;i++)
+        verificationCode[i]=str[rand()%62];
+    verificationCode[n]='\0';
+}
+
 // 登录页面：获取用户输入的账号和密码原文
 void page_login(long long* account, char* passwd, char* info) {
 	while (1) {
@@ -50,6 +61,21 @@ void page_login(long long* account, char* passwd, char* info) {
 		cui_setFontStyle(4);
 		cui_inputs(passwd, 32, '*');  // 输入密码
 		cui_setFontStyle(24);
+
+		//验证码验证
+		char verificationCode[5];                   //存放验证码
+		char inputVerificationCode[5];              //存入用户输入的验证码
+		getVerificationCode(verificationCode,4);
+        printf("\n\n   验证码：            [%s]\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",verificationCode);
+        scanf("%s",inputVerificationCode);
+		int flag = 1;
+		if(strcmp(verificationCode, inputVerificationCode)) 
+		{
+			system("cls");
+			printf("验证码出错");
+			getch();
+			continue;
+		}
 		break;
 	}
 }
