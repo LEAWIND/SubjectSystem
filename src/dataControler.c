@@ -254,11 +254,15 @@ int dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	return 0;
 }
 // 检查教师账号密码是否正确
-int dc_checkTeacherLogin(Database db, long long account, char* passwd) {
+int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher *user) {
 	for (int i = 0; i < db.teacherCount; i++) {
 		Teacher tea = db.teachers[i];
 		if (tea.id == account && !strcmp(passwd, tea.key))
+		{
+			*user = tea;
 			return 1;
+		}
+			
 	}
 	return 0;
 }

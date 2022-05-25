@@ -78,6 +78,7 @@ def generateTeacher(names):
     for name in names:
         teacher = []
         teacher.append("{0:0>8d}".format(availableId))  # 老师id
+        availableId += 1
         teacher.append('123456')  # 密码
         teacher.append(name)  # 名字
         teacher.append('我是一个认真负责，教学经验丰富的老师')#介绍
