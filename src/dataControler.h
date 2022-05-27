@@ -20,11 +20,12 @@ typedef struct Database {
 
 /**
  * @brief 32 字节哈希函数
+ * 输入数据可以是
  * @param src 源数据地址
  * @param len 源数据长度
  * @param dst 哈希值存放地址
  */
-void dc_hash32(const void* src, int len, const void* dst);
+void dc_hash32(const void* src, int len, void* dst);
 
 /**
  * @brief 加载数据
@@ -75,7 +76,7 @@ void dc_importRawData(Database* db, char* dirPath);
  * @brief 检查管理员账号密码是否正确
  * @param db Database 结构体
  * @param account 账号
- * @param passwd 密码
+ * @param passwd 密码原文
  * @return 1:匹配成功|0:账号或密码错误
  */
 int dc_checkAdminLogin(Database db, long long account, char* passwd);
@@ -84,7 +85,7 @@ int dc_checkAdminLogin(Database db, long long account, char* passwd);
  * @brief 检查学生账号密码是否正确
  * @param db Database 结构体
  * @param account 账号
- * @param passwd 密码
+ * @param passwd 密码原文
  * @return 1:匹配成功|0:账号或密码错误
  */
 int dc_checkStudentLogin(Database db, long long account, char* passwd);
@@ -93,7 +94,7 @@ int dc_checkStudentLogin(Database db, long long account, char* passwd);
  * @brief 检查教师账号密码是否正确
  * @param db Database 结构体
  * @param account 账号
- * @param passwd 密码
+ * @param passwd 密码原文
  * @param user 登入成功的账户
  * @return 1:匹配成功|0:账号或密码错误
  * @author 陈华
