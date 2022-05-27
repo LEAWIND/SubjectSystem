@@ -28,8 +28,9 @@ gcc -fdiagnostics-color=always -std=c11 -g %WORKDIR%/src/main.c -o %WORKDIR%/mai
 		|- administrator.h
 		|- blablabla.h
 	|- data/
-		|- blablabla.bin
-		|- blablabla.txt
+		|- raw/
+			|- blablabla.txt
+		|- blablabla.dat
 	|- main.exe
 ```
 

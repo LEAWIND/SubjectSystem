@@ -1,6 +1,6 @@
 *.exe
 *.ignored
 *.o
-.vscode/
+.vscode
 launch.json
 tasks.json

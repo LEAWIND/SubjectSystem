@@ -19,6 +19,14 @@ typedef struct Database {
 } Database;
 
 /**
+ * @brief 32 字节哈希函数
+ * @param src 源数据地址
+ * @param len 源数据长度
+ * @param dst 哈希值存放地址
+ */
+void dc_hash32(const void* src, int len, const void* dst);
+
+/**
  * @brief 加载数据
  * @param dir 目录路径
  * @return Database 数据库结构体
@@ -28,7 +36,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir);
 
 /**
  * @brief 保存数据
- * 
+ *
  * @param db 数据库
  * @param dir 目录路径
  * @author LEAWIND

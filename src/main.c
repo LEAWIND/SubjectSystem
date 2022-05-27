@@ -1,6 +1,12 @@
 #include "main.h"
+int test() {
+	dc_test_hash32();
 
+	getch();
+	return 0;
+}
 int main(int argc, char* argv[]) {
+	// return test();
 	if (argc > 1)
 		SetCurrentDirectory(argv[1]);
 
