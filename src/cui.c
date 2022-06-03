@@ -1,27 +1,27 @@
 #pragma once
-// [æ§åˆ¶å°è™šæ‹Ÿç»ˆç«¯åºåˆ—](https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences)
+// [¿ØÖÆÌ¨ĞéÄâÖÕ¶ËĞòÁĞ](https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences)
 
 /**
- * @brief è®¾ç½®æ–‡æœ¬æ ¼å¼ï¼Œn çš„å€¼å‚è€ƒ[https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting]
+ * @brief ÉèÖÃÎÄ±¾¸ñÊ½£¬n µÄÖµ²Î¿¼[https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting]
  * @param n
  */
 void cui_setFontStyle(int n) {
 	printf("\033[%dm", n);
 };
 
-// è·å–ç”¨æˆ·è¾“å…¥å­—ç¬¦ä¸²
+// »ñÈ¡ÓÃ»§ÊäÈë×Ö·û´®
 void cui_inputs(char* s, int maxLen, char replaceChar) {
 	int len = 0;
 	char c, doLoop = 1;
 	int flag;
 	while (doLoop) {
-		c = getch();  // æ— ç¼“å†²è¾“å…¥
+		c = getch();  // ÎŞ»º³åÊäÈë
 		switch (c) {
-			case '\r':	// å›è½¦ \r\n ä»£è¡¨è¾“å…¥ç»“æŸ
+			case '\r':	// »Ø³µ \r\n ´ú±íÊäÈë½áÊø
 				if (len)
 					doLoop = 0;
 				break;
-			case '\b':	// é€€æ ¼
+			case '\b':	// ÍË¸ñ
 				if (len) {
 					s[--len] = '\0';
 					printf("\033[1D \033[1D");
@@ -37,15 +37,15 @@ void cui_inputs(char* s, int maxLen, char replaceChar) {
 	s[len++] = 0;
 }
 
-// è®¾ç½®å…‰æ ‡ä½ç½®
+// ÉèÖÃ¹â±êÎ»ÖÃ
 void cui_setCursorPos(int x, int y) {
 	printf("\033[%d;%dH", y < 0 ? 1 : 1 + y, x < 0 ? 1 : 1 + x);
 }
 
-// ç§»åŠ¨å…‰æ ‡
+// ÒÆ¶¯¹â±ê
 void cui_moveCursor(int x, int y) {
-	char buff_fmt[15];	// æ ¼å¼ç¼“å­˜
-	char buff[64];		// æ§åˆ¶å­—ç¬¦ç¼“å­˜
+	char buff_fmt[15];	// ¸ñÊ½»º´æ
+	char buff[64];		// ¿ØÖÆ×Ö·û»º´æ
 	char* pbuff = buff;
 	if (y) {
 		strcpy(buff_fmt, y > 0 ? "\033[%dB" : "\033[%dA");
@@ -59,22 +59,22 @@ void cui_moveCursor(int x, int y) {
 		printf(buff);
 }
 
-// éšè—å…‰æ ‡
+// Òş²Ø¹â±ê
 void cui_hideCursor() {
 	printf("\033[?25l");
 }
 
-// æ˜¾ç¤ºå…‰æ ‡
+// ÏÔÊ¾¹â±ê
 void cui_showCursor() {
 	printf("\033[?25h");
 }
 
-// å°†å­—ç¬¦ä¸²æ‰“å°åˆ°æŒ‡å®šä½ç½®
+// ½«×Ö·û´®´òÓ¡µ½Ö¸¶¨Î»ÖÃ
 void cui_putStringAt(int x, int y, char* c) {
 	printf("\033[%d;%dH%s", 1 + y, 1 + x, c);
 }
 
-// å°†å­—ç¬¦ä¸²æ‰“å°åˆ°æŒ‡å®šä½ç½®ï¼Œä¸­å¿ƒå¯¹é½
+// ½«×Ö·û´®´òÓ¡µ½Ö¸¶¨Î»ÖÃ£¬ÖĞĞÄ¶ÔÆë
 void cui_putStringCenterAt(int x, int y, char* c, int len) {
 	if (!len)
 		len = strlen(c);
@@ -86,7 +86,7 @@ void cui_putStringCenterAt(int x, int y, char* c, int len) {
 	printf("\033[%d;%dH%s", 1 + y, 1 + x, c);
 }
 
-// ç”¨å­—ç¬¦å¡«å……çŸ©å½¢åŒºåŸŸ
+// ÓÃ×Ö·ûÌî³ä¾ØĞÎÇøÓò
 void cui_fillRect(int x, int y, int w, int h, char c) {
 	for (int i = 0; i < h; i++) {
 		printf("\033[%d;%dH", 1 + y + i, 1 + x);
@@ -95,38 +95,38 @@ void cui_fillRect(int x, int y, int w, int h, char c) {
 	}
 }
 
-// æ¸…é™¤çŸ©å½¢åŒºåŸŸ
+// Çå³ı¾ØĞÎÇøÓò
 void cui_clearRect(int x, int y, int w, int h) {
 	for (int i = 0; i < h; i++)
 		printf("\033[%d;%dH\033[%dX", 1 + y + i, 1 + x, w);
 }
 
-// ç»˜åˆ¶çŸ©å½¢è¾¹æ¡†
+// »æÖÆ¾ØĞÎ±ß¿ò
 void cui_strokeRect(int x, int y, int w, int h, char c) {
-	// ç§»åŠ¨å…‰æ ‡
+	// ÒÆ¶¯¹â±ê
 	printf("\033[%d;%dH", 1 + y, 1 + x);
-	// å·¦ä¸Š
+	// ×óÉÏ
 	putchar('*' | c);
-	// ä¸Š
+	// ÉÏ
 	for (int i = 2; i < w; i++)
 		putchar('-' | c);
-	// å³ä¸Š
+	// ÓÒÉÏ
 	putchar('*' | c);
-	// ç§»åŠ¨å…‰æ ‡
+	// ÒÆ¶¯¹â±ê
 	printf("\033[%d;%dH", 2 + y, 1 + x);
-	// å·¦
+	// ×ó
 	for (int i = 2; i < h; i++)
 		printf("%c\033[1B\033[1D", '|' | c);
-	// å·¦ä¸‹
+	// ×óÏÂ
 	putchar('*' | c);
-	// ä¸‹
+	// ÏÂ
 	for (int i = 2; i < w; i++)
 		putchar('-' | c);
-	// å³ä¸‹
+	// ÓÒÏÂ
 	putchar('*' | c);
-	// ç§»åŠ¨å…‰æ ‡
+	// ÒÆ¶¯¹â±ê
 	printf("\033[%d;%dH", 2 + y, x + w);
-	// å³
+	// ÓÒ
 	for (int i = 2; i < h; i++)
 		printf("%c\033[1B\033[1D", '|' | c);
 }

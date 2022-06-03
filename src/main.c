@@ -10,33 +10,32 @@ int main(int argc, char* argv[]) {
 	if (argc > 1)
 		SetCurrentDirectory(argv[1]);
 
-	system("chcp 65001");  // è®¾ç½®å­—ç¬¦ç¼–ç : UTF-8
-	// å°è¯•åŠ è½½äºŒè¿›åˆ¶æ•°æ®
+	// ³¢ÊÔ¼ÓÔØ¶ş½øÖÆÊı¾İ
 	Database database = dc_loadEntireDatabaseIfDare(DATA_DIR);
 	if (!database.studentCount)
-		dc_importRawData(&database, "data/raw");  // å¯¼å…¥æ•°æ®
+		dc_importRawData(&database, "data/raw");  // µ¼ÈëÊı¾İ
 	char stayHere = 1;
 	while (stayHere) {
-		system("cls");						 // æ¸…ç©ºç¼“å†²åŒº
-		char userType = page_getUserType();	 // è¿›å…¥ç”¨æˆ·ç±»å‹é€‰æ‹©ç•Œé¢
+		system("cls");						 // Çå¿Õ»º³åÇø
+		char userType = page_getUserType();	 // ½øÈëÓÃ»§ÀàĞÍÑ¡Ôñ½çÃæ
 		system("cls");
 		switch (userType) {
 			case '1':
-				startStudentModule(database);  // å­¦ç”Ÿ
+				startStudentModule(database);  // Ñ§Éú
 				break;
 			case '2':
-				startTeacherModule(database);  //æ•™å¸ˆ
+				startTeacherModule(database);  //½ÌÊ¦
 				break;
 			case '3':
-				startAdminModule(database);	 // ç®¡ç†å‘˜
+				startAdminModule(database);	 // ¹ÜÀíÔ±
 				break;
 			case '\033':  // Esc
-				printf("æ‹œæ‹œäº†æ‚¨å˜\n");
+				printf("°İ°İÁËÄúàÏ\n");
 				stayHere = 0;
 				break;
 		}
 	}
-	dc_saveEntireDatabase(database, DATA_DIR);	// ä¿å­˜æ•°æ®
+	dc_saveEntireDatabase(database, DATA_DIR);	// ±£´æÊı¾İ
 	system("pause");
 	return 0;
 }

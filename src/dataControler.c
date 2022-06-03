@@ -59,13 +59,13 @@ void dc_hash32(const void* src, int len, void* dst) {
 	memset(buff, 0, HASH_LEN);
 	// 将源数据分成 n 段，每段长度 HASH_LEN Bytes，最后一段可能不完整
 
-	// 遍历每一段
+	// 遍历每一�?
 	for (int i = 0; i < len; i += HASH_LEN) {
-		int s = (len - i <= HASH_LEN) ? len % HASH_LEN : HASH_LEN;	// 该段的长度
+		int s = (len - i <= HASH_LEN) ? len % HASH_LEN : HASH_LEN;	// 该段的长�?
 
 		memcpy(buff, (unsigned char*)src + i, s);  // 将源数据写进缓存
 		if (s != HASH_LEN)
-			memcpy(buff + s, fillers[d] + s, HASH_LEN - s);	 // 用 filler 填充剩余部分
+			memcpy(buff + s, fillers[d] + s, HASH_LEN - s);	 // �? filler 填充剩余部分
 
 		for (int j = 0; j < HASH_LEN; j++)
 			((unsigned char*)dst)[j] ^= buff[j];  // 异或操作
@@ -109,7 +109,7 @@ int dc_loadArray(int elementSize, void* p, char* fpath) {
 	FILE* fp = fopen(fpath, "rb");
 	int len;
 	fread(&len, sizeof(int), 1, fp);  // 读取元素数量
-	fread(p, elementSize, len, fp);	  // 读取所有元素
+	fread(p, elementSize, len, fp);	  // 读取所有元�?
 	fclose(fp);
 	return len;
 }
@@ -119,13 +119,13 @@ void dc_saveArray(int elementSize, void* p, int plen, char* fpath) {
 	FILE* fp = fopen(fpath, "wb");
 	int s = plen;
 	fwrite(&s, sizeof(int), 1, fp);	   // 写入元素数量
-	fwrite(p, elementSize, plen, fp);  // 写入所有元素
+	fwrite(p, elementSize, plen, fp);  // 写入所有元�?
 	fclose(fp);
 }
 
 // 加载数据
 Database dc_loadEntireDatabaseIfDare(char* dir) {
-	// TODO 确保文件夹存在
+	// TODO 确保文件夹存�?
 	FILE* fp;
 	Database db;
 	int flag_fileNotFound;
@@ -137,7 +137,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		if (fp) {
 			fread(&(db.studentCount), sizeof(int), 1, fp);						// 读入元素数量
 			db.students = (Student*)malloc(sizeof(Student) * db.studentCount);	// 申请内存
-			fread(db.students, sizeof(Student), db.studentCount, fp);			// 读取所有元素
+			fread(db.students, sizeof(Student), db.studentCount, fp);			// 读取所有元�?
 		} else {
 			db.studentCount = 0;
 		}
@@ -150,20 +150,20 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		if (fp) {
 			fread(&(db.teacherCount), sizeof(int), 1, fp);						// 读入元素数量
 			db.teachers = (Teacher*)malloc(sizeof(Teacher) * db.teacherCount);	// 申请内存
-			fread(db.teachers, sizeof(Teacher), db.teacherCount, fp);			// 读取所有元素
+			fread(db.teachers, sizeof(Teacher), db.teacherCount, fp);			// 读取所有元�?
 		} else {
 			db.teacherCount = 0;
 		}
 		fclose(fp);
 	}
 	{
-		// 管理员
+		// 管理�?
 		sprintf(buff, "%s/%s", dir, "admin.dat");
 		fp = fopen(buff, "rb");
 		if (fp) {
 			fread(&(db.adminCount), sizeof(int), 1, fp);				// 读入元素数量
 			db.admins = (Admin*)malloc(sizeof(Admin) * db.adminCount);	// 申请内存
-			fread(db.admins, sizeof(Admin), db.adminCount, fp);			// 读取所有元素
+			fread(db.admins, sizeof(Admin), db.adminCount, fp);			// 读取所有元�?
 		} else {
 			db.adminCount = 0;
 		}
@@ -215,7 +215,7 @@ void dc_saveEntireDatabase(Database db, char* dir) {
 
 // 导入原始数据
 void dc_importRawData(Database* db, char* dirPath) {
-	// TODO 确保文件夹存在
+	// TODO 确保文件夹存�?
 	char buff[64];
 	FILE* fp;
 	int d;
@@ -237,8 +237,8 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%s", &(db->students[i].name));		 // 3. 名字
 				fscanf(fp, "%s", &(db->students[i].class_pro));	 // 4. 专业班级
 				// 5.$课表
-				for (int i = 0; i < 7; i++) {	   // 一天 7 节课
-					for (int j = 0; j < 7; j++) {  // 一周 7 天
+				for (int i = 0; i < 7; i++) {	   // 一�? 7 节课
+					for (int j = 0; j < 7; j++) {  // 一�? 7 �?
 						fscanf(fp, "%d", &(db->students[i].classSheet[j][i]));
 					}
 				}
@@ -268,7 +268,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				}
 
 				fscanf(fp, "%s", &(db->teachers[i].name));			// 名字
-				fscanf(fp, "%s", &(db->teachers[i].introduce));		// 简介
+				fscanf(fp, "%s", &(db->teachers[i].introduce));		// 简�?
 				fscanf(fp, "%lld", db->teachers[i].CourseClasses);	// 课程班级数量
 				for (int j = 0; j < db->teachers[i].CourseClasses[0]; j++)
 					fscanf(fp, "%lld", db->teachers[i].CourseClasses + j + 1);	// 课程班级 ID
@@ -279,20 +279,20 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fclose(fp);
 		}
 	}
-	// 管理员
+	// 管理�?
 	{
 		sprintf(buff, "%s/%s", dirPath, "admin.txt");
 		fp = fopen(buff, "r");
 		if (fp) {
-			fscanf(fp, "%d", &(db->adminCount));						  // 管理员数量
+			fscanf(fp, "%d", &(db->adminCount));						  // 管理员数�?
 			db->admins = (Admin*)malloc(sizeof(Admin) * db->adminCount);  // 申请内存
 			for (int i = 0; i < db->adminCount; i++) {
-				fscanf(fp, "%lld", &(db->admins[i].id));  // 管理员 ID
+				fscanf(fp, "%lld", &(db->admins[i].id));  // 管理�? ID
 				{										  // 密码
 					char buff_passwd[32];
 					memset(buff_passwd, 0, 32);
 					fscanf(fp, "%s", buff_passwd);
-					dc_hash32(buff_passwd, 0, &(db->admins[i].key));  // 保存 hash 值
+					dc_hash32(buff_passwd, 0, &(db->admins[i].key));  // 保存 hash �?
 				}
 
 				// printf("%lld\n", db->admins[i].id);
@@ -314,7 +314,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				// for (int j = 0; j < db->courses[i].CourseClasses[0]; j++)
 				// 	fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);  // 课程班级
 				fscanf(fp, "%d", &(db->courses[i].availableTime));	// 可以选该课的学期
-				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学院
+				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学�?
 				fscanf(fp, "%d", &(db->courses[i].point));			// 课程学分
 
 				// printf("%lld\n", db->courses[i].id);
@@ -336,9 +336,9 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%lld", &(db->courseClasses[i].course));		//课程
 				fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));	// 老师 ID
 
-				fscanf(fp, "%d", db->courseClasses[i].periods);	 // 时间段数量
+				fscanf(fp, "%d", db->courseClasses[i].periods);	 // 时间段数�?
 				for (int j = 0; j < db->courseClasses[i].periods[0]; j++)
-					fscanf(fp, "%d", db->courseClasses[i].periods + j + 1);	 // 时间段
+					fscanf(fp, "%d", db->courseClasses[i].periods + j + 1);	 // 时间�?
 
 				fscanf(fp, "%lld", db->courseClasses[i].students);	// 已加入的学生数量
 				for (int j = 0; j < db->courseClasses[i].students[0]; j++)
@@ -365,7 +365,7 @@ int dc_checkAdminLogin(Database db, long long account, char* passwd) {
 	return 0;
 }
 
-// 检查学生账号密码是否正确
+// 检查学生账号密码是否正�?
 int dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);
@@ -376,14 +376,14 @@ int dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	}
 	return 0;
 }
-// 检查教师账号密码是否正确
-int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher* user) {
+// 检查教师账号密码是否正�?
+int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);
 	for (int i = 0; i < db.teacherCount; i++) {
 		Teacher tea = db.teachers[i];
 		if (tea.id == account && !memcmp(psd, tea.key, HASH_LEN)) {
-			*user = tea;
+			*user = &db.teachers[i];
 			return 1;
 		}
 	}

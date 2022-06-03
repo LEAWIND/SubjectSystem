@@ -2,26 +2,26 @@
 
 int startTeacherModule(Database db) {
 	system("cls");
-	Teacher* user;
+	Teacher* user;//ÕıÔÚÊ¹ÓÃµÄÓÃ»§
 
-	//===============è·³è¿‡ç™»å…¥
-	// long long account;//æ•™å¸ˆè¾“å…¥çš„è´¦å·
-	// char passwd[HASH_LEN];//è¾“å…¥çš„å¯†ç 
-	// {
-	// 	page_login(&account, passwd, "æ•™å¸ˆç™»å½•");
-	// 	while (!dc_checkTeacherLogin(db, account, passwd, &user)) {
-	// 		page_login(&account, passwd, "æ•™å¸ˆç™»å½•: è´¦å·æˆ–å¯†ç é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥");
-	// 	}
-	// }
-
-	user = db.teachers;
+	//===============Ìø¹ıµÇÈë
+	long long account;//½ÌÊ¦ÊäÈëµÄÕËºÅ
+	char passwd[HASH_LEN];//ÊäÈëµÄÃÜÂë
+	{
+		page_login(&account, passwd, "½ÌÊ¦µÇÂ¼");
+		while (!dc_checkTeacherLogin(db, account, passwd, &user)) {
+			page_login(&account, passwd, "½ÌÊ¦µÇÂ¼: ÕËºÅ»òÃÜÂë´íÎó£¬ÇëÖØĞÂÊäÈë");
+		}
+	}
+	//====================
+	//user = db.teachers;
 	startSection(db, user);
 }
 
 void startSection(Database db, Teacher* user){
 	system("cls");
-	int op;//å­˜å‚¨ç”¨æˆ·çš„é€‰é¡¹
-	op = showMenuTeacher((*user).name);//è·å–ç”¨æˆ·é€‰é¡¹
+	int op;//´æ´¢ÓÃ»§µÄÑ¡Ïî
+	op = showMenuTeacher((*user).name);//»ñÈ¡ÓÃ»§Ñ¡Ïî
 	switch (op)
 	{
 	case 0:
@@ -34,9 +34,9 @@ void startSection(Database db, Teacher* user){
 		break;
 	default:
 		system("cls");
-		cui_clearRect(0, 0, us_width, us_height);	   // æ¸…ç©ºçŸ©å½¢åŒºåŸŸ
-		cui_strokeRect(0, 0, us_width, us_height, 0);  // ç»˜åˆ¶è¾¹æ¡†
-		cui_putStringCenterAt(us_width/2, us_height/2, "æ‚¨è¾“å…¥çš„æ•°å­—ä¸ç¬¦åˆè¦æ±‚", 0);
+		cui_clearRect(0, 0, us_width, us_height);	   // Çå¿Õ¾ØĞÎÇøÓò
+		cui_strokeRect(0, 0, us_width, us_height, 0);  // »æÖÆ±ß¿ò
+		cui_putStringCenterAt(us_width/2, us_height/2, "ÄúÊäÈëµÄÊı×Ö²»·ûºÏÒªÇó", 0);
 		getch();
 		startSection(db, user);
 		break;
@@ -45,23 +45,23 @@ void startSection(Database db, Teacher* user){
 }
 
 int showMenuTeacher(char *name){
-	cui_setFontStyle(0);						   // é»˜è®¤æ ·å¼
-	cui_clearRect(0, 0, us_width, us_height);	   // æ¸…ç©ºçŸ©å½¢åŒºåŸŸ
-	cui_strokeRect(0, 0, us_width, us_height, 0);  // ç»˜åˆ¶è¾¹æ¡†
+	cui_setFontStyle(0);						   // Ä¬ÈÏÑùÊ½
+	cui_clearRect(0, 0, us_width, us_height);	   // Çå¿Õ¾ØĞÎÇøÓò
+	cui_strokeRect(0, 0, us_width, us_height, 0);  // »æÖÆ±ß¿ò
 	int y = 2;
-	// éšè—å…‰æ ‡
+	// Òş²Ø¹â±ê
 	cui_hideCursor();
 	cui_putStringCenterAt(us_width / 2, y += 4, name, strlen(name));
-	cui_putStringAt(2, y += 2, "[0]é€€å‡ºç™»å½•");
-	cui_putStringAt(2, y += 2, "[1]ç®¡ç†ç­çº§");
-	cui_putStringAt(2, y += 2, "[2]ä¿®æ”¹ä¸ªäººä¿¡æ¯");
-	cui_putStringAt(2, y += 4, "è¯·è¾“å…¥é€‰é¡¹");
-	// ç›‘å¬ç”¨æˆ·è¾“å…¥
+	cui_putStringAt(2, y += 2, "[0]ÍË³öµÇÂ¼");
+	cui_putStringAt(2, y += 2, "[1]¹ÜÀí°à¼¶");
+	cui_putStringAt(2, y += 2, "[2]ĞŞ¸Ä¸öÈËĞÅÏ¢");
+	cui_putStringAt(2, y += 4, "ÇëÊäÈëÑ¡Ïî");
+	// ¼àÌıÓÃ»§ÊäÈë
 	char ut;
 	do {
-		ut = getch();  // æ— ç¼“å†²è¾“å…¥
+		ut = getch();  // ÎŞ»º³åÊäÈë
 	} while (!strchr("012", ut));
-	cui_showCursor();  // æ˜¾ç¤ºå…‰æ ‡
+	cui_showCursor();  // ÏÔÊ¾¹â±ê
 	// printf("\033[?1049l");
 	int op = ut - 48;
 	return op;
@@ -70,23 +70,23 @@ int showMenuTeacher(char *name){
 
 void manageClass(Database db, Teacher* user){
 	system("cls");
-	printf("æ‚¨å·²è¿›å…¥ç®¡ç†ç­çº§æ¨¡å—");
+	printf("ÄúÒÑ½øÈë¹ÜÀí°à¼¶Ä£¿é");
 }
 
 void resetInfo(Database db, Teacher* user){
 	system("cls");
-	//å±•ç¤ºä¿®æ”¹ä¸ªäººä¿¡æ¯çš„é€‰é¡¹
-	cui_setFontStyle(0);						   // é»˜è®¤æ ·å¼
-	cui_clearRect(0, 0, us_width, us_height);	   // æ¸…ç©ºçŸ©å½¢åŒºåŸŸ
-	cui_strokeRect(0, 0, us_width, us_height, 0);  // ç»˜åˆ¶è¾¹æ¡†
+	//Õ¹Ê¾ĞŞ¸Ä¸öÈËĞÅÏ¢µÄÑ¡Ïî
+	cui_setFontStyle(0);						   // Ä¬ÈÏÑùÊ½
+	cui_clearRect(0, 0, us_width, us_height);	   // Çå¿Õ¾ØĞÎÇøÓò
+	cui_strokeRect(0, 0, us_width, us_height, 0);  // »æÖÆ±ß¿ò
 	int y = 2;
-	cui_putStringAt(2, y += 2, "[0]é€€å‡ºé€‰æ‹©");
-	cui_putStringAt(2, y += 2, "[1]ä¿®æ”¹åå­—");
-	cui_putStringAt(2, y += 2, "[2]ä¿®æ”¹ä¸ªäººç®€ä»‹");
-	cui_putStringAt(2, y += 2, "[3]ä¿®æ”¹å¯†ç ");
-	cui_putStringAt(2, y += 2, "[4]æŸ¥è¯¢ä¸ªäººä¿¡æ¯");
-	cui_putStringAt(2, y += 4, "è¯·è¾“å…¥é€‰é¡¹ï¼š");
-	//è·å–é€‰é¡¹åŠä¿®æ”¹å¯¹åº”å†…å®¹
+	cui_putStringAt(2, y += 2, "[0]ÍË³öÑ¡Ôñ");
+	cui_putStringAt(2, y += 2, "[1]ĞŞ¸ÄÃû×Ö");
+	cui_putStringAt(2, y += 2, "[2]ĞŞ¸Ä¸öÈË¼ò½é");
+	cui_putStringAt(2, y += 2, "[3]ĞŞ¸ÄÃÜÂë");
+	cui_putStringAt(2, y += 2, "[4]²éÑ¯¸öÈËĞÅÏ¢");
+	cui_putStringAt(2, y += 4, "ÇëÊäÈëÑ¡Ïî£º");
+	//»ñÈ¡Ñ¡Ïî¼°ĞŞ¸Ä¶ÔÓ¦ÄÚÈİ
 	int op;
 	char content[1024];
 	memset(content, '\0', sizeof(content));
@@ -97,38 +97,47 @@ void resetInfo(Database db, Teacher* user){
 	case 0:
 		return ;
 	case 1:
-		printf("  è¯·è¾“å…¥æ‚¨çš„æ–°åå­—:");
+		printf("  ÇëÊäÈëÄúµÄĞÂÃû×Ö:");
 		scanf("%s", content);
+
+		// unsigned char sss[1024];
+		// dc_test_sprintByte(content, sss);
+		// printf("%s", sss);
+
 		strcpy((*user).name, content);
 		system("cls");
-		printf("  ä¿®æ”¹æˆåŠŸï¼Œæ‚¨çš„æ–°åå­—ä¸ºï¼š%s\n", (*user).name);
+		printf("content %s\n", content);
+		printf("  ĞŞ¸Ä³É¹¦£¬ÄúµÄĞÂÃû×ÖÎª£º%s\n", (*user).name);
 		getch();
 		break;
 	case 2:
-		printf("  è¯·è¾“å…¥æ‚¨çš„æ–°ä¸ªäººç®€ä»‹:");
+		printf("  ÇëÊäÈëÄúµÄĞÂ¸öÈË¼ò½é:");
 		gets(content);
 		strcpy((*user).introduce, content);
 		system("cls");
-		printf("  ä¿®æ”¹æˆåŠŸï¼Œæ‚¨çš„ä»‹ç»ä¸ºä¸ºï¼š%s\n", (*user).introduce);
+		printf("  ĞŞ¸Ä³É¹¦£¬ÄúµÄ½éÉÜÎªÎª£º%s\n", (*user).introduce);
 		getch();
 		break;
 	case 3:
-		printf("  è¯·è¾“å…¥æ‚¨çš„æ–°å¯†ç :");
+		printf("  ÇëÊäÈëÄúµÄĞÂÃÜÂë:");
 		scanf("%s", content);
 
-		printf("  è¯·é‡æ–°è¾“å…¥è¾“å…¥æ‚¨çš„æ–°å¯†ç :");
+		printf("  ÇëÖØĞÂÊäÈëÊäÈëÄúµÄĞÂÃÜÂë:");
 		char temp[1024];
 		memset(temp, '\0', sizeof(temp));
 		scanf("%s", temp);
 		if(!strcmp(temp, content))
 		{
-			strcpy((*user).key, content);
+			unsigned char psd[HASH_LEN];
+			dc_hash32(content, 0, psd);
+			memcpy((*user).key, psd, HASH_LEN);
+
 			system("cls");
-			printf("  ä¿®æ”¹æˆåŠŸï¼Œæ‚¨çš„å¯†ç ä¸ºä¸ºï¼š%s\n", content);
+			printf("  ĞŞ¸Ä³É¹¦£¬ÄúµÄÃÜÂëÎªÎª£º%s\n", content);
 		}
 		else
 		{
-			printf("  æ‚¨ä¸¤æ¬¡è¾“å…¥çš„å¯†ç å¹¶ä¸ç›¸åŒï¼ï¼!");
+			printf("  ÄúÁ½´ÎÊäÈëµÄÃÜÂë²¢²»ÏàÍ¬£¡£¡!");
 			resetInfo(db, user);
 		}
 		getch();
@@ -136,10 +145,10 @@ void resetInfo(Database db, Teacher* user){
 	case 4:
 		system("cls");
 		printf("==================================================\n");
-		printf("        ä¸ªäººä¿¡æ¯\n");
+		printf("        ¸öÈËĞÅÏ¢\n");
 		printf("==================================================\n\n");
-		printf("   åå­—ä¸ºï¼š%s\n\n", (*user).name);
-		printf("   ä¸ªäººç®€ä»‹ä¸ºï¼š%s\n\n", (*user).introduce);
+		printf("   Ãû×ÖÎª£º%s\n\n", (*user).name);
+		printf("   ¸öÈË¼ò½éÎª£º%s\n\n", (*user).introduce);
 		getch();
 	default:
 		break;

@@ -99,6 +99,6 @@ int dc_checkStudentLogin(Database db, long long account, char* passwd);
  * @return 1:匹配成功|0:账号或密码错误
  * @author 陈华
  */
-int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher* user);
+int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user);
 
 #include "dataControler.c"

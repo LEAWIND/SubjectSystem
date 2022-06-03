@@ -1,11 +1,11 @@
-// [æ§åˆ¶å°API](https://docs.microsoft.com/zh-cn/windows/console/using-the-console)
+// [¿ØÖÆÌ¨API](https://docs.microsoft.com/zh-cn/windows/console/using-the-console)
 
 #pragma once
 #include <stdio.h>
 #include <string.h>
 
 /**
- * @brief è®¾ç½®å…‰æ ‡ä½ç½®
+ * @brief ÉèÖÃ¹â±êÎ»ÖÃ
  * @param x
  * @param y
  * @author LEAWIND
@@ -13,7 +13,7 @@
 void cui_setCursorPos(int x, int y);
 
 /**
- * @brief ç§»åŠ¨å…‰æ ‡
+ * @brief ÒÆ¶¯¹â±ê
  * @param x
  * @param y
  * @author LEAWIND
@@ -21,72 +21,72 @@ void cui_setCursorPos(int x, int y);
 void cui_moveCursor(int x, int y);
 
 /**
- * @brief è®¾ç½®æ–‡æœ¬æ ¼å¼
- * @param n æ ¼å¼ä»£ç  å‚è€ƒhttps://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting
+ * @brief ÉèÖÃÎÄ±¾¸ñÊ½
+ * @param n ¸ñÊ½´úÂë ²Î¿¼https://docs.microsoft.com/zh-cn/windows/console/console-virtual-terminal-sequences#text-formatting
  * @author LEAWIND
  */
 void cui_setFontStyle(int n);
 
 /**
- * @brief è·å–ç”¨æˆ·è¾“å…¥å­—ç¬¦ä¸²
- * @param s å°†è¾“å…¥çš„å­—ç¬¦ä¸²ä¿å­˜åˆ°æ­¤åœ°å€
- * @param maxLen å­—ç¬¦ä¸²æœ€å¤§é•¿åº¦
- * @param replaceChar å›æ˜¾çš„æ›¿ä»£å­—ç¬¦ï¼Œ'\0' è¡¨ç¤ºè¾“å…¥çš„çœŸå®å­—ç¬¦
+ * @brief »ñÈ¡ÓÃ»§ÊäÈë×Ö·û´®
+ * @param s ½«ÊäÈëµÄ×Ö·û´®±£´æµ½´ËµØÖ·
+ * @param maxLen ×Ö·û´®×î´ó³¤¶È
+ * @param replaceChar »ØÏÔµÄÌæ´ú×Ö·û£¬'\0' ±íÊ¾ÊäÈëµÄÕæÊµ×Ö·û
  * @author LEAWIND
  */
 void cui_inputs(char* s, int maxLen, char replaceChar);
 
-// éšè—å…‰æ ‡
+// Òş²Ø¹â±ê
 void cui_hideCursor();
 
-// æ˜¾ç¤ºå…‰æ ‡
+// ÏÔÊ¾¹â±ê
 void cui_showCursor();
 
 /**
- * @brief å°†å­—ç¬¦ä¸²æ‰“å°åˆ°æŒ‡å®šä½ç½®
- * @param x x åæ ‡
- * @param y y åæ ‡
- * @param c å­—ç¬¦ä¸²åœ°å€
+ * @brief ½«×Ö·û´®´òÓ¡µ½Ö¸¶¨Î»ÖÃ
+ * @param x x ×ø±ê
+ * @param y y ×ø±ê
+ * @param c ×Ö·û´®µØÖ·
  */
 void cui_putStringAt(int x, int y, char* c);
 
 /**
- * @brief å°†å­—ç¬¦ä¸²æ‰“å°åˆ°æŒ‡å®šä½ç½®ï¼Œä¸­å¿ƒå¯¹é½
- * @param x å­—ç¬¦ä¸²çš„ä¸­å¿ƒ x åæ ‡
- * @param y å­—ç¬¦ä¸²çš„ä¸­å¿ƒ y åæ ‡
- * @param c å­—ç¬¦ä¸²åœ°å€
- * @param len å­—ç¬¦ä¸²é•¿åº¦ï¼Œè‹¥ä¸º 0 åˆ™è‡ªåŠ¨è®¡ç®—
+ * @brief ½«×Ö·û´®´òÓ¡µ½Ö¸¶¨Î»ÖÃ£¬ÖĞĞÄ¶ÔÆë
+ * @param x ×Ö·û´®µÄÖĞĞÄ x ×ø±ê
+ * @param y ×Ö·û´®µÄÖĞĞÄ y ×ø±ê
+ * @param c ×Ö·û´®µØÖ·
+ * @param len ×Ö·û´®³¤¶È£¬ÈôÎª 0 Ôò×Ô¶¯¼ÆËã
  */
 void cui_putStringCenterAt(int x, int y, char* c, int len);
 
 /**
- * @brief ç”¨æŒ‡å®šå­—ç¬¦å¡«å……çŸ©å½¢åŒºåŸŸ
- * @param x å·¦ä¸Šè§’ x åæ ‡
- * @param y å·¦ä¸Šè§’ y åæ ‡
- * @param w çŸ©å½¢å®½åº¦
- * @param h çŸ©å½¢é«˜åº¦
- * @param c å­—ç¬¦
+ * @brief ÓÃÖ¸¶¨×Ö·ûÌî³ä¾ØĞÎÇøÓò
+ * @param x ×óÉÏ½Ç x ×ø±ê
+ * @param y ×óÉÏ½Ç y ×ø±ê
+ * @param w ¾ØĞÎ¿í¶È
+ * @param h ¾ØĞÎ¸ß¶È
+ * @param c ×Ö·û
  */
 void cui_fillRect(int x, int y, int w, int h, char c);
 
-// æ¸…é™¤çŸ©å½¢åŒºåŸŸ
+// Çå³ı¾ØĞÎÇøÓò
 
 /**
- * @brief æ¸…ç©ºçŸ©å½¢åŒºåŸŸ
- * @param x å·¦ä¸Šè§’ x åæ ‡
- * @param y å·¦ä¸Šè§’ y åæ ‡
- * @param w çŸ©å½¢å®½åº¦
- * @param h çŸ©å½¢é«˜åº¦
+ * @brief Çå¿Õ¾ØĞÎÇøÓò
+ * @param x ×óÉÏ½Ç x ×ø±ê
+ * @param y ×óÉÏ½Ç y ×ø±ê
+ * @param w ¾ØĞÎ¿í¶È
+ * @param h ¾ØĞÎ¸ß¶È
  */
 void cui_clearRect(int x, int y, int w, int h);
 
 /**
- * @brief ç»˜åˆ¶çŸ©å½¢è¾¹æ¡†
- * @param x å·¦ä¸Šè§’ x åæ ‡
- * @param y å·¦ä¸Šè§’ y åæ ‡
- * @param w çŸ©å½¢å®½åº¦
- * @param h çŸ©å½¢é«˜åº¦
- * @param c å¦‚æœä¸º0åˆ™åœ¨è¾¹ç¼˜ç”¨ |,- ç­‰å­—ç¬¦ï¼Œå¦åˆ™ç”¨å­—ç¬¦ c
+ * @brief »æÖÆ¾ØĞÎ±ß¿ò
+ * @param x ×óÉÏ½Ç x ×ø±ê
+ * @param y ×óÉÏ½Ç y ×ø±ê
+ * @param w ¾ØĞÎ¿í¶È
+ * @param h ¾ØĞÎ¸ß¶È
+ * @param c Èç¹ûÎª0ÔòÔÚ±ßÔµÓÃ |,- µÈ×Ö·û£¬·ñÔòÓÃ×Ö·û c
  */
 void _strokeRect(int x, int y, int w, int h, char c);
 
