@@ -27,13 +27,6 @@ void startSection(Database db, Teacher* user);
 
 int showMenuTeacher(char *name);
 
-/**
- * @brief 查询班级信息
- * @param db 数据库
- * @param user 当前登入的用户
- * @author 陈华
- */
-void queryClass(Database db, Teacher* user);
 
 /**
  * @brief 管理班级信息
