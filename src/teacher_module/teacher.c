@@ -22,7 +22,26 @@ void startSection(Database db, Teacher* user){
 	system("cls");
 	int op;//存储用户的选项
 	op = showMenuTeacher((*user).name);//获取用户选项
-	printf("用户输入的是%d", op);
+	switch (op)
+	{
+	case 1:
+		queryClass(db, user);
+		break;
+	case 2:
+		manageClass(db, user);
+		break;
+	case 3:
+		resetInfo(db, user);
+		break;
+	default:
+		system("cls");
+		cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
+		cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
+		cui_putStringCenterAt(us_width/2, us_height/2, "您输入的数字不符合要求", 0);
+		getch();
+		startSection(db, user);
+		break;
+	}
 	getch();
 }
 
@@ -35,10 +54,25 @@ int showMenuTeacher(char *name){
 
 	cui_putStringAt(2, y += 2, "[1]查看班级信息");
 	cui_putStringAt(2, y += 2, "[2]管理班级");
-	cui_putStringAt(2, y += 2, "[3]修改密码");
+	cui_putStringAt(2, y += 2, "[3]修改个人信息模块");
 	cui_putStringAt(2, y += 4, "[   ]请输入选项\b\b\b\b\b\b\b\b\b\b\b\b\b");
 
 	int c;
 	scanf("%d", &c);
 	return c;
+}
+
+void queryClass(Database db, Teacher* user){
+	system("cls");
+	printf("您已进入查询班级信息模块");
+}
+
+void manageClass(Database db, Teacher* user){
+	system("cls");
+	printf("您已进入管理班级模块");
+}
+
+void resetInfo(Database db, Teacher* user){
+	system("cls");
+	printf("您已进入修改个人信息模块");
 }
