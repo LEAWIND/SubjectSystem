@@ -4,8 +4,8 @@
 #include "../page.h"
 
 /**
- * @brief å¯åŠ¨å­¦ç”Ÿæ¨¡å—
- * @param db æ•°æ®åº“
+ * @brief Æô¶¯Ñ§ÉúÄ£¿é
+ * @param db Êı¾İ¿â
  */
 int startStudentModule(Database db);
 

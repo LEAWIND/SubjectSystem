@@ -1,33 +1,33 @@
 #pragma once
 
-// é¦–é¡µï¼šé€‰æ‹©ç”¨æˆ·ç±»åˆ«
+// Ê×Ò³£ºÑ¡ÔñÓÃ»§Àà±ğ
 char page_getUserType() {
 	// printf("\033[?1049h");
-	cui_clearRect(0, 0, us_width, us_height);	   // æ¸…ç©ºçŸ©å½¢åŒºåŸŸ
-	cui_strokeRect(0, 0, us_width, us_height, 0);  // ç»˜åˆ¶è¾¹æ¡†
-	// éšè—å…‰æ ‡
+	cui_clearRect(0, 0, us_width, us_height);	   // Çå¿Õ¾ØĞÎÇøÓò
+	cui_strokeRect(0, 0, us_width, us_height, 0);  // »æÖÆ±ß¿ò
+	// Òş²Ø¹â±ê
 	cui_hideCursor();
-	// æ”¾ç½®ä¸€äº›æ–‡æœ¬
-	cui_putStringCenterAt(us_width / 2, 1, " é€‰ è¯¾ ç³» ç»Ÿ ", 0);
+	// ·ÅÖÃÒ»Ğ©ÎÄ±¾
+	cui_putStringCenterAt(us_width / 2, 1, " Ñ¡ ¿Î Ïµ Í³ ", 0);
 	int y = 2;
-	cui_putStringAt(us_width / 2 - 18, y += 2, "è¯·æŒ‰é”®:");
-	cui_putStringAt(us_width / 2 - 14, y += 2, "1. å­¦ç”Ÿ");
-	cui_putStringAt(us_width / 2 - 14, y += 2, "2. æ•™å¸ˆ");
-	cui_putStringAt(us_width / 2 - 14, y += 2, "3. ç®¡ç†å‘˜");
-	cui_putStringAt(us_width / 2 - 14, y += 2, "Esc. é€€å‡º");
-	// ç›‘å¬ç”¨æˆ·è¾“å…¥
+	cui_putStringAt(us_width / 2 - 18, y += 2, "Çë°´¼ü:");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "1. Ñ§Éú");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "2. ½ÌÊ¦");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "3. ¹ÜÀíÔ±");
+	cui_putStringAt(us_width / 2 - 14, y += 2, "Esc. ÍË³ö");
+	// ¼àÌıÓÃ»§ÊäÈë
 	char ut;
 	do {
-		ut = getch();  // æ— ç¼“å†²è¾“å…¥
+		ut = getch();  // ÎŞ»º³åÊäÈë
 	} while (!strchr("123\033", ut));
-	cui_showCursor();  // æ˜¾ç¤ºå…‰æ ‡
+	cui_showCursor();  // ÏÔÊ¾¹â±ê
 	// printf("\033[?1049l");
 	return ut;
 }
 
 void getVerificationCode(char verificationCode[], int n) {
 	char str[] = "2323456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	// 0,1æ˜“ä¸å­—æ¯â€˜oâ€™ä¸â€˜l'æ··æ¶ˆï¼Œä¸ç”¨
+	// 0,1Ò×Óë×ÖÄ¸¡®o¡¯Óë¡®l'»ìÏû£¬²»ÓÃ
 	int i;
 	srand(time(NULL));
 	for (i = 0; i < n; i++)
@@ -35,42 +35,42 @@ void getVerificationCode(char verificationCode[], int n) {
 	verificationCode[n] = '\0';
 }
 
-// ç™»å½•é¡µé¢ï¼šè·å–ç”¨æˆ·è¾“å…¥çš„è´¦å·å’Œå¯†ç åŸæ–‡
+// µÇÂ¼Ò³Ãæ£º»ñÈ¡ÓÃ»§ÊäÈëµÄÕËºÅºÍÃÜÂëÔ­ÎÄ
 void page_login(long long* account, char* passwd, char* info) {
 	while (1) {
 		system("cls");
-		cui_setFontStyle(0);						   // é»˜è®¤æ ·å¼
-		cui_clearRect(0, 0, us_width, us_height);	   // æ¸…ç©ºçŸ©å½¢åŒºåŸŸ
-		cui_strokeRect(0, 0, us_width, us_height, 0);  // ç»˜åˆ¶è¾¹æ¡†
+		cui_setFontStyle(0);						   // Ä¬ÈÏÑùÊ½
+		cui_clearRect(0, 0, us_width, us_height);	   // Çå¿Õ¾ØĞÎÇøÓò
+		cui_strokeRect(0, 0, us_width, us_height, 0);  // »æÖÆ±ß¿ò
 
 		int y = 3;
-		// æ”¾ç½®æ–‡æœ¬
+		// ·ÅÖÃÎÄ±¾
 		cui_putStringCenterAt(us_width / 2, y += 2, info, strlen(info));
 
-		cui_putStringAt(3, y += 2, "è´¦å·:________________");
+		cui_putStringAt(3, y += 2, "ÕËºÅ:________________");
 		cui_moveCursor(-16, 0);
-		cui_setFontStyle(4);  // å¸¦ä¸‹åˆ’çº¿
+		cui_setFontStyle(4);  // ´øÏÂ»®Ïß
 		char buff[50];
 		cui_inputs(buff, 49, 0);
 		sscanf(buff, "%lld", account);
-		cui_setFontStyle(24);  // ä¸å¸¦ä¸‹åˆ’çº¿
+		cui_setFontStyle(24);  // ²»´øÏÂ»®Ïß
 
-		cui_putStringAt(3, y += 2, "å¯†ç :________________");
+		cui_putStringAt(3, y += 2, "ÃÜÂë:________________");
 		cui_moveCursor(-16, 0);
 		cui_setFontStyle(4);
-		cui_inputs(passwd, 32, '*');  // è¾“å…¥å¯†ç 
+		cui_inputs(passwd, 32, '*');  // ÊäÈëÃÜÂë
 		cui_setFontStyle(24);
 
-		//éªŒè¯ç éªŒè¯
-		char verificationCode[5];		//å­˜æ”¾éªŒè¯ç 
-		char inputVerificationCode[5];	//å­˜å…¥ç”¨æˆ·è¾“å…¥çš„éªŒè¯ç 
+		//ÑéÖ¤ÂëÑéÖ¤
+		char verificationCode[5];		//´æ·ÅÑéÖ¤Âë
+		char inputVerificationCode[5];	//´æÈëÓÃ»§ÊäÈëµÄÑéÖ¤Âë
 		getVerificationCode(verificationCode, 4);
-		printf("\n\n   éªŒè¯ç ï¼š            [%s]\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", verificationCode);
+		printf("\n\n   ÑéÖ¤Âë£º            [%s]\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", verificationCode);
 		scanf("%s", inputVerificationCode);
 		int flag = 1;
 		if (strcmp(verificationCode, inputVerificationCode)) {
 			system("cls");
-			printf("éªŒè¯ç å‡ºé”™");
+			printf("ÑéÖ¤Âë³ö´í");
 			getch();
 			continue;
 		}

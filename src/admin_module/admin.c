@@ -5,23 +5,23 @@ int startAdminModule(Database db) {
 	long long account;
 	char passwd[HASH_LEN];
 	{
-		// è®©ç”¨æˆ·è¾“å…¥è´¦å·å’Œå¯†ç 
-		page_login(&account, passwd, "ç®¡ç†å‘˜ç™»å½•");
-		while (!dc_checkAdminLogin(db, account, passwd)) {	// æ£€æŸ¥è´¦å·å’Œå¯†ç æ˜¯å¦æ­£ç¡®
+		// ÈÃÓÃ»§ÊäÈëÕËºÅºÍÃÜÂë
+		page_login(&account, passwd, "¹ÜÀíÔ±µÇÂ¼");
+		while (!dc_checkAdminLogin(db, account, passwd)) {	// ¼ì²éÕËºÅºÍÃÜÂëÊÇ·ñÕıÈ·
 			system("cls");
-			cui_putStringCenterAt(us_width / 2, 3, "è´¦å·æˆ–å¯†ç é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥! æŒ‰ä»»æ„é”®ç»§ç»­", 0);
+			cui_putStringCenterAt(us_width / 2, 3, "ÕËºÅ»òÃÜÂë´íÎó£¬ÇëÖØĞÂÊäÈë! °´ÈÎÒâ¼ü¼ÌĞø", 0);
 			getch();
-			page_login(&account, passwd, "ç®¡ç†å‘˜ç™»å½•");
+			page_login(&account, passwd, "¹ÜÀíÔ±µÇÂ¼");
 		}
 
 		char stayHere = 1;
 		while (stayHere) {
 			system("cls");
-			// æ˜¾ç¤ºé¡µé¢
-			printf("æˆåŠŸç™»å½•ç®¡ç†å‘˜è´¦å·: %lld\n", account);
-			printf("ESC  è¿”å›");
+			// ÏÔÊ¾Ò³Ãæ
+			printf("³É¹¦µÇÂ¼¹ÜÀíÔ±ÕËºÅ: %lld\n", account);
+			printf("ESC  ·µ»Ø");
 
-			// è·å–è¾“å…¥
+			// »ñÈ¡ÊäÈë
 			char c;
 			do {
 				c = getch();

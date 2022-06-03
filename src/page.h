@@ -9,17 +9,17 @@ const int us_width = 72;
 const int us_height = 32;
 
 /**
- * @brief é¦–é¡µï¼šé€‰æ‹©ç”¨æˆ·ç±»åˆ«
- * @return char ç”¨æˆ·ç±»åˆ«
+ * @brief Ê×Ò³£ºÑ¡ÔñÓÃ»§Àà±ğ
+ * @return char ÓÃ»§Àà±ğ
  * @author LEAWIND
  */
 char page_getUserType();
 
 /**
- * @brief ç™»å½•é¡µé¢ï¼šè·å–ç”¨æˆ·è¾“å…¥çš„è´¦å·å’Œå¯†ç åŸæ–‡
- * @param account è´¦å·å˜é‡ä¿å­˜åœ°å€
- * @param passwd å¯†ç åŸæ–‡ä¿å­˜åœ°å€
- * @param info æç¤ºä¿¡æ¯
+ * @brief µÇÂ¼Ò³Ãæ£º»ñÈ¡ÓÃ»§ÊäÈëµÄÕËºÅºÍÃÜÂëÔ­ÎÄ
+ * @param account ÕËºÅ±äÁ¿±£´æµØÖ·
+ * @param passwd ÃÜÂëÔ­ÎÄ±£´æµØÖ·
+ * @param info ÌáÊ¾ĞÅÏ¢
  * @author LEAWIND
  */
 void page_login(long long* account, char* passwd, char* info);

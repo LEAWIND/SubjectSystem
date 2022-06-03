@@ -19,85 +19,85 @@ typedef struct Database {
 } Database;
 
 /**
- * @brief 32 å­—èŠ‚å“ˆå¸Œå‡½æ•°
- * è¾“å…¥æ•°æ®å¯ä»¥æ˜¯
- * @param src æºæ•°æ®åœ°å€
- * @param len æºæ•°æ®é•¿åº¦
- * @param dst å“ˆå¸Œå€¼å­˜æ”¾åœ°å€
+ * @brief 32 ×Ö½Ú¹şÏ£º¯Êı
+ * ÊäÈëÊı¾İ¿ÉÒÔÊÇ
+ * @param src Ô´Êı¾İµØÖ·
+ * @param len Ô´Êı¾İ³¤¶È
+ * @param dst ¹şÏ£Öµ´æ·ÅµØÖ·
  */
 void dc_hash32(const void* src, int len, void* dst);
 
 /**
- * @brief åŠ è½½æ•°æ®
- * @param dir ç›®å½•è·¯å¾„
- * @return Database æ•°æ®åº“ç»“æ„ä½“
+ * @brief ¼ÓÔØÊı¾İ
+ * @param dir Ä¿Â¼Â·¾¶
+ * @return Database Êı¾İ¿â½á¹¹Ìå
  * @author LEAWIND
  */
 Database dc_loadEntireDatabaseIfDare(char* dir);
 
 /**
- * @brief ä¿å­˜æ•°æ®
+ * @brief ±£´æÊı¾İ
  *
- * @param db æ•°æ®åº“
- * @param dir ç›®å½•è·¯å¾„
+ * @param db Êı¾İ¿â
+ * @param dir Ä¿Â¼Â·¾¶
  * @author LEAWIND
  */
 void dc_saveEntireDatabase(Database db, char* dir);
 
 /**
- * @brief ä»æ–‡ä»¶è¯»å–ç»“æ„ä½“æ•°ç»„
- * @param elementSize å…ƒç´ å¤§å°
- * @param p ä¿å­˜åˆ°æ­¤åœ°å€
- * @param fpath æ–‡ä»¶è·¯å¾„
- * @return int è¯»å–åˆ°çš„é•¿åº¦
+ * @brief ´ÓÎÄ¼ş¶ÁÈ¡½á¹¹ÌåÊı×é
+ * @param elementSize ÔªËØ´óĞ¡
+ * @param p ±£´æµ½´ËµØÖ·
+ * @param fpath ÎÄ¼şÂ·¾¶
+ * @return int ¶ÁÈ¡µ½µÄ³¤¶È
  * @author LEAWIND
  */
 int dc_loadArray(int elementSize, void* p, char* fpath);
 
 /**
- * @brief å°†ç»“æ„ä½“æ•°ç»„ä»¥äºŒè¿›åˆ¶å½¢å¼ä¿å­˜åˆ°æ–‡ä»¶
- * @param elementSize å…ƒç´ å¤§å°
- * @param p ç»“æ„ä½“åœ°å€
- * @param plen å…ƒç´ æ•°é‡
- * @param fpath æ–‡ä»¶è·¯å¾„
+ * @brief ½«½á¹¹ÌåÊı×éÒÔ¶ş½øÖÆĞÎÊ½±£´æµ½ÎÄ¼ş
+ * @param elementSize ÔªËØ´óĞ¡
+ * @param p ½á¹¹ÌåµØÖ·
+ * @param plen ÔªËØÊıÁ¿
+ * @param fpath ÎÄ¼şÂ·¾¶
  * @author LEAWIND
  */
 void dc_saveArray(int elementSize, void* p, int plen, char* fpath);
 
 /**
- * @brief å¯¼å…¥åŸå§‹æ•°æ®
- * @param db	æ•°æ®åº“åœ°å€
- * @param dirPath åŸå§‹æ•°æ®ç›®å½•
+ * @brief µ¼ÈëÔ­Ê¼Êı¾İ
+ * @param db	Êı¾İ¿âµØÖ·
+ * @param dirPath Ô­Ê¼Êı¾İÄ¿Â¼
  * @author LEAWIND
  */
 void dc_importRawData(Database* db, char* dirPath);
 
 /**
- * @brief æ£€æŸ¥ç®¡ç†å‘˜è´¦å·å¯†ç æ˜¯å¦æ­£ç¡®
- * @param db Database ç»“æ„ä½“
- * @param account è´¦å·
- * @param passwd å¯†ç åŸæ–‡
- * @return 1:åŒ¹é…æˆåŠŸ|0:è´¦å·æˆ–å¯†ç é”™è¯¯
+ * @brief ¼ì²é¹ÜÀíÔ±ÕËºÅÃÜÂëÊÇ·ñÕıÈ·
+ * @param db Database ½á¹¹Ìå
+ * @param account ÕËºÅ
+ * @param passwd ÃÜÂëÔ­ÎÄ
+ * @return 1:Æ¥Åä³É¹¦|0:ÕËºÅ»òÃÜÂë´íÎó
  */
 int dc_checkAdminLogin(Database db, long long account, char* passwd);
 
 /**
- * @brief æ£€æŸ¥å­¦ç”Ÿè´¦å·å¯†ç æ˜¯å¦æ­£ç¡®
- * @param db Database ç»“æ„ä½“
- * @param account è´¦å·
- * @param passwd å¯†ç åŸæ–‡
- * @return 1:åŒ¹é…æˆåŠŸ|0:è´¦å·æˆ–å¯†ç é”™è¯¯
+ * @brief ¼ì²éÑ§ÉúÕËºÅÃÜÂëÊÇ·ñÕıÈ·
+ * @param db Database ½á¹¹Ìå
+ * @param account ÕËºÅ
+ * @param passwd ÃÜÂëÔ­ÎÄ
+ * @return 1:Æ¥Åä³É¹¦|0:ÕËºÅ»òÃÜÂë´íÎó
  */
 int dc_checkStudentLogin(Database db, long long account, char* passwd);
 
 /**
- * @brief æ£€æŸ¥æ•™å¸ˆè´¦å·å¯†ç æ˜¯å¦æ­£ç¡®
- * @param db Database ç»“æ„ä½“
- * @param account è´¦å·
- * @param passwd å¯†ç åŸæ–‡
- * @param user ç™»å…¥æˆåŠŸçš„è´¦æˆ·
- * @return 1:åŒ¹é…æˆåŠŸ|0:è´¦å·æˆ–å¯†ç é”™è¯¯
- * @author é™ˆå
+ * @brief ¼ì²é½ÌÊ¦ÕËºÅÃÜÂëÊÇ·ñÕıÈ·
+ * @param db Database ½á¹¹Ìå
+ * @param account ÕËºÅ
+ * @param passwd ÃÜÂëÔ­ÎÄ
+ * @param user µÇÈë³É¹¦µÄÕË»§
+ * @return 1:Æ¥Åä³É¹¦|0:ÕËºÅ»òÃÜÂë´íÎó
+ * @author ³Â»ª
  */
 int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user);
 

@@ -5,21 +5,21 @@ int startStudentModule(Database db) {
 	long long account;
 	char passwd[HASH_LEN];
 	{
-		page_login(&account, passwd, "å­¦ç”Ÿç™»å½•");
+		page_login(&account, passwd, "Ñ§ÉúµÇÂ¼");
 		while (!dc_checkStudentLogin(db, account, passwd)) {
 			system("cls");
-			cui_putStringCenterAt(us_width / 2, 3, "è´¦å·æˆ–å¯†ç é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥! æŒ‰ä»»æ„é”®ç»§ç»­", 0);
+			cui_putStringCenterAt(us_width / 2, 3, "ÕËºÅ»òÃÜÂë´íÎó£¬ÇëÖØĞÂÊäÈë! °´ÈÎÒâ¼ü¼ÌĞø", 0);
 			getch();
-			page_login(&account, passwd, "å­¦ç”Ÿç™»å½•");
+			page_login(&account, passwd, "Ñ§ÉúµÇÂ¼");
 		}
 		char stayHere = 1;
 		while (stayHere) {
 			system("cls");
-			// æ˜¾ç¤ºé¡µé¢
-			printf("æˆåŠŸç™»å½•å­¦ç”Ÿè´¦å·: %lld\n", account);
+			// ÏÔÊ¾Ò³Ãæ
+			printf("³É¹¦µÇÂ¼Ñ§ÉúÕËºÅ: %lld\n", account);
 			int y = 4;
 			cui_putStringAt(1, y += 2, "");
-			// è·å–è¾“å…¥
+			// »ñÈ¡ÊäÈë
 			char c;
 			do {
 				c = getch();

@@ -1,73 +1,73 @@
 #pragma once
 
-#define NAMELEN 100		   // åå­—æœ€å¤§é•¿åº¦
-#define HASH_LEN 32		   // å¯†ç å“ˆå¸Œå€¼é•¿åº¦
-#define PERIODS_PER_DAY 7  // ä¸€å¤©å‡ ä¸ªä¸Šè¯¾æ—¶é—´æ®µ
+#define NAMELEN 100		   // Ãû×Ö×î´ó³¤¶È
+#define HASH_LEN 32		   // ÃÜÂë¹şÏ£Öµ³¤¶È
+#define PERIODS_PER_DAY 7  // Ò»Ìì¼¸¸öÉÏ¿ÎÊ±¼ä¶Î
 
 char* colleges[] = {
 	"-1,"				   // 0
-	"ä¸­å›½è¯­è¨€æ–‡å­¦ç³»",	   // 1
-	"ä½“è‚²æ•™ç ”éƒ¨",		   // 2
-	"ä¿¡æ¯ç§‘å­¦æŠ€æœ¯å­¦é™¢",	   // 3
-	"åŒ—äº¬å¤§å­¦æ•™åŠ¡éƒ¨",	   // 4
-	"å†å²å­¦ç³»",			   // 5
-	"åŸå¸‚ä¸ç¯å¢ƒå­¦é™¢",	   // 6
-	"å¤–å›½è¯­å­¦é™¢",		   // 7
-	"å·¥å­¦é™¢",			   // 8
-	"å¿ƒç†ä¸è®¤çŸ¥ç§‘å­¦å­¦é™¢",  // 9
-	"æ•™è‚²å­¦é™¢",			   // 10
-	"æ–°é—»ä¸ä¼ æ’­å­¦é™¢",	   // 11
-	"ç‰©ç†å­¦é™¢",			   // 12
-	"ç¯å¢ƒç§‘å­¦ä¸å·¥ç¨‹å­¦é™¢",  // 13
-	"ç”Ÿå‘½ç§‘å­¦å­¦é™¢",		   // 14
-	"ç¤¾ä¼šå­¦ç³»",			   // 15
-	"ç»æµå­¦é™¢",			   // 16
-	"è‹±è¯­è¯­è¨€æ–‡å­¦ç³»"	   // 17
+	"ÖĞ¹úÓïÑÔÎÄÑ§Ïµ",	   // 1
+	"ÌåÓı½ÌÑĞ²¿",		   // 2
+	"ĞÅÏ¢¿ÆÑ§¼¼ÊõÑ§Ôº",	   // 3
+	"±±¾©´óÑ§½ÌÎñ²¿",	   // 4
+	"ÀúÊ·Ñ§Ïµ",			   // 5
+	"³ÇÊĞÓë»·¾³Ñ§Ôº",	   // 6
+	"Íâ¹úÓïÑ§Ôº",		   // 7
+	"¹¤Ñ§Ôº",			   // 8
+	"ĞÄÀíÓëÈÏÖª¿ÆÑ§Ñ§Ôº",  // 9
+	"½ÌÓıÑ§Ôº",			   // 10
+	"ĞÂÎÅÓë´«²¥Ñ§Ôº",	   // 11
+	"ÎïÀíÑ§Ôº",			   // 12
+	"»·¾³¿ÆÑ§Óë¹¤³ÌÑ§Ôº",  // 13
+	"ÉúÃü¿ÆÑ§Ñ§Ôº",		   // 14
+	"Éç»áÑ§Ïµ",			   // 15
+	"¾­¼ÃÑ§Ôº",			   // 16
+	"Ó¢ÓïÓïÑÔÎÄÑ§Ïµ"	   // 17
 };
 
-// å­¦ç”Ÿ
+// Ñ§Éú
 typedef struct Student {
-	long long id;							   // ID å‰4ä½ä»£è¡¨å…¥å­¦å¹´ä»½
-	char key[32];							   // å¯†ç å“ˆå¸Œå€¼
-	char name[NAMELEN];						   // åå­—
-	char class_pro[NAMELEN];				   //ä¸“ä¸šç­çº§
-	long long classSheet[7][PERIODS_PER_DAY];  // è¯¾è¡¨ï¼ˆå…ƒç´ ä¸º è¯¾ç¨‹ç­çº§idï¼‰
-	char college;							   // å­¦é™¢
-	int points;								   // å½“å‰å·²ä¿®å­¦åˆ†
+	long long id;							   // ID Ç°4Î»´ú±íÈëÑ§Äê·İ
+	char key[32];							   // ÃÜÂë¹şÏ£Öµ
+	char name[NAMELEN];						   // Ãû×Ö
+	char class_pro[NAMELEN];				   //×¨Òµ°à¼¶
+	long long classSheet[7][PERIODS_PER_DAY];  // ¿Î±í£¨ÔªËØÎª ¿Î³Ì°à¼¶id£©
+	char college;							   // Ñ§Ôº
+	int points;								   // µ±Ç°ÒÑĞŞÑ§·Ö
 } Student;
 
-// è¯¾ç¨‹ç­çº§
+// ¿Î³Ì°à¼¶
 typedef struct CourseClass {
-	long long id;			  // ç­çº§id
-	int id_local;			  // ç­çº§ç¼–å·ï¼ˆæŸæŸæŸ1ç­ã€æŸæŸæŸ2ç­ï¼‰
-	long long course;		  // è¯¾ç¨‹id
-	long long teacherID;	  // è€å¸ˆID
-	int periods[49];		  // ä¸Šè¯¾æ—¶é—´æ®µä»¬
-	long long students[100];  // å­¦ç”Ÿä»¬ID
-	char room[10];			  // ä¸Šè¯¾çš„æ•™å®¤
-	int capacity;			  // å®¹çº³æœ€å¤§å­¦ç”Ÿæ•°
+	long long id;			  // °à¼¶id
+	int id_local;			  // °à¼¶±àºÅ£¨Ä³Ä³Ä³1°à¡¢Ä³Ä³Ä³2°à£©
+	long long course;		  // ¿Î³Ìid
+	long long teacherID;	  // ÀÏÊ¦ID
+	int periods[49];		  // ÉÏ¿ÎÊ±¼ä¶ÎÃÇ
+	long long students[100];  // Ñ§ÉúÃÇID
+	char room[10];			  // ÉÏ¿ÎµÄ½ÌÊÒ
+	int capacity;			  // ÈİÄÉ×î´óÑ§ÉúÊı
 } CourseClass;
 
-// è¯¾ç¨‹
+// ¿Î³Ì
 typedef struct Course {
-	long long id;		 // è¯¾ç¨‹ ID
-	char name[NAMELEN];	 // è¯¾ç¨‹åç§°
-	int availableTime;	 // å¼€è¯¾å­¦æœŸ (1:å¤§ä¸€ä¸Š|2:å¤§ä¸€ä¸‹|3:å¤§äºŒä¸Š|4:å¤§äºŒä¸‹|5678)
-	int college;		 // æ‰€å±çš„å­¦é™¢ï¼Œ-1ä»£è¡¨å…¬é€‰
-	int point;			 // å­¦åˆ†
+	long long id;		 // ¿Î³Ì ID
+	char name[NAMELEN];	 // ¿Î³ÌÃû³Æ
+	int availableTime;	 // ¿ª¿ÎÑ§ÆÚ (1:´óÒ»ÉÏ|2:´óÒ»ÏÂ|3:´ó¶şÉÏ|4:´ó¶şÏÂ|5678)
+	int college;		 // ËùÊôµÄÑ§Ôº£¬-1´ú±í¹«Ñ¡
+	int point;			 // Ñ§·Ö
 } Course;
 
-// è€å¸ˆ
+// ÀÏÊ¦
 typedef struct Teacher {
 	long long id;				  // ID
-	char key[32];				  // å¯†ç 
-	char name[NAMELEN];			  // åå­—
-	char introduce[1024];		  // ç®€ä»‹
-	long long CourseClasses[10];  // æ•™æˆå“ªäº›è¯¾ç¨‹ç­çº§
+	char key[32];				  // ÃÜÂë
+	char name[NAMELEN];			  // Ãû×Ö
+	char introduce[1024];		  // ¼ò½é
+	long long CourseClasses[10];  // ½ÌÊÚÄÄĞ©¿Î³Ì°à¼¶
 } Teacher;
 
-// ç®¡ç†å‘˜
+// ¹ÜÀíÔ±
 typedef struct Admin {
 	long long id;  // ID
-	char key[32];  // å¯†ç 
+	char key[32];  // ÃÜÂë
 } Admin;

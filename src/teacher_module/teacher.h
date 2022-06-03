@@ -4,43 +4,42 @@
 #include "../page.h"
 
 /**
- * @brief å¯åŠ¨æ•™å¸ˆæ¨¡å—
- * @param db æ•°æ®åº“
- * @author é™ˆå
+ * @brief Æô¶¯½ÌÊ¦Ä£¿é
+ * @param db Êı¾İ¿â
+ * @author ³Â»ª
  */
 int startTeacherModule(Database db);
 
 /**
- * @brief å¯åŠ¨é€‰é¡¹é¡µé¢
- * @param db æ•°æ®åº“
- * @param user å½“å‰ç™»å…¥çš„ç”¨æˆ·
- * @author é™ˆå
+ * @brief Æô¶¯Ñ¡ÏîÒ³Ãæ
+ * @param db Êı¾İ¿â
+ * @param user µ±Ç°µÇÈëµÄÓÃ»§
+ * @author ³Â»ª
  */
 void startSection(Database db, Teacher* user);
 
 /**
- * @brief å±•ç¤ºé€‰é¡¹
- * @param name ç™»å…¥çš„ç”¨æˆ·çš„åå­—
- * @author é™ˆå
- * @return è¿”å›ç”¨æˆ·çš„é€‰é¡¹
+ * @brief Õ¹Ê¾Ñ¡Ïî
+ * @param name µÇÈëµÄÓÃ»§µÄÃû×Ö
+ * @author ³Â»ª
+ * @return ·µ»ØÓÃ»§µÄÑ¡Ïî
  */
 
 int showMenuTeacher(char *name);
 
-
 /**
- * @brief ç®¡ç†ç­çº§ä¿¡æ¯
- * @param db æ•°æ®åº“
- * @param user å½“å‰ç™»å…¥çš„ç”¨æˆ·
- * @author é™ˆå
+ * @brief ¹ÜÀí°à¼¶ĞÅÏ¢
+ * @param db Êı¾İ¿â
+ * @param user µ±Ç°µÇÈëµÄÓÃ»§
+ * @author ³Â»ª
  */
 void manageClass(Database db, Teacher* user);
 
 /**
- * @brief ä¿®æ”¹ä¸ªäººä¿¡æ¯
- * @param db æ•°æ®åº“
- * @param user å½“å‰ç™»å…¥çš„ç”¨æˆ·
- * @author é™ˆå
+ * @brief ĞŞ¸Ä¸öÈËĞÅÏ¢
+ * @param db Êı¾İ¿â
+ * @param user µ±Ç°µÇÈëµÄÓÃ»§
+ * @author ³Â»ª
  */
 void resetInfo(Database db, Teacher* user);
 

@@ -6,7 +6,7 @@ void dc_test_sprintByte(unsigned char* b, char* dst) {
 		dst[i] = *b & (1 << (7 - i)) ? '1' : '0';
 }
 
-// å“ˆå¸Œå‡½æ•°
+// ¹şÏ£º¯Êı
 void dc_hash32(const void* src, int len, void* dst) {
 	memset(dst, 0, HASH_LEN);
 	if (!len)
@@ -57,18 +57,18 @@ void dc_hash32(const void* src, int len, void* dst) {
 
 	unsigned char buff[HASH_LEN];
 	memset(buff, 0, HASH_LEN);
-	// å°†æºæ•°æ®åˆ†æˆ n æ®µï¼Œæ¯æ®µé•¿åº¦ HASH_LEN Bytesï¼Œæœ€åä¸€æ®µå¯èƒ½ä¸å®Œæ•´
+	// ½«Ô´Êı¾İ·Ö³É n ¶Î£¬Ã¿¶Î³¤¶È HASH_LEN Bytes£¬×îºóÒ»¶Î¿ÉÄÜ²»ÍêÕû
 
-	// éå†æ¯ä¸€ï¿½?
+	// ±éÀúÃ¿Ò»¶Î
 	for (int i = 0; i < len; i += HASH_LEN) {
-		int s = (len - i <= HASH_LEN) ? len % HASH_LEN : HASH_LEN;	// è¯¥æ®µçš„é•¿ï¿½?
+		int s = (len - i <= HASH_LEN) ? len % HASH_LEN : HASH_LEN;	// ¸Ã¶ÎµÄ³¤¶È
 
-		memcpy(buff, (unsigned char*)src + i, s);  // å°†æºæ•°æ®å†™è¿›ç¼“å­˜
+		memcpy(buff, (unsigned char*)src + i, s);  // ½«Ô´Êı¾İĞ´½ø»º´æ
 		if (s != HASH_LEN)
-			memcpy(buff + s, fillers[d] + s, HASH_LEN - s);	 // ï¿½? filler å¡«å……å‰©ä½™éƒ¨åˆ†
+			memcpy(buff + s, fillers[d] + s, HASH_LEN - s);	 // ÓÃ filler Ìî³äÊ£Óà²¿·Ö
 
 		for (int j = 0; j < HASH_LEN; j++)
-			((unsigned char*)dst)[j] ^= buff[j];  // å¼‚æˆ–æ“ä½œ
+			((unsigned char*)dst)[j] ^= buff[j];  // Òì»ò²Ù×÷
 		d = (d + 1) % StrangeVariable;
 	}
 }
@@ -92,11 +92,11 @@ void dc_test_hash32() {
 			printf("\t");
 			for (int k = 0; k < 16; k++) {
 				{
-					// 2 è¿›åˆ¶è¾“å‡º
+					// 2 ½øÖÆÊä³ö
 					dc_test_sprintByte(buff + j * 16 + k, buff_B);
 					printf("%s ", buff_B);
 				}
-				// 16 è¿›åˆ¶è¾“å‡º
+				// 16 ½øÖÆÊä³ö
 				// printf("%2x ", *((unsigned char*)(buff + j * 16 + k)));
 			}
 			printf("\n");
@@ -104,73 +104,73 @@ void dc_test_hash32() {
 	}
 }
 
-// åŠ è½½æ•°æ®
+// ¼ÓÔØÊı¾İ
 int dc_loadArray(int elementSize, void* p, char* fpath) {
 	FILE* fp = fopen(fpath, "rb");
 	int len;
-	fread(&len, sizeof(int), 1, fp);  // è¯»å–å…ƒç´ æ•°é‡
-	fread(p, elementSize, len, fp);	  // è¯»å–æ‰€æœ‰å…ƒï¿½?
+	fread(&len, sizeof(int), 1, fp);  // ¶ÁÈ¡ÔªËØÊıÁ¿
+	fread(p, elementSize, len, fp);	  // ¶ÁÈ¡ËùÓĞÔªËØ
 	fclose(fp);
 	return len;
 }
 
-// ä¿å­˜æ•°æ®
+// ±£´æÊı¾İ
 void dc_saveArray(int elementSize, void* p, int plen, char* fpath) {
 	FILE* fp = fopen(fpath, "wb");
 	int s = plen;
-	fwrite(&s, sizeof(int), 1, fp);	   // å†™å…¥å…ƒç´ æ•°é‡
-	fwrite(p, elementSize, plen, fp);  // å†™å…¥æ‰€æœ‰å…ƒï¿½?
+	fwrite(&s, sizeof(int), 1, fp);	   // Ğ´ÈëÔªËØÊıÁ¿
+	fwrite(p, elementSize, plen, fp);  // Ğ´ÈëËùÓĞÔªËØ
 	fclose(fp);
 }
 
-// åŠ è½½æ•°æ®
+// ¼ÓÔØÊı¾İ
 Database dc_loadEntireDatabaseIfDare(char* dir) {
-	// TODO ç¡®ä¿æ–‡ä»¶å¤¹å­˜ï¿½?
+	// TODO È·±£ÎÄ¼ş¼Ğ´æÔÚ
 	FILE* fp;
 	Database db;
 	int flag_fileNotFound;
 	char buff[50];
 	{
-		// å­¦ç”Ÿ
-		sprintf(buff, "%s/%s", dir, "student.dat");	 // è®¡ç®—æ–‡ä»¶è·¯å¾„
+		// Ñ§Éú
+		sprintf(buff, "%s/%s", dir, "student.dat");	 // ¼ÆËãÎÄ¼şÂ·¾¶
 		fp = fopen(buff, "rb");
 		if (fp) {
-			fread(&(db.studentCount), sizeof(int), 1, fp);						// è¯»å…¥å…ƒç´ æ•°é‡
-			db.students = (Student*)malloc(sizeof(Student) * db.studentCount);	// ç”³è¯·å†…å­˜
-			fread(db.students, sizeof(Student), db.studentCount, fp);			// è¯»å–æ‰€æœ‰å…ƒï¿½?
+			fread(&(db.studentCount), sizeof(int), 1, fp);						// ¶ÁÈëÔªËØÊıÁ¿
+			db.students = (Student*)malloc(sizeof(Student) * db.studentCount);	// ÉêÇëÄÚ´æ
+			fread(db.students, sizeof(Student), db.studentCount, fp);			// ¶ÁÈ¡ËùÓĞÔªËØ
 		} else {
 			db.studentCount = 0;
 		}
 		fclose(fp);
 	}
 	{
-		// æ•™å¸ˆ
+		// ½ÌÊ¦
 		sprintf(buff, "%s/%s", dir, "teacher.dat");
 		fp = fopen(buff, "rb");
 		if (fp) {
-			fread(&(db.teacherCount), sizeof(int), 1, fp);						// è¯»å…¥å…ƒç´ æ•°é‡
-			db.teachers = (Teacher*)malloc(sizeof(Teacher) * db.teacherCount);	// ç”³è¯·å†…å­˜
-			fread(db.teachers, sizeof(Teacher), db.teacherCount, fp);			// è¯»å–æ‰€æœ‰å…ƒï¿½?
+			fread(&(db.teacherCount), sizeof(int), 1, fp);						// ¶ÁÈëÔªËØÊıÁ¿
+			db.teachers = (Teacher*)malloc(sizeof(Teacher) * db.teacherCount);	// ÉêÇëÄÚ´æ
+			fread(db.teachers, sizeof(Teacher), db.teacherCount, fp);			// ¶ÁÈ¡ËùÓĞÔªËØ
 		} else {
 			db.teacherCount = 0;
 		}
 		fclose(fp);
 	}
 	{
-		// ç®¡ç†ï¿½?
+		// ¹ÜÀí??
 		sprintf(buff, "%s/%s", dir, "admin.dat");
 		fp = fopen(buff, "rb");
 		if (fp) {
-			fread(&(db.adminCount), sizeof(int), 1, fp);				// è¯»å…¥å…ƒç´ æ•°é‡
-			db.admins = (Admin*)malloc(sizeof(Admin) * db.adminCount);	// ç”³è¯·å†…å­˜
-			fread(db.admins, sizeof(Admin), db.adminCount, fp);			// è¯»å–æ‰€æœ‰å…ƒï¿½?
+			fread(&(db.adminCount), sizeof(int), 1, fp);				// ¶ÁÈëÔªËØÊıÁ¿
+			db.admins = (Admin*)malloc(sizeof(Admin) * db.adminCount);	// ÉêÇëÄÚ´æ
+			fread(db.admins, sizeof(Admin), db.adminCount, fp);			// ¶ÁÈ¡ËùÓĞÔªËØ
 		} else {
 			db.adminCount = 0;
 		}
 		fclose(fp);
 	}
 	{
-		// è¯¾ç¨‹
+		// ¿Î³Ì
 		sprintf(buff, "%s/%s", dir, "course.dat");
 		fp = fopen(buff, "rb");
 		if (fp) {
@@ -183,7 +183,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		fclose(fp);
 	}
 	{
-		// è¯¾ç¨‹ç­çº§
+		// ¿Î³Ì°à¼¶
 		sprintf(buff, "%s/%s", dir, "courseClass.dat");
 		fp = fopen(buff, "rb");
 		if (fp) {
@@ -198,13 +198,13 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 	return db;
 }
 
-// ä¿å­˜æ•°æ®
+// ±£´æÊı¾İ
 void dc_saveEntireDatabase(Database db, char* dir) {
 	char buff[50];
-	sprintf(buff, "%s/%s", dir, "student.dat");							// è®¡ç®—æ–‡ä»¶è·¯å¾„
-	dc_saveArray(sizeof(Student), db.students, db.studentCount, buff);	// ä¿å­˜
-	sprintf(buff, "%s/%s", dir, "teacher.dat");							// è®¡ç®—æ–‡ä»¶è·¯å¾„
-	dc_saveArray(sizeof(Teacher), db.teachers, db.teacherCount, buff);	// ä¿å­˜
+	sprintf(buff, "%s/%s", dir, "student.dat");							// ¼ÆËãÎÄ¼şÂ·¾¶
+	dc_saveArray(sizeof(Student), db.students, db.studentCount, buff);	// ±£´æ
+	sprintf(buff, "%s/%s", dir, "teacher.dat");							// ¼ÆËãÎÄ¼şÂ·¾¶
+	dc_saveArray(sizeof(Teacher), db.teachers, db.teacherCount, buff);	// ±£´æ
 	sprintf(buff, "%s/%s", dir, "admin.dat");
 	dc_saveArray(sizeof(Admin), db.admins, db.adminCount, buff);
 	sprintf(buff, "%s/%s", dir, "courseClass.dat");
@@ -213,65 +213,65 @@ void dc_saveEntireDatabase(Database db, char* dir) {
 	dc_saveArray(sizeof(Course), db.courses, db.courseCount, buff);
 }
 
-// å¯¼å…¥åŸå§‹æ•°æ®
+// µ¼ÈëÔ­Ê¼Êı¾İ
 void dc_importRawData(Database* db, char* dirPath) {
-	// TODO ç¡®ä¿æ–‡ä»¶å¤¹å­˜ï¿½?
+	// TODO È·±£ÎÄ¼ş¼Ğ´æÔÚ
 	char buff[64];
 	FILE* fp;
 	int d;
-	// å­¦ç”Ÿ
+	// Ñ§Éú
 	{
-		sprintf(buff, "%s/%s", dirPath, "student.txt");	 // è®¡ç®—è·¯å¾„
+		sprintf(buff, "%s/%s", dirPath, "student.txt");	 // ¼ÆËãÂ·¾¶
 		fp = fopen(buff, "r");
 		if (fp) {
-			fscanf(fp, "%d", &(db->studentCount));								  // å­¦ç”Ÿæ•°é‡
-			db->students = (Student*)malloc(sizeof(Student) * db->studentCount);  // ç”³è¯·å†…å­˜
+			fscanf(fp, "%d", &(db->studentCount));								  // Ñ§ÉúÊıÁ¿
+			db->students = (Student*)malloc(sizeof(Student) * db->studentCount);  // ÉêÇëÄÚ´æ
 			for (int i = 0; i < db->studentCount; i++) {
-				fscanf(fp, "%lld", &(db->students[i].id));	// 1. å­¦ç”Ÿ ID
-				{											// 2. å¯†ç 
-					char buff_passwd[32];					// ç”¨äºå¯†ç  hash
+				fscanf(fp, "%lld", &(db->students[i].id));	// 1. Ñ§Éú ID
+				{											// 2. ÃÜÂë
+					char buff_passwd[32];					// ÓÃÓÚÃÜÂë hash
 					memset(buff_passwd, 0, 32);
 					fscanf(fp, "%s", buff_passwd);
 					dc_hash32(buff_passwd, 0, &(db->students[i].key));
 				}
-				fscanf(fp, "%s", &(db->students[i].name));		 // 3. åå­—
-				fscanf(fp, "%s", &(db->students[i].class_pro));	 // 4. ä¸“ä¸šç­çº§
-				// 5.$è¯¾è¡¨
-				for (int i = 0; i < 7; i++) {	   // ä¸€ï¿½? 7 èŠ‚è¯¾
-					for (int j = 0; j < 7; j++) {  // ä¸€ï¿½? 7 ï¿½?
+				fscanf(fp, "%s", &(db->students[i].name));		 // 3. Ãû×Ö
+				fscanf(fp, "%s", &(db->students[i].class_pro));	 // 4. ×¨Òµ°à¼¶
+				// 5.$¿Î±í
+				for (int i = 0; i < 7; i++) {	   // Ò»Ìì 7 ½Ú¿Î
+					for (int j = 0; j < 7; j++) {  // Ò»ÖÜ 7 Ìì
 						fscanf(fp, "%d", &(db->students[i].classSheet[j][i]));
 					}
 				}
 				// fscanf()
-				fscanf(fp, "%d", &(db->students[i].college));  // å­¦é™¢
-				fscanf(fp, "%d", &(db->students[i].points));   //$å·²ä¿®å­¦åˆ†
+				fscanf(fp, "%d", &(db->students[i].college));  // Ñ§Ôº
+				fscanf(fp, "%d", &(db->students[i].points));   // ÒÑĞŞÑ§·Ö
 
 				// printf("%lld\n", db->students[i].id);
 			}
 			fclose(fp);
 		}
 	}
-	// æ•™å¸ˆ
+	// ½ÌÊ¦
 	{
 		sprintf(buff, "%s/%s", dirPath, "teacher.txt");
 		fp = fopen(buff, "r");
 		if (fp) {
-			fscanf(fp, "%d", &(db->teacherCount));								  // æ•™å¸ˆæ•°é‡
-			db->teachers = (Teacher*)malloc(sizeof(Teacher) * db->teacherCount);  //ç”³è¯·å†…å­˜
+			fscanf(fp, "%d", &(db->teacherCount));								  // ½ÌÊ¦ÊıÁ¿
+			db->teachers = (Teacher*)malloc(sizeof(Teacher) * db->teacherCount);  //ÉêÇëÄÚ´æ
 			for (int i = 0; i < db->teacherCount; i++) {
-				fscanf(fp, "%lld", &(db->teachers[i].id));			// æ•™å¸ˆ ID
-				{													// å¯†ç 
+				fscanf(fp, "%lld", &(db->teachers[i].id));	// ½ÌÊ¦ ID
+				{											// ÃÜÂë
 					char buff_passwd[32];
 					memset(buff_passwd, 0, 32);
 					fscanf(fp, "%s", buff_passwd);
 					dc_hash32(buff_passwd, 0, &(db->teachers[i].key));
 				}
 
-				fscanf(fp, "%s", &(db->teachers[i].name));			// åå­—
-				fscanf(fp, "%s", &(db->teachers[i].introduce));		// ç®€ï¿½?
-				fscanf(fp, "%lld", db->teachers[i].CourseClasses);	// è¯¾ç¨‹ç­çº§æ•°é‡
+				fscanf(fp, "%s", &(db->teachers[i].name));			// Ãû×Ö
+				fscanf(fp, "%s", &(db->teachers[i].introduce));		// ¼ò½é
+				fscanf(fp, "%lld", db->teachers[i].CourseClasses);	// ¿Î³Ì°à¼¶ÊıÁ¿
 				for (int j = 0; j < db->teachers[i].CourseClasses[0]; j++)
-					fscanf(fp, "%lld", db->teachers[i].CourseClasses + j + 1);	// è¯¾ç¨‹ç­çº§ ID
+					fscanf(fp, "%lld", db->teachers[i].CourseClasses + j + 1);	// ¿Î³Ì°à¼¶ ID
 
 				// printf("%s\n", db->teachers[i].introduce);
 				// printf("%lld\n", db->teachers[i].CourseClasses[0]);
@@ -279,20 +279,20 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fclose(fp);
 		}
 	}
-	// ç®¡ç†ï¿½?
+	// ¹ÜÀíÔ±
 	{
 		sprintf(buff, "%s/%s", dirPath, "admin.txt");
 		fp = fopen(buff, "r");
 		if (fp) {
-			fscanf(fp, "%d", &(db->adminCount));						  // ç®¡ç†å‘˜æ•°ï¿½?
-			db->admins = (Admin*)malloc(sizeof(Admin) * db->adminCount);  // ç”³è¯·å†…å­˜
+			fscanf(fp, "%d", &(db->adminCount));						  // ¹ÜÀíÔ±ÊıÁ¿
+			db->admins = (Admin*)malloc(sizeof(Admin) * db->adminCount);  // ÉêÇëÄÚ´æ
 			for (int i = 0; i < db->adminCount; i++) {
-				fscanf(fp, "%lld", &(db->admins[i].id));  // ç®¡ç†ï¿½? ID
-				{										  // å¯†ç 
+				fscanf(fp, "%lld", &(db->admins[i].id));  // ¹ÜÀíÔ± ID
+				{										  // ÃÜÂë
 					char buff_passwd[32];
 					memset(buff_passwd, 0, 32);
 					fscanf(fp, "%s", buff_passwd);
-					dc_hash32(buff_passwd, 0, &(db->admins[i].key));  // ä¿å­˜ hash ï¿½?
+					dc_hash32(buff_passwd, 0, &(db->admins[i].key));  // ±£´æ hash Öµ
 				}
 
 				// printf("%lld\n", db->admins[i].id);
@@ -300,22 +300,22 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fclose(fp);
 		}
 	}
-	// è¯¾ç¨‹
+	// ¿Î³Ì
 	{
 		sprintf(buff, "%s/%s", dirPath, "course.txt");
 		fp = fopen(buff, "r");
 		if (fp) {
-			fscanf(fp, "%d", &(db->courseCount));							  // è¯¾ç¨‹æ•°é‡
-			db->courses = (Course*)malloc(sizeof(Course) * db->courseCount);  // ç”³è¯·å†…å­˜
+			fscanf(fp, "%d", &(db->courseCount));							  // ¿Î³ÌÊıÁ¿
+			db->courses = (Course*)malloc(sizeof(Course) * db->courseCount);  // ÉêÇëÄÚ´æ
 			for (int i = 0; i < db->courseCount; i++) {
-				fscanf(fp, "%lld", &(db->courses[i].id));  // è¯¾ç¨‹ ID
-				fscanf(fp, "%s", &(db->courses[i].name));  // è¯¾ç¨‹åç§°
-				// fscanf(fp, "%lld", &(db->courses[i].CourseClasses));  // è¯¥è¯¾ç¨‹å¯¹åº”çš„è¯¾ç¨‹ç­çº§æ•°é‡
+				fscanf(fp, "%lld", &(db->courses[i].id));  // ¿Î³Ì ID
+				fscanf(fp, "%s", &(db->courses[i].name));  // ¿Î³ÌÃû³Æ
+				// fscanf(fp, "%lld", &(db->courses[i].CourseClasses));  // ¸Ã¿Î³Ì¶ÔÓ¦µÄ¿Î³Ì°à¼¶ÊıÁ¿
 				// for (int j = 0; j < db->courses[i].CourseClasses[0]; j++)
-				// 	fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);  // è¯¾ç¨‹ç­çº§
-				fscanf(fp, "%d", &(db->courses[i].availableTime));	// å¯ä»¥é€‰è¯¥è¯¾çš„å­¦æœŸ
-				fscanf(fp, "%d", &(db->courses[i].college));		// æ‰€å±å­¦ï¿½?
-				fscanf(fp, "%d", &(db->courses[i].point));			// è¯¾ç¨‹å­¦åˆ†
+				// 	fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);  // ¿Î³Ì°à¼¶
+				fscanf(fp, "%d", &(db->courses[i].availableTime));	// ¿ÉÒÔÑ¡¸Ã¿ÎµÄÑ§ÆÚ
+				fscanf(fp, "%d", &(db->courses[i].college));		// ËùÊôÑ§Ôº
+				fscanf(fp, "%d", &(db->courses[i].point));			// ¿Î³ÌÑ§·Ö
 
 				// printf("%lld\n", db->courses[i].id);
 				// printf("%s\n", db->courses[i].name);
@@ -323,28 +323,28 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fclose(fp);
 		}
 	}
-	// è¯¾ç¨‹ç­çº§
+	// ¿Î³Ì°à¼¶
 	{
 		sprintf(buff, "%s/%s", dirPath, "courseClass.txt");
 		fp = fopen(buff, "r");
 		if (fp) {
-			fscanf(fp, "%d", &(db->ccCount));  //è¯¾ç¨‹ç­çº§æ•°é‡
+			fscanf(fp, "%d", &(db->ccCount));  //¿Î³Ì°à¼¶ÊıÁ¿
 			db->courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * db->ccCount);
 			for (int i = 0; i < db->ccCount; i++) {
-				fscanf(fp, "%lld", &(db->courseClasses[i].id));			//è¯¾ç¨‹ç­çº§ ID
-				fscanf(fp, "%d", &(db->courseClasses[i].id_local));		// æœ¬åœ° ID
-				fscanf(fp, "%lld", &(db->courseClasses[i].course));		//è¯¾ç¨‹
-				fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));	// è€å¸ˆ ID
+				fscanf(fp, "%lld", &(db->courseClasses[i].id));			//¿Î³Ì°à¼¶ ID
+				fscanf(fp, "%d", &(db->courseClasses[i].id_local));		// ±¾µØ ID
+				fscanf(fp, "%lld", &(db->courseClasses[i].course));		//¿Î³Ì
+				fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));	// ÀÏÊ¦ ID
 
-				fscanf(fp, "%d", db->courseClasses[i].periods);	 // æ—¶é—´æ®µæ•°ï¿½?
+				fscanf(fp, "%d", db->courseClasses[i].periods);	 // Ê±¼ä¶ÎÊıÁ¿
 				for (int j = 0; j < db->courseClasses[i].periods[0]; j++)
-					fscanf(fp, "%d", db->courseClasses[i].periods + j + 1);	 // æ—¶é—´ï¿½?
+					fscanf(fp, "%d", db->courseClasses[i].periods + j + 1);	 // Ê±¼ä¶Î
 
-				fscanf(fp, "%lld", db->courseClasses[i].students);	// å·²åŠ å…¥çš„å­¦ç”Ÿæ•°é‡
+				fscanf(fp, "%lld", db->courseClasses[i].students);	// ÒÑ¼ÓÈëµÄÑ§ÉúÊıÁ¿
 				for (int j = 0; j < db->courseClasses[i].students[0]; j++)
-					fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);	// å­¦ç”Ÿ ID
-				fscanf(fp, "%s", db->courseClasses[i].room);					// æ•™å®¤
-				fscanf(fp, "%d", &(db->courseClasses[i].capacity));				//  å®¹çº³æœ€å¤§å­¦ç”Ÿæ•°
+					fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);	// Ñ§Éú ID
+				fscanf(fp, "%s", db->courseClasses[i].room);					// ½ÌÊÒ
+				fscanf(fp, "%d", &(db->courseClasses[i].capacity));				//  ÈİÄÉ×î´óÑ§ÉúÊı
 
 				// printf("%s\n", db->courseClasses[i].room);
 			}
@@ -353,7 +353,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 	}
 };
 
-// æ£€æŸ¥ç®¡ç†å‘˜è´¦å·å¯†ç æ˜¯å¦æ­£ç¡®
+// ¼ì²é¹ÜÀíÔ±ÕËºÅÃÜÂëÊÇ·ñÕıÈ·
 int dc_checkAdminLogin(Database db, long long account, char* passwd) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);
@@ -365,7 +365,7 @@ int dc_checkAdminLogin(Database db, long long account, char* passwd) {
 	return 0;
 }
 
-// æ£€æŸ¥å­¦ç”Ÿè´¦å·å¯†ç æ˜¯å¦æ­£ï¿½?
+// ¼ì²éÑ§ÉúÕËºÅÃÜÂëÊÇ·ñÕıÈ·
 int dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);
@@ -376,7 +376,7 @@ int dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	}
 	return 0;
 }
-// æ£€æŸ¥æ•™å¸ˆè´¦å·å¯†ç æ˜¯å¦æ­£ï¿½?
+// ¼ì²é½ÌÊ¦ÕËºÅÃÜÂëÊÇ·ñÕıÈ·
 int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);

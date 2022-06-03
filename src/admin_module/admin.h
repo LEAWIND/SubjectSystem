@@ -3,8 +3,8 @@
 #include "../datastruct.h"
 #include "../page.h"
 /**
- * @brief å¯åŠ¨ç®¡ç†å‘˜æ¨¡å—
- * @param db æ•°æ®åº“
+ * @brief Æô¶¯¹ÜÀíÔ±Ä£¿é
+ * @param db Êı¾İ¿â
  */
 int startAdminModule(Database db);
 #include "admin.c"
