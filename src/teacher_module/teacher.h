@@ -43,4 +43,14 @@ void manageClass(Database db, Teacher* user);
  */
 void resetInfo(Database db, Teacher* user);
 
+/**
+ * @brief 展示学生信息
+ * @param posClass 展示第几个
+ * @param posStudent 展示第几页学生
+ * @param db 数据库
+ * @param user 当前登入的用户
+ * @author 陈华
+ */
+void showCS(int posClass, int posStudent, Database db, Teacher* user);
+
 #include "teacher.c"

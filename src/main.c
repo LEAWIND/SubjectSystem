@@ -5,7 +5,7 @@ int test() {
 	getch();
 	return 0;
 }
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]){
 	// return test();
 	if (argc > 1)
 		SetCurrentDirectory(argv[1]);

@@ -5,16 +5,16 @@ int startTeacherModule(Database db) {
 	Teacher* user;//正在使用的用户
 
 	//===============跳过登入
-	long long account;//教师输入的账号
-	char passwd[HASH_LEN];//输入的密码
-	{
-		page_login(&account, passwd, "教师登录");
-		while (!dc_checkTeacherLogin(db, account, passwd, &user)) {
-			page_login(&account, passwd, "教师登录: 账号或密码错误，请重新输入");
-		}
-	}
+	// long long account;//教师输入的账号
+	// char passwd[HASH_LEN];//输入的密码
+	// {
+	// 	page_login(&account, passwd, "教师登录");
+	// 	while (!dc_checkTeacherLogin(db, account, passwd, &user)) {
+	// 		page_login(&account, passwd, "教师登录: 账号或密码错误，请重新输入");
+	// 	}
+	// }
 	//====================
-	//user = db.teachers;
+	user = db.teachers;
 	startSection(db, user);
 }
 
@@ -55,7 +55,6 @@ int showMenuTeacher(char *name){
 	cui_putStringAt(2, y += 2, "[0]退出登录");
 	cui_putStringAt(2, y += 2, "[1]管理班级");
 	cui_putStringAt(2, y += 2, "[2]修改个人信息");
-	cui_putStringAt(2, y += 4, "请输入选项");
 	// 监听用户输入
 	char ut;
 	do {
@@ -67,10 +66,91 @@ int showMenuTeacher(char *name){
 	return op;
 }
 
-
 void manageClass(Database db, Teacher* user){
 	system("cls");
-	printf("您已进入管理班级模块");
+	showCS(1, 0, db, user);
+}
+
+//在学生们里面找到学号为id的学生并返回
+Student* findStudent(Student* students, long long id, int l, int r)
+{
+	while(l < r)
+	{
+		int mid = l + r >> 1;
+		if(students[mid].id >= id) r = mid;
+		else l = mid+1;
+	}
+	return &(students[l]);
+}
+
+void showCS(int posClass, int posStudent, Database db, Teacher* user){
+	system("cls");
+	const int N = 10;//一页最多展示学生数目
+	int i;
+	long long classId = (*user).CourseClasses[posClass];
+	CourseClass* CC;
+	//找到对应的课程班级
+	for(i = 0; i < db.ccCount; i++)
+	{
+		if(db.courseClasses[i].id == classId)
+		{
+			CC = &(db.courseClasses[i]);
+		}
+	}
+	//得到课程名字
+	char* courseName;
+	for(i = 0; i < db.courseCount; i++)
+	{
+		if(db.courses[i].id == CC->course)
+		{
+			courseName = db.courses[i].name;
+		}
+	}
+	printf("===================================================\n");
+	printf("               %s%d班\n", courseName,CC->id_local);
+	printf("===================================================\n");
+	printf("   学号          姓名         所属学院\n");
+	//打印学生信息
+	for(int i = posStudent*N + 1; i <= posStudent*(N+1); i++)
+	{
+		Student* stu = findStudent(db.students,CC->students[i], 0, db.studentCount-1);
+		printf("   %-12lld  %-6s    %-8s\n",stu->id, stu->name, colleges[stu->college]);
+	}
+	printf("===================================================\n");
+	printf("左箭头:上一页，右箭头:下一页，上箭头:上一个班级，下箭头:下一个班级\n");
+	//等待用户输入
+	int stayHere = 1;
+	while (stayHere) {
+		stayHere = 0;
+		int userType = getch();	
+		switch(userType){
+			case 224://方向键区的ASCII码
+				userType = getch();	                    
+				switch(userType){
+				case 72:
+					//上
+					showCS(posClass-1 >= 1 ? posClass -1 : posClass , 0, db,  user);
+					break;
+				case 80:
+					//下 
+					showCS(posClass+1 <= user->CourseClasses[0] ? posClass+1 : posClass, 0, db,  user);
+					break;
+				case 75:    
+					//左
+					showCS(posClass, posStudent-1 >= 0 ? posStudent-1: posStudent, db,  user);
+					break;
+				case 77:
+					showCS(posClass, (posStudent+1)*N+1 <= CC->students[0]?posStudent+1:posStudent, db,  user);
+					//右
+					break;   
+				}
+				break;
+			case 27:  // Esc
+				break;
+		default:
+			stayHere = 1;       
+		}
+	}
 }
 
 void resetInfo(Database db, Teacher* user){
@@ -120,12 +200,11 @@ void resetInfo(Database db, Teacher* user){
 		break;
 	case 3:
 		printf("  请输入您的新密码:");
-		scanf("%s", content);
-
-		printf("  请重新输入输入您的新密码:");
+		cui_inputs(content, 32, '*');
+		printf("\n  请重新输入输入您的新密码:");
 		char temp[1024];
 		memset(temp, '\0', sizeof(temp));
-		scanf("%s", temp);
+		cui_inputs(temp, 32, '*');
 		if(!strcmp(temp, content))
 		{
 			unsigned char psd[HASH_LEN];
