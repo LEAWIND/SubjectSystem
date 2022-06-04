@@ -82,13 +82,13 @@ void dc_importRawData(Database* db, char* dirPath);
 int dc_checkAdminLogin(Database db, long long account, char* passwd);
 
 /**
- * @brief 检查学生账号密码是否正确
+ * @brief 检查学生账号密码是否正确，如果正确则返回学生结构体地址
  * @param db Database 结构体
  * @param account 账号
  * @param passwd 密码原文
- * @return 1:匹配成功|0:账号或密码错误
+ * @return 地址:匹配成功|NULL:账号或密码错误
  */
-int dc_checkStudentLogin(Database db, long long account, char* passwd);
+Student* dc_checkStudentLogin(Database db, long long account, char* passwd);
 
 /**
  * @brief 检查教师账号密码是否正确

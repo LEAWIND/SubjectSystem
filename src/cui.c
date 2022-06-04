@@ -130,3 +130,16 @@ void cui_strokeRect(int x, int y, int w, int h, char c) {
 	for (int i = 2; i < h; i++)
 		printf("%c\033[1B\033[1D", '|' | c);
 }
+
+void cui_putWrappedText(int x, int y, int w, int h, char* str, int len) {
+	if (!len)
+		len = strlen(str);
+	for (int i = 0; i < len; i += w) {
+		cui_setCursorPos(x, y + i / w);
+		for (int j = 0; j < w; j++) {
+			if (i + j >= len)
+				break;
+			putchar(str[i + j]);
+		}
+	}
+}

@@ -31,8 +31,8 @@ typedef struct Student {
 	char key[32];							   // 密码哈希值
 	char name[NAMELEN];						   // 名字
 	char class_pro[NAMELEN];				   //专业班级
-	long long classSheet[7][PERIODS_PER_DAY];  // 课表（元素为 课程班级id）
-	char college;							   // 学院
+	long long classSheet[7][7];				   // 课表（元素为 课程班级id）
+	int college;							   // 学院
 	int points;								   // 当前已修学分
 } Student;
 
