@@ -80,6 +80,7 @@ Student* findStudent(Student* students, long long id, int l, int r)
 		if(students[mid].id >= id) r = mid;
 		else l = mid+1;
 	}
+	if(students[l].id != id) return NULL;
 	return &(students[l]);
 }
 
@@ -106,18 +107,19 @@ void showCS(int posClass, int posStudent, Database db, Teacher* user){
 			courseName = db.courses[i].name;
 		}
 	}
-	printf("===================================================\n");
+	printf("========================================================================\n");
 	printf("               %s%d班\n", courseName,CC->id_local);
-	printf("===================================================\n");
+	printf("========================================================================\n");
 	printf("   学号          姓名         所属学院\n");
 	//打印学生信息
-	for(int i = posStudent*N + 1; i <= posStudent*(N+1); i++)
+	for(i = posStudent*N + 1; i <= (posStudent+1)*N; i++)
 	{
 		Student* stu = findStudent(db.students,CC->students[i], 0, db.studentCount-1);
-		printf("   %-12lld  %-6s    %-8s\n",stu->id, stu->name, colleges[stu->college]);
+		if(stu) printf("   %-12lld  %-6s    %-8s\n",stu->id, stu->name, colleges[stu->college]);
+		else printf("-\n");
 	}
-	printf("===================================================\n");
-	printf("左箭头:上一页，右箭头:下一页，上箭头:上一个班级，下箭头:下一个班级\n");
+	printf("========================================================================\n");
+	printf("左箭头:上一页，右箭头:下一页，上箭头:上一个班级，下箭头:下一个班级 d:删除学生\n");
 	//等待用户输入
 	int stayHere = 1;
 	while (stayHere) {
@@ -147,6 +149,51 @@ void showCS(int posClass, int posStudent, Database db, Teacher* user){
 				break;
 			case 27:  // Esc
 				break;
+			case 100://d
+				printf("\n\n  请输入需要删除学生的学号:");
+				long long stuId;//被删除学生的学号
+				scanf("%lld", &stuId);
+				long long temp;
+				printf("  请再次输入需要删除学生的学号:");
+				scanf("%lld", &temp);
+				if(temp != stuId)
+				{
+					printf("  两次输入的学号不一致");
+					getch();
+					showCS(posClass , 0, db,  user);
+					break;
+				}
+				Student* dStu = findStudent(db.students, stuId, 0, db.studentCount-1);//被删除的学生
+				if (!dStu) {
+					printf("  该学生并不存在于您的班级");
+					getch();
+					showCS(posClass , 0, db,  user);
+					break;
+				}
+				else{
+					//从课表中去除该门课
+					int i, j;
+					for(i = 0;i < 7; i++)
+					{
+						for(j = 0; j < 7; j++)
+						{
+							if(dStu->classSheet[i][j] == CC->id) dStu->classSheet[i][j] = -1;
+						}
+					}
+					//从课程班级中删除该学生
+					for(i = 1; i <= CC->students[0]; i++)
+					{
+						if(CC->students[i] == stuId) break;
+					}
+					for(i = i; i < CC->students[0]; i++)
+					{
+						CC->students[i] = CC->students[i+1];
+					}
+					CC->students[0] -= 1;
+					showCS(posClass , 0, db,  user);
+					break;
+				}
+				
 		default:
 			stayHere = 1;       
 		}
