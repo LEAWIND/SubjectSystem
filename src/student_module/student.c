@@ -25,28 +25,28 @@ int startStudentModule(Database db) {
 		while (stayHere) {
 			system("cls");
 			// 显示页面
-			printf("成功登录学生账号: %lld\n", account);
+			printf("欢迎 %s 同学", stu->name);
 			int y = 4;
-			cui_putStringAt(1, y += 2, "1.查看课程表");
-			cui_putStringAt(1, y += 2, "2.选课");
-			cui_putStringAt(1, y += 2, "3.修改密码");
+			cui_putStringAt(1, y += 2, "  1.查看课程表");
+			cui_putStringAt(1, y += 2, "  2.选课");
+			cui_putStringAt(1, y += 2, "  3.修改密码");
+			cui_putStringAt(1, y += 2, "Esc.返回");
 			// 获取输入
 			char c;
-			do {
-				c = getch();
-				switch (c) {
-					case '1':
-						stu_page_classSheet(&db, stu);
-						break;
-					case '2':
-						break;
-					case '3':
-						break;
-					case '\033':
-						stayHere = 0;
-						break;
-				}
-			} while (stayHere);
+			c = getch();
+			switch (c) {
+				case '1':
+					stu_page_classSheet(&db, stu);
+					break;
+				case '2':
+					stu_page_chooseClasses(&db, stu);
+					break;
+				case '3':
+					break;
+				case '\033':
+					stayHere = 0;
+					break;
+			}
 		}
 	}
 	printf("Successfully login: student module\n");
@@ -58,7 +58,7 @@ int stu_page_classSheet(Database* db, Student* stu) {
 	while (stayHere) {
 		{  // render
 			system("cls");
-			printf("%s", stu->name);
+			printf("欢迎 %s 同学", stu->name);
 			int y = 1;
 			cui_putStringCenterAt(us_width / 2, y, "课程表", 0);
 
@@ -85,14 +85,104 @@ int stu_page_classSheet(Database* db, Student* stu) {
 			}
 		}
 		char c;
-		do {
-			c = getch();
-			switch (c) {
-				case '\033':
-					stayHere = 0;
-					break;
+		c = getch();
+		switch (c) {
+			case '\033':
+				stayHere = 0;
+				break;
+		}
+	}
+	return 0;
+}
+
+// 打开选课界面
+int stu_page_chooseClasses(Database* db, Student* stu) {
+	const int ItemsPerPage = 12;
+	int pageIndex = 0;
+	char stayHere = 1;
+	while (stayHere) {
+		int ix, iy;			  // 用户输入回显位置
+		char inputBuff[100];  // 用户输入缓冲
+		memset(inputBuff, 0, 100);
+		int inputLen = 0;
+
+		{  // render
+			char buff[200];
+			system("cls");
+			printf("欢迎 %s 同学", stu->name);
+			int y = 5;
+			// 列出本页所有课程
+			{
+				int j = pageIndex * ItemsPerPage;  // 本页第一条的下标
+				for (int i = 0; i < ItemsPerPage && j + i < db->courseCount; i++) {
+					Course* course = db->courses + j + i;
+					int x = 3;
+					y += 2;
+					sprintf(buff, "%d. %s", j + i, course->name);
+					cui_putStringAt(x, y, buff);
+					cui_strokeRect(x - 1, y - 1, 40, 3, 0);
+				}
 			}
-		} while (stayHere);
+			// 页数提示
+			sprintf(buff, "[%d/%d] 按 ',' 和 '.' 键翻页", pageIndex, db->courseCount / ItemsPerPage);
+			cui_putStringAt(5, y += 2, buff);
+
+			ix = 5;
+			iy = y += 2;
+			cui_setCursorPos(ix, iy);
+		}
+		{
+			int hisChoice = -1;
+			char keepTyping = 1;
+			char c;
+			while (keepTyping) {
+				c = getch();
+				switch (c) {
+					case ',':
+						pageIndex -= pageIndex > 0 ? 1 : 0;
+						keepTyping = 0;
+						break;
+					case '.':
+						pageIndex += pageIndex < db->courseCount / ItemsPerPage ? 1 : 0;
+						keepTyping = 0;
+						break;
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+						inputBuff[inputLen++] = c;
+						break;
+					case '\r':
+						// stayHere = 0;
+						keepTyping = 0;
+						sscanf(inputBuff, "%d", &hisChoice);
+						break;
+					case '\b':
+						if (inputLen) {
+							inputBuff[--inputLen] = '\0';
+							cui_putStringAt(ix + inputLen, iy, " ");
+						}
+						break;
+					case '\033':
+						stayHere = 0;
+						keepTyping = 0;
+						break;
+					default:
+						break;
+				}
+				cui_putStringAt(ix, iy, inputBuff);
+			}
+			if (hisChoice >= 0) {
+				// TODO 选择的课程是 hisChoice
+				// 接下来选择课程班级
+			}
+		}
 	}
 	return 0;
 }

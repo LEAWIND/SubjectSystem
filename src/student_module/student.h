@@ -9,4 +9,6 @@
  */
 int startStudentModule(Database db);
 int stu_page_classSheet(Database* db, Student* stu);
+int stu_page_chooseClasses(Database* db, Student* stu);
+
 #include "student.c"
