@@ -1,7 +1,7 @@
 #include "main.h"
 int test() {
-	dc_test_hash32();
-
+	system("cls");
+	cui_putWrappedText(3, 4, 3, 10, "ABCDEFGHIJKLMNOPQRS", 0);
 	getch();
 	return 0;
 }

@@ -90,4 +90,17 @@ void cui_clearRect(int x, int y, int w, int h);
  */
 void _strokeRect(int x, int y, int w, int h, char c);
 
+/**
+ * @brief 放置换行文本
+ * 在矩形区域中放置文本，自动换行
+ * 超出部分不显示
+ *
+ * @param x 左上角 x 坐标
+ * @param y 左上角 y 坐标
+ * @param w 矩形宽度
+ * @param h 矩形高度
+ * @param str 字符串
+ * @param len 字符串长度, 0表示自动
+ */
+void cui_putWrappedText(int x, int y, int w, int h, char* str, int len);
 #include "cui.c"

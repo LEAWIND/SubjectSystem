@@ -239,10 +239,11 @@ void dc_importRawData(Database* db, char* dirPath) {
 				// 5.$课表
 				for (int i = 0; i < 7; i++) {	   // 一天 7 节课
 					for (int j = 0; j < 7; j++) {  // 一周 7 天
-						fscanf(fp, "%d", &(db->students[i].classSheet[j][i]));
+						long long tp;
+						fscanf(fp, "%lld", &tp);
+						db->students[i].classSheet[j][i] = tp;
 					}
 				}
-				// fscanf()
 				fscanf(fp, "%d", &(db->students[i].college));  // 学院
 				fscanf(fp, "%d", &(db->students[i].points));   // 已修学分
 
@@ -360,21 +361,21 @@ int dc_checkAdminLogin(Database db, long long account, char* passwd) {
 	for (int i = 0; i < db.adminCount; i++) {
 		Admin adm = db.admins[i];
 		if (adm.id == account && !memcmp(psd, adm.key, HASH_LEN))
-			return 1;
+			return i;
 	}
 	return 0;
 }
 
-// 检查学生账号密码是否正确
-int dc_checkStudentLogin(Database db, long long account, char* passwd) {
+// 检查学生账号密码是否正确，如果正确则返回其地址
+Student* dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);
 	for (int i = 0; i < db.studentCount; i++) {
 		Student stu = db.students[i];
 		if (stu.id == account && !memcmp(psd, stu.key, HASH_LEN))
-			return 1;
+			return db.students + i;
 	}
-	return 0;
+	return NULL;
 }
 // 检查教师账号密码是否正确
 int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user) {
@@ -384,7 +385,7 @@ int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher**
 		Teacher tea = db.teachers[i];
 		if (tea.id == account && !memcmp(psd, tea.key, HASH_LEN)) {
 			*user = &db.teachers[i];
-			return 1;
+			return i;
 		}
 	}
 	return 0;
