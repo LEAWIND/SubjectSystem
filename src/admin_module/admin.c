@@ -14,20 +14,34 @@ int startAdminModule(Database db) {
 			page_login(&account, passwd, "管理员登录");
 		}
 
-		char stayHere = 1;
+		int stayHere = 1;
 		while (stayHere) {
 			system("cls");
 			// 显示页面
-			printf("成功登录管理员账号: %lld\n", account);
-			printf("ESC  返回");
+			printf("==========================================\n");
+			printf("           选项界面\n");
+			printf("==========================================\n");
+			printf("  [1]管理学生账号\n");
+			printf("  [2]管理老师账号\n");
+			printf("  ESC  返回\n");
 
 			// 获取输入
 			char c;
 			do {
 				c = getch();
+				stayHere = 0;
 				switch (c) {
 					case '\033':
-						stayHere = 0;
+						break;
+					case '1':
+						printf("管理学生模块");
+						break;
+					case '2':
+						printf("管理老师模块");
+						break;
+					//如果没有匹配任何一个选项则继续获取输入
+					default:
+						stayHere = 1;
 						break;
 				}
 			} while (stayHere);
