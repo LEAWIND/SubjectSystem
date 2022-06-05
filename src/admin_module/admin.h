@@ -79,4 +79,5 @@ void findCourseName(Database* db);
  * @author ³Â»ª
  */
 void changeCourse(Database *db);
+
 #include "admin.c"

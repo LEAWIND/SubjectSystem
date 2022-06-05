@@ -7,17 +7,18 @@ int startAdminModule(Database* db) {
 	char passwd[HASH_LEN];
 	Admin* user;
 	{
-		//===============跳过登入环节
+		// ===============跳过登入环节
 		// 让用户输入账号和密码
-		// page_login(&account, passwd, "管理员登录");
-		// while (!dc_checkAdminLogin(*db, account, passwd, &user)) {	// 检查账号和密码是否正确
-		// 	system("cls");
-		// 	cui_putStringCenterAt(us_width / 2, 3, "账号或密码错误，请重新输入! 按任意键继续", 0);
-		// 	getch();
-		// 	page_login(&account, passwd, "管理员登录");
-		// }
-		//===============以第一个管理员身份登入系统
-		user = &(db->admins[0]);
+		page_login(&account, passwd, "管理员登录");
+		while (!dc_checkAdminLogin(*db, account, passwd, &user)) {	// 检查账号和密码是否正确
+			system("cls");
+			cui_putStringCenterAt(us_width / 2, 3, "账号或密码错误，请重新输入! 按任意键继续", 0);
+			getch();
+			page_login(&account, passwd, "管理员登录");
+		}
+		// ===============以第一个管理员身份登入系统
+		// user = &(db->admins[0]);
+
 		int stayHere = 1;
 		while (stayHere) {
 			cui_hideCursor();
@@ -27,8 +28,7 @@ int startAdminModule(Database* db) {
 			printf("           选项界面\n");
 			printf("==========================================\n");
 			printf("\n\n  [1]管理课程\n");
-			printf("\n\n  [2]管理课程班级\n");
-			printf("\n\n  [3]修改密码\n");
+			printf("\n\n  [2]修改密码\n");
 			printf("\n\n  [ESC]  返回\n");
 
 			// 获取输入
@@ -42,9 +42,6 @@ int startAdminModule(Database* db) {
 					manageCourse(db);
 					break;
 				case '2':
-					printf("管理老师模块");
-					break;
-				case '3':
 					cui_showCursor();
 					resetKey(user);
 					break;
@@ -59,6 +56,7 @@ int startAdminModule(Database* db) {
 	return 0;
 }
 
+//管理课程
 void manageCourse(Database* db)
 {	
 	int N = 10;//一页展示课程的数目
@@ -120,14 +118,13 @@ void resetKey(Admin *user)
 	printf("\n\n  请输入您的新密码:");
 	char key[32];
 	char backupKey[32];
-	scanf("%s", key);
+	cui_inputs(key, 32, '*');
 	printf("\n\n  请再次输入您的新密码:");
-	scanf("%s", backupKey);
+	cui_inputs(backupKey, 32, '*');
 	if(!strcmp(key, backupKey))
 	{
 		system("cls");
 		printf("\n\n\n\n        设置成功");
-		printf("%s", key);
 		unsigned char psd[HASH_LEN];
 		dc_hash32(key, 0, psd);
 		memcpy((*user).key, psd, HASH_LEN);
