@@ -39,7 +39,7 @@ int startStudentModule(Database db) {
 					stu_page_classSheet(&db, stu);
 					break;
 				case '2':
-					stu_page_chooseClasses(&db, stu);
+					stu_page_chooseCourse(&db, stu);
 					break;
 				case '3':
 					break;
@@ -96,7 +96,7 @@ int stu_page_classSheet(Database* db, Student* stu) {
 }
 
 // 打开选课界面
-int stu_page_chooseClasses(Database* db, Student* stu) {
+int stu_page_chooseCourse(Database* db, Student* stu) {
 	const int ItemsPerPage = 12;
 	int pageIndex = 0;
 	char stayHere = 1;
@@ -158,15 +158,19 @@ int stu_page_chooseClasses(Database* db, Student* stu) {
 					case '9':
 						inputBuff[inputLen++] = c;
 						break;
-					case '\r':
-						// stayHere = 0;
-						keepTyping = 0;
-						sscanf(inputBuff, "%d", &hisChoice);
-						break;
 					case '\b':
 						if (inputLen) {
 							inputBuff[--inputLen] = '\0';
-							cui_putStringAt(ix + inputLen, iy, " ");
+							printf("\033[1D\033[1X");
+							cui_clearRect(ix, iy, 10, 1);
+						}
+						break;
+					case '\r':
+						sscanf(inputBuff, "%d", &hisChoice);
+						if (hisChoice >= db->courseCount) {
+							memset(inputBuff, 0, 100);
+						} else {
+							keepTyping = 0;
 						}
 						break;
 					case '\033':
@@ -181,7 +185,28 @@ int stu_page_chooseClasses(Database* db, Student* stu) {
 			if (hisChoice >= 0) {
 				// TODO 选择的课程是 hisChoice
 				// 接下来选择课程班级
+				stu_page_chooseCourseClasses(db, stu, db->courses + hisChoice);
 			}
+		}
+	}
+	return 0;
+}
+
+int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
+	char stayHere = 1;
+	while (stayHere) {
+		{  // render
+			system("cls");
+			printf("欢迎 %s 同学", stu->name);
+			int y = 1;
+			cui_putStringCenterAt(us_width / 2, y, course->name, 0);
+		}
+		char c;
+		c = getch();
+		switch (c) {
+			case '\033':
+				stayHere = 0;
+				break;
 		}
 	}
 	return 0;

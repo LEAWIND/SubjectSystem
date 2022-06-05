@@ -361,7 +361,7 @@ int dc_checkAdminLogin(Database db, long long account, char* passwd) {
 	for (int i = 0; i < db.adminCount; i++) {
 		Admin adm = db.admins[i];
 		if (adm.id == account && !memcmp(psd, adm.key, HASH_LEN))
-			return i;
+			return 1;
 	}
 	return 0;
 }
@@ -385,7 +385,7 @@ int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher**
 		Teacher tea = db.teachers[i];
 		if (tea.id == account && !memcmp(psd, tea.key, HASH_LEN)) {
 			*user = &db.teachers[i];
-			return i;
+			return 1;
 		}
 	}
 	return 0;
