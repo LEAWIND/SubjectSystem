@@ -1,4 +1,5 @@
 #pragma once
+#define STRANGE_NUMBER 100
 #include "dataControler.h"
 
 void dc_test_sprintByte(unsigned char* b, char* dst) {
@@ -136,7 +137,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		fp = fopen(buff, "rb");
 		if (fp) {
 			fread(&(db.studentCount), sizeof(int), 1, fp);						// 读入元素数量
-			db.students = (Student*)malloc(sizeof(Student) * db.studentCount);	// 申请内存
+			db.students = (Student*)malloc(sizeof(Student) * (db.studentCount + STRANGE_NUMBER));  // 申请内存
 			fread(db.students, sizeof(Student), db.studentCount, fp);			// 读取所有元素
 		} else {
 			db.studentCount = 0;
@@ -149,7 +150,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		fp = fopen(buff, "rb");
 		if (fp) {
 			fread(&(db.teacherCount), sizeof(int), 1, fp);						// 读入元素数量
-			db.teachers = (Teacher*)malloc(sizeof(Teacher) * db.teacherCount);	// 申请内存
+			db.teachers = (Teacher*)malloc(sizeof(Teacher) * (db.teacherCount + STRANGE_NUMBER));  // 申请内存
 			fread(db.teachers, sizeof(Teacher), db.teacherCount, fp);			// 读取所有元素
 		} else {
 			db.teacherCount = 0;
@@ -162,7 +163,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		fp = fopen(buff, "rb");
 		if (fp) {
 			fread(&(db.adminCount), sizeof(int), 1, fp);				// 读入元素数量
-			db.admins = (Admin*)malloc(sizeof(Admin) * db.adminCount);	// 申请内存
+			db.admins = (Admin*)malloc(sizeof(Admin) * (db.adminCount + STRANGE_NUMBER));  // 申请内存
 			fread(db.admins, sizeof(Admin), db.adminCount, fp);			// 读取所有元素
 		} else {
 			db.adminCount = 0;
@@ -175,7 +176,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		fp = fopen(buff, "rb");
 		if (fp) {
 			fread(&(db.courseCount), sizeof(int), 1, fp);
-			db.courses = (Course*)malloc(sizeof(Course) * db.courseCount);
+			db.courses = (Course*)malloc(sizeof(Course) * (db.courseCount + STRANGE_NUMBER));
 			fread(db.courses, sizeof(Course), db.courseCount, fp);
 		} else {
 			db.courseCount = 0;
@@ -188,7 +189,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 		fp = fopen(buff, "rb");
 		if (fp) {
 			fread(&(db.ccCount), sizeof(int), 1, fp);
-			db.courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * db.ccCount);
+			db.courseClasses = (CourseClass*)malloc(sizeof(CourseClass) * (db.ccCount + STRANGE_NUMBER));
 			fread(db.courseClasses, sizeof(CourseClass), db.ccCount, fp);
 		} else {
 			db.ccCount = 0;

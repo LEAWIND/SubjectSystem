@@ -46,6 +46,7 @@ typedef struct CourseClass {
 	long long students[100];  // 学生们ID
 	char room[10];			  // 上课的教室
 	int capacity;			  // 容纳最大学生数
+	int isDeleted;			  // 是否已经被删除
 } CourseClass;
 
 // 课程
@@ -55,6 +56,7 @@ typedef struct Course {
 	int availableTime;	 // 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
 	int college;		 // 所属的学院，-1代表公选
 	int point;			 // 学分
+	int isDeleted;		 // 是否已经被删除
 } Course;
 
 // 老师
@@ -64,6 +66,7 @@ typedef struct Teacher {
 	char name[NAMELEN];			  // 名字
 	char introduce[1024];		  // 简介
 	long long CourseClasses[10];  // 教授哪些课程班级
+	int isDeleted;				  // 是否已经被删除
 } Teacher;
 
 // 管理员

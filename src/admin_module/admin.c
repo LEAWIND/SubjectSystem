@@ -85,7 +85,7 @@ int strFind(char *arr[], char *str, int len)
 
 void addCourse(Database *db)
 {
-	char* neStartTime[] = {"大一上","大一下","大二上", "大二下","大三上","大三下","大四上", "大四下"};
+	char* neStartTime[] = {"大一上", "大一下", "大二上", "大二下", "大三上", "大三下", "大四上", "大四下"};	 // 各学期名称
 	cui_showCursor();
 	Course c;
 	printf("\n\n  请输入课程名称:");
@@ -93,6 +93,7 @@ void addCourse(Database *db)
 	printf("  请输入课程开课时间:");
 	char startTime[100];
 	scanf("%s", startTime);
+
 	int t = strFind(neStartTime, startTime, 8);
 	if(t == -1)
 	{
@@ -112,8 +113,11 @@ void addCourse(Database *db)
 		return;
 	}
 	printf("  请输入学分:");
-	scanf("%s", &(c.point));
+	scanf("%d", &(c.point));
+
+	// 获取新的 id
 	c.id = db->courseCount;
+	//
 	db->courses[db->courseCount++] = c;
 	printf("  创建成功！！！");
 	getch();
