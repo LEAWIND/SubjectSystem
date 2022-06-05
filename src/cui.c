@@ -132,6 +132,7 @@ void cui_strokeRect(int x, int y, int w, int h, char c) {
 		printf("%c\033[1B\033[1D", '|' | c);
 }
 
+// 放置可能换行的文本
 void cui_putWrappedText(int x, int y, int w, int h, char* str, int len) {
 	if (!len)
 		len = strlen(str);

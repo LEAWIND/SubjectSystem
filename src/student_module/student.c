@@ -72,7 +72,6 @@ int stu_page_classSheet(Database* db, Student* stu) {
 					int dx = 4 + day * (w + 1),
 						dy = y + 2 + cp * (h + 1);
 					cui_strokeRect(dx - 1, dy - 1, w + 2, h + 2, 0);  // 绘制边框
-
 					if (ccid < 0) {
 						cui_putWrappedText(dx, dy, w, h, "空", 0);
 						continue;
@@ -276,7 +275,25 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 					} else if (inlen) {
 						keepTyping = 0;
 						stayHere = 0;
-						stu_page_courseClassPreview(db, ccs[hisChoice]);
+						int res = stu_page_courseClassPreview(db, ccs[hisChoice]);
+
+						if (res) {
+							// 确认选择此课程
+							CourseClass* cc = ccs[hisChoice];
+							// db, stu, course, cc
+							{  // 修改学生课程表
+								// 遍历课程的时间段们
+								for (int i = 0; i < cc->periods[0]; i++) {
+									int p = cc->periods[i + 1];	 // 时间段下标
+									int day = p / 7, cp = p % 7;
+									stu->classSheet[day][cp] = cc->id;	// 修改课程表
+								}
+							}
+							{
+								// 修改课程班级的 学生 ID
+								cc->students[cc->students[0]++] = stu->id;
+							}
+						}
 					}
 					break;
 				case '\033':
@@ -302,24 +319,56 @@ int stu_page_courseClassPreview(Database* db, CourseClass* cc) {
 	while (stayHere) {
 		{  // render
 			char buff[100];
+			char name[100];
 			system("cls");
 			int x = 5;
 			int y = 0;
 
-			cui_putStringCenterAt(us_width / 2, y += 2, ds_getCourseById(db, cc->course)->name, 0);
-			sprintf(buff, "课程班级: %s %d 班", tea->name, cc->id_local);
+			cui_putStringCenterAt(us_width / 2, y += 1, ds_getCourseById(db, cc->course)->name, 0);
+			// 课程班级
+			sprintf(name, "课程班级: %s %d 班", tea->name, cc->id_local);
+			cui_putStringAt(x, y += 2, name);
+			// 教室
+			sprintf(buff, "教室: %s", cc->room);
+			cui_putStringAt(x, y += 1, buff);
+			// 教师介绍
+			sprintf(buff, "教师简介: %s", tea->introduce);
 			cui_putStringAt(x, y += 2, buff);
+			{  //  上课时间段（表格）
+				const int w = 14, h = 3;
+				// 边框
+				// 一周 7 天
+				for (int day = 0; day < 7; day++) {
+					// 一天 7 个时段
+					for (int cp = 0; cp < PERIODS_PER_DAY; cp++) {
+						int dx = 4 + day * (w + 1),
+							dy = y + 2 + cp * (h + 1);
+						cui_strokeRect(dx - 1, dy - 1, w + 2, h + 2, 0);  // 绘制边框
+					}
+				}
+				// 内容
+				for (int i = 0; i < cc->periods[0]; i++) {
+					int index = cc->periods[i + 1];
+					int day = index / 7,
+						cp = index % 7;
+					int dx = 4 + day * (w + 1),
+						dy = y + 2 + cp * (h + 1);
+					cui_putWrappedText(dx, dy, w, h, name, 0);
+				}
+				y += 7 * (h + 1) + 1;
+			}
+			// 按键提示
+			cui_putStringAt(x, y += 1, "按回车确认, ESC 取消 ");
 		}
 		{  // event
 			char c;
 			c = getch();
 			switch (c) {
 				case '\r':
-					// 确认选择
-					break;
+					// TODO 确认选择
+					return 1;
 				case '\033':
-					stayHere = 0;
-					break;
+					return 0;
 			}
 		}
 	}
