@@ -105,7 +105,7 @@ void dc_test_hash32() {
 	}
 }
 
-// 加载数据
+// 加载类型数组
 int dc_loadArray(int elementSize, void* p, char* fpath) {
 	FILE* fp = fopen(fpath, "rb");
 	int len;
@@ -115,7 +115,7 @@ int dc_loadArray(int elementSize, void* p, char* fpath) {
 	return len;
 }
 
-// 保存数据
+// 保存类型数组
 void dc_saveArray(int elementSize, void* p, int plen, char* fpath) {
 	FILE* fp = fopen(fpath, "wb");
 	int s = plen;
@@ -132,7 +132,7 @@ Database dc_loadEntireDatabaseIfDare(char* dir) {
 	int flag_fileNotFound;
 	char buff[50];
 	{
-		// 学生
+		// TODO 学生
 		sprintf(buff, "%s/%s", dir, "student.dat");	 // 计算文件路径
 		fp = fopen(buff, "rb");
 		if (fp) {
@@ -252,6 +252,14 @@ void dc_importRawData(Database* db, char* dirPath) {
 			}
 			fclose(fp);
 		}
+		if (1) {
+			printf("students.length = %d\n", db->studentCount);
+			for (int i = 0; i < db->studentCount; i++) {
+				Student* stu = db->students + i;
+				printf("i=%5d, .id=%lld\n", i, stu->id);
+			}
+			getch();
+		}
 	}
 	// 教师
 	{
@@ -346,7 +354,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%s", db->courseClasses[i].room);					// 教室
 				fscanf(fp, "%d", &(db->courseClasses[i].capacity));				//  容纳最大学生数
 
-				printf("课程班级: id=%lld, course=%lld\n", db->courseClasses[i].id, db->courseClasses[i].course);
+				// printf("课程班级: id=%lld, course=%lld\n", db->courseClasses[i].id, db->courseClasses[i].course);
 			}
 			fclose(fp);
 		}
@@ -358,7 +366,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 			Course* course = db->courses + i;
 			CourseClass* ccs[300];
 			int ccslen = dc_searchCourseClasses(db, course, ccs);
-			printf("课程: id=%3lld ccslen=[%2d] anme=%s\n", course->id, ccslen, course->name);
+			// printf("课程: id=%3lld ccslen=[%2d] anme=%s\n", course->id, ccslen, course->name);
 		}
 	}
 	getch();
