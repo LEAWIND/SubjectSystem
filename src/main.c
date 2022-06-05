@@ -1,11 +1,10 @@
 #include "main.h"
 int test() {
 	system("cls");
-	cui_putWrappedText(3, 4, 3, 10, "ABCDEFGHIJKLMNOPQRS", 0);
 	getch();
 	return 0;
 }
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 	// printf("\033[47m\033[30m");
 	system("color F0");
 	// return test();
@@ -31,7 +30,7 @@ int main(int argc, char* argv[]){
 				break;
 			case '3':
 				system("color F0");
-				startAdminModule(&database);	 // 管理员
+				startAdminModule(&database);  // 管理员
 				break;
 			case '\033':  // Esc
 				printf("拜拜了您嘞\n");
