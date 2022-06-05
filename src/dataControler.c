@@ -443,3 +443,11 @@ Course* ds_getCourseById(Database* db, long long id) {
 			return db->courses + i;
 	return NULL;
 }
+
+// 根据 id 获取课程班级
+CourseClass* ds_getCourseClassById(Database* db, long long id) {
+	for (int i = 0; i < db->ccCount; i++)
+		if (db->courseClasses[i].id == id)
+			return db->courseClasses + i;
+	return NULL;
+}
