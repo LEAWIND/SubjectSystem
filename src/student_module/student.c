@@ -7,7 +7,7 @@ int startStudentModule(Database db) {
 	char passwd[HASH_LEN];
 	{
 		Student* stu;
-		if (0) {
+		if (1) {
 			page_login(&account, passwd, "学生登录");
 			while (1) {
 				stu = dc_checkStudentLogin(db, account, passwd);
@@ -77,7 +77,6 @@ int stu_page_classSheet(Database* db, Student* stu) {
 						cui_putWrappedText(dx, dy, w, h, "空", 0);
 						continue;
 					} else {  // 绘制课程名称
-
 						CourseClass* cc = ds_getCourseClassById(db, ccid);
 						Course* course = ds_getCourseById(db, cc->course);
 						cui_putWrappedText(dx, dy, w, h, course->name, 0);
@@ -377,15 +376,38 @@ int stu_page_courseClassPreview(Database* db, CourseClass* cc) {
 	}
 }
 
-// TODO
+//
 int stu_page_changePassword(Database* db, Student* stu) {
 	char buff[100];
+	char npsd1[32];
+	char npsd2[32];
 	char stayHere = 1;
 	while (stayHere) {
-		{  // render
-			int x = 2, y = 0;
-			sprintf(buff, "正在修改 %s 同学的密码(*￣0￣)", stu->name);
-			cui_putStringCenterAt(us_width / 2, y += 1, buff, 0);
-		}
+		cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
+		cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
+		int x = 2, y = 0;
+		sprintf(buff, "正在修改 %s 同学的密码(*￣0￣)", stu->name);
+		cui_putStringCenterAt(us_width / 2, y += 1, buff, 0);
+
+		cui_putStringAt(x, y += 2, "请输入新密码:________________");
+		cui_moveCursor(-16, 0);
+		cui_setFontStyle(4);
+		cui_inputs(npsd1, 32, '*');
+		cui_setFontStyle(24);
+
+		cui_putStringAt(x, y += 2, "再次输入密码:________________");
+		cui_moveCursor(-16, 0);
+		cui_setFontStyle(4);
+		cui_inputs(npsd2, 32, '*');	 // 输入密码
+		cui_setFontStyle(24);
+
+		if (!strcmp(npsd1, npsd2)) {
+			// 若相等
+			stayHere = 0;
+
+			// 修改密码
+			dc_hash32(npsd1, 32, npsd2);
+			memcpy(stu->key, npsd2, 32);
+		};
 	}
 }
