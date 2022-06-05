@@ -25,7 +25,7 @@ void startSection(Database db, Teacher* user);
  * @return 返回用户的选项
  */
 
-int showMenuTeacher(char *name);
+char showMenuTeacher(char *name);
 
 /**
  * @brief 管理班级信息

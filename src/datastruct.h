@@ -25,6 +25,8 @@ char* colleges[] = {
 	"英语语言文学系"	   // 17
 };
 
+char* neStartTime[] = {"大一上","大一下","大二上", "大二下","大三上","大三下","大四上", "大四下"};
+
 // 学生
 typedef struct Student {
 	long long id;							   // ID 前4位代表入学年份
