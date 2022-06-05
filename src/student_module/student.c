@@ -1,6 +1,7 @@
 #pragma once
 
 int startStudentModule(Database db) {
+	system("color F0");
 	system("cls");
 	long long account;
 	char passwd[HASH_LEN];
@@ -202,44 +203,76 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 
 // 选择课程班级
 int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
+	char inputBuff[100];
+	int inlen = 0;
 	char buff[100];
 	char stayHere = 1;
+	char keepTyping = 1;
+	int hisChoice;
 	while (stayHere) {
-		{  // render
-			system("cls");
-			printf("欢迎 %s 同学", stu->name);
-			int x = us_width / 2 - 20;
-			int y = 0;
-			cui_putStringCenterAt(us_width / 2, y += 2, course->name, 0);
+		// render
+		system("cls");
+		printf("欢迎 %s 同学", stu->name);
+		int x = us_width / 2 - 20;
+		int y = 0;
+		cui_putStringCenterAt(us_width / 2, y += 2, course->name, 0);
 
-			// 搜索所有对应的课程班级
-			CourseClass* ccs[100];
-			int ccslen = dc_searchCourseClasses(db, course, ccs);
+		// 搜索所有对应的课程班级
+		CourseClass* ccs[100];
+		int ccslen = dc_searchCourseClasses(db, course, ccs);
 
-			if (ccslen) {
-				// 打印所有对应的课程班级
-
-				sprintf(buff, "%15s%20s", "教师", "教室");
+		if (ccslen) {
+			// 打印所有对应的课程班级
+			sprintf(buff, "%15s%20s", "教师", "教室");
+			cui_putStringAt(x, y += 2, buff);
+			for (int i = 0; i < ccslen; i++) {
+				if (!(ccs[i]))
+					continue;
+				sprintf(buff, "%15s%20s", db->teachers[ccs[i]->teacherID].name, "W4508");
 				cui_putStringAt(x, y += 2, buff);
-				for (int i = 0; i < ccslen; i++) {
-					if (!(ccs[i]))
-						continue;
-					sprintf(buff, "%15s%20s", db->teachers[ccs[i]->teacherID].name, "W4508");
-					cui_putStringAt(x, y += 2, buff);
-					cui_strokeRect(x - 1, y - 1, 40, 3, 0);
-				}
-			} else {
-				cui_putStringCenterAt(us_width / 2, y += 2, "没有对应的课程班级可供选择。", 0);
+				cui_strokeRect(x - 1, y - 1, 40, 3, 0);
 			}
+		} else {
+			cui_putStringCenterAt(us_width / 2, y += 2, "没有对应的课程班级可供选择。", 0);
 		}
+
 		char c;
-		c = getch();
-		switch (c) {
-			case '\033':
-				stayHere = 0;
-				break;
-			default:
-				break;
+		while (keepTyping) {
+			c = getch();
+			switch (c) {
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					inputBuff[inlen++] = c;
+					break;
+				case '\b':
+					if (inlen) {
+						inputBuff[--inlen] = '\0';
+						printf("\033[1D\033[1X");
+					}
+					break;
+				case '\r':
+					sscanf(inputBuff, "%d", &hisChoice);
+					if (hisChoice >= ccslen) {
+						memset(inputBuff, 0, 100);
+						inlen = 0;
+						// cui_clearRect()
+					}
+					break;
+				case '\033':
+					keepTyping = 0;
+					stayHere = 0;
+					break;
+				default:
+					break;
+			}
 		}
 	}
 	return 0;

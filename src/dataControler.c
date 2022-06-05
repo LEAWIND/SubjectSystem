@@ -313,6 +313,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%s", &(db->courses[i].name));  // 课程名称
 				fscanf(fp, "%d", &(db->courses[i].availableTime));	// 可以选该课的学期
 				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学院
+				printf("学院: %d\n", db->courses[i].college);
 				fscanf(fp, "%d", &(db->courses[i].point));			// 课程学分
 
 				// printf("%lld\n", db->courses[i].id);
@@ -332,6 +333,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%lld", &(db->courseClasses[i].id));			//课程班级 ID
 				fscanf(fp, "%d", &(db->courseClasses[i].id_local));		// 本地 ID
 				fscanf(fp, "%lld", &(db->courseClasses[i].course));		//课程
+				printf("课程id: %d\n", db->courseClasses[i].course);
 				fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));	// 老师 ID
 
 				fscanf(fp, "%d", db->courseClasses[i].periods);	 // 时间段数量
@@ -343,8 +345,6 @@ void dc_importRawData(Database* db, char* dirPath) {
 					fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);	// 学生 ID
 				fscanf(fp, "%s", db->courseClasses[i].room);					// 教室
 				fscanf(fp, "%d", &(db->courseClasses[i].capacity));				//  容纳最大学生数
-
-				// printf("%s\n", db->courseClasses[i].room);
 			}
 			fclose(fp);
 		}
@@ -392,7 +392,7 @@ int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher**
 	return 0;
 }
 
-// 搜索 课程 对应的所有 课程班级
+// TODO 搜索 课程 对应的所有 课程班级
 int dc_searchCourseClasses(Database* db, Course* course, CourseClass** result) {
 	int len = 0;
 	for (int i = 0; i < db->courseCount; i++) {
