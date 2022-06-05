@@ -5,16 +5,17 @@ int startTeacherModule(Database db) {
 	Teacher* user;//正在使用的用户
 
 	//===============跳过登入
-	// long long account;//教师输入的账号
-	// char passwd[HASH_LEN];//输入的密码
-	// {
-	// 	page_login(&account, passwd, "教师登录");
-	// 	while (!dc_checkTeacherLogin(db, account, passwd, &user)) {
-	// 		page_login(&account, passwd, "教师登录: 账号或密码错误，请重新输入");
-	// 	}
-	// }
+	long long account;//教师输入的账号
+	char passwd[HASH_LEN];//输入的密码
+	{
+		page_login(&account, passwd, "教师登录");
+		while (!dc_checkTeacherLogin(db, account, passwd, &user)) {
+			page_login(&account, passwd, "教师登录: 账号或密码错误，请重新输入");
+		}
+	}
 	//====================
-	user = db.teachers;
+	// user = db.teachers;
+
 	startSection(db, user);
 }
 
@@ -76,7 +77,8 @@ Student* findStudent(Student* students, long long id, int l, int r)
 	while(l < r)
 	{
 		int mid = l + r >> 1;
-		if(students[mid].id >= id) r = mid;
+		//printf("--mid students[%d].id:%lld --\n", mid, students[mid].id);
+		if(students[mid].id%100000000 >= id%100000000) r = mid;
 		else l = mid+1;
 	}
 	if(students[l].id != id) return NULL;
@@ -114,8 +116,8 @@ void showCS(int posClass, int posStudent, Database db, Teacher* user){
 	for(i = posStudent*N + 1; i <= (posStudent+1)*N; i++)
 	{
 		Student* stu = findStudent(db.students,CC->students[i], 0, db.studentCount-1);
-		if(stu) printf("   %-12lld  %-6s    %-8s\n",stu->id, stu->name, colleges[stu->college]);
-		else printf("-\n");
+		if(stu != NULL) printf("   %-12lld  %-13s    %-8s\n",stu->id, stu->name, colleges[stu->college]);
+		else printf("\n");
 	}
 	printf("========================================================================\n");
 	printf("左箭头:上一页，右箭头:下一页，上箭头:上一个班级，下箭头:下一个班级 d:删除学生\n");
@@ -184,7 +186,7 @@ void showCS(int posClass, int posStudent, Database db, Teacher* user){
 					{
 						if(CC->students[i] == stuId) break;
 					}
-					for(i = i; i < CC->students[0]; i++)
+					for(i = i; i <= CC->students[0]; i++)
 					{
 						CC->students[i] = CC->students[i+1];
 					}

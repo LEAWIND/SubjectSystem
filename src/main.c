@@ -17,6 +17,10 @@ int main(int argc, char* argv[]){
 	if (!database.studentCount)
 		dc_importRawData(&database, "data/raw");  // 导入数据
 	char stayHere = 1;
+
+	int i;
+	for(i = 0; i < 100; i++) printf("%d:%lld\n",i, database.students[i].id);
+
 	while (stayHere) {
 		system("cls");						 // 清空缓冲区
 		char userType = page_getUserType();	 // 进入用户类型选择界面
