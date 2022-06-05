@@ -7,7 +7,7 @@ int startStudentModule(Database db) {
 	char passwd[HASH_LEN];
 	{
 		Student* stu;
-		if (1) {
+		if (!DEBUG_MODE) {
 			page_login(&account, passwd, "学生登录");
 			while (1) {
 				stu = dc_checkStudentLogin(db, account, passwd);
@@ -293,7 +293,8 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 							}
 							{
 								// 修改课程班级的 学生 ID
-								cc->students[cc->students[0]++] = stu->id;
+								cc->students[cc->students[0] + 1] = stu->id;
+								cc->students[0]++;
 							}
 						}
 					}

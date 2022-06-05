@@ -1,4 +1,5 @@
 #pragma once
+#define DEBUG_MODE 1
 
 #define NAMELEN 100		   // 名字最大长度
 #define HASH_LEN 32		   // 密码哈希值长度
