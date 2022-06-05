@@ -53,7 +53,7 @@ typedef struct Course {
 	long long id;		 // 课程 ID
 	char name[NAMELEN];	 // 课程名称
 	int availableTime;	 // 开课学期 (1:大一上|2:大一下|3:大二上|4:大二下|5678)
-	char college[NAMELEN];	// 所属的学院，-1代表公选
+	int college;		 // 所属的学院，-1代表公选
 	int point;			 // 学分
 } Course;
 

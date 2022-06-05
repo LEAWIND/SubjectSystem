@@ -312,7 +312,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%lld", &(db->courses[i].id));  // 课程 ID
 				fscanf(fp, "%s", &(db->courses[i].name));  // 课程名称
 				fscanf(fp, "%d", &(db->courses[i].availableTime));	// 可以选该课的学期
-				fscanf(fp, "%s", &(db->courses[i].college));		// 所属学院
+				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学院
 				fscanf(fp, "%d", &(db->courses[i].point));			// 课程学分
 
 				// printf("%lld\n", db->courses[i].id);
