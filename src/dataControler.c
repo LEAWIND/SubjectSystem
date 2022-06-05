@@ -289,7 +289,8 @@ void dc_importRawData(Database* db, char* dirPath) {
 			db->admins = (Admin*)malloc(sizeof(Admin) * db->adminCount);  // 申请内存
 			for (int i = 0; i < db->adminCount; i++) {
 				fscanf(fp, "%lld", &(db->admins[i].id));  // 管理员 ID
-				{										  // 密码
+
+				{  // 密码
 					char buff_passwd[32];
 					memset(buff_passwd, 0, 32);
 					fscanf(fp, "%s", buff_passwd);
@@ -313,7 +314,6 @@ void dc_importRawData(Database* db, char* dirPath) {
 				fscanf(fp, "%s", &(db->courses[i].name));  // 课程名称
 				fscanf(fp, "%d", &(db->courses[i].availableTime));	// 可以选该课的学期
 				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学院
-				printf("学院: %d\n", db->courses[i].college);
 				fscanf(fp, "%d", &(db->courses[i].point));			// 课程学分
 
 				// printf("%lld\n", db->courses[i].id);
@@ -332,8 +332,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 			for (int i = 0; i < db->ccCount; i++) {
 				fscanf(fp, "%lld", &(db->courseClasses[i].id));			//课程班级 ID
 				fscanf(fp, "%d", &(db->courseClasses[i].id_local));		// 本地 ID
-				fscanf(fp, "%lld", &(db->courseClasses[i].course));		//课程
-				printf("课程id: %d\n", db->courseClasses[i].course);
+				fscanf(fp, "%lld", &(db->courseClasses[i].course));		//课程 ID
 				fscanf(fp, "%lld", &(db->courseClasses[i].teacherID));	// 老师 ID
 
 				fscanf(fp, "%d", db->courseClasses[i].periods);	 // 时间段数量
@@ -345,10 +344,23 @@ void dc_importRawData(Database* db, char* dirPath) {
 					fscanf(fp, "%lld", db->courseClasses[i].students + j + 1);	// 学生 ID
 				fscanf(fp, "%s", db->courseClasses[i].room);					// 教室
 				fscanf(fp, "%d", &(db->courseClasses[i].capacity));				//  容纳最大学生数
+
+				printf("课程班级: id=%lld, course=%lld\n", db->courseClasses[i].id, db->courseClasses[i].course);
 			}
 			fclose(fp);
 		}
 	}
+	if (0) {
+		int summer = 0;
+		// 遍历课程
+		for (int i = 0; i < db->courseCount; i++) {
+			Course* course = db->courses + i;
+			CourseClass* ccs[300];
+			int ccslen = dc_searchCourseClasses(db, course, ccs);
+			printf("课程: id=%3lld ccslen=[%2d] anme=%s\n", course->id, ccslen, course->name);
+		}
+	}
+	getch();
 };
 
 // 检查管理员账号密码是否正确
@@ -378,6 +390,7 @@ Student* dc_checkStudentLogin(Database db, long long account, char* passwd) {
 	}
 	return NULL;
 }
+
 // 检查教师账号密码是否正确
 int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user) {
 	unsigned char psd[HASH_LEN];
@@ -392,10 +405,11 @@ int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher**
 	return 0;
 }
 
-// TODO 搜索 课程 对应的所有 课程班级
+// 搜索 课程 对应的所有 课程班级
 int dc_searchCourseClasses(Database* db, Course* course, CourseClass** result) {
 	int len = 0;
-	for (int i = 0; i < db->courseCount; i++) {
+	// 在课程班级中搜索
+	for (int i = 0; i < db->ccCount; i++) {
 		CourseClass* cc = db->courseClasses + i;
 		if (cc->course == course->id) {
 			if (result)
