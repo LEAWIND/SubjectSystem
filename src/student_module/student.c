@@ -7,7 +7,7 @@ int startStudentModule(Database db) {
 	char passwd[HASH_LEN];
 	{
 		Student* stu;
-		if (0) {
+		if (1) {
 			page_login(&account, passwd, "学生登录");
 			while (1) {
 				stu = dc_checkStudentLogin(db, account, passwd);
@@ -43,6 +43,7 @@ int startStudentModule(Database db) {
 					stu_page_chooseCourse(&db, stu);
 					break;
 				case '3':
+					stu_page_changePassword(&db, stu);
 					break;
 				case '\033':
 					stayHere = 0;
@@ -53,7 +54,7 @@ int startStudentModule(Database db) {
 	printf("Successfully login: student module\n");
 }
 
-// 打开课程表
+// 绘制学生的课程表
 int stu_page_classSheet(Database* db, Student* stu) {
 	char stayHere = 1;
 	while (stayHere) {
@@ -63,7 +64,7 @@ int stu_page_classSheet(Database* db, Student* stu) {
 			int y = 1;
 			cui_putStringCenterAt(us_width / 2, y, "课程表", 0);
 
-			const int w = 11, h = 4;
+			const int w = 15, h = 3;
 			// 一周 7 天
 			for (int day = 0; day < 7; day++) {
 				// 一天 7 个时段
@@ -75,11 +76,10 @@ int stu_page_classSheet(Database* db, Student* stu) {
 					if (ccid < 0) {
 						cui_putWrappedText(dx, dy, w, h, "空", 0);
 						continue;
-					} else {
-						CourseClass* courseClass = db->courseClasses + ccid;
-						Course* course = db->courses + courseClass->course;
+					} else {  // 绘制课程名称
+						CourseClass* cc = ds_getCourseClassById(db, ccid);
+						Course* course = ds_getCourseById(db, cc->course);
 						cui_putWrappedText(dx, dy, w, h, course->name, 0);
-						// printf("%s\n", course->name);
 					}
 				}
 			}
@@ -122,10 +122,10 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 					Course* course = db->courses + j + i;
 					y += 2;
 					sprintf(buff, "%3d. %s", j + i, course->name);
-					cui_putStringAt(x, y, buff);
-					cui_strokeRect(x - 1, y - 1, 70, 3, 0);
+					cui_putStringAt(x, y, buff);			 // 打印课程名称
+					cui_strokeRect(x - 1, y - 1, 70, 3, 0);	 // 绘制边框
 
-					sprintf(buff, "%2d", dc_searchCourseClasses(db, course, NULL));
+					sprintf(buff, "%2d", dc_searchCourseClasses(db, course, NULL));	 // 打印对应的课程班级数量
 					cui_putStringAt(x + 50, y, buff);
 					cui_strokeRect(x - 1, y - 1, 70, 3, 0);
 				}
@@ -133,7 +133,7 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 			// 页数提示
 			sprintf(buff, "[%d/%d] 按 ',' 和 '.' 键翻页", pageIndex, db->courseCount / ItemsPerPage);
 			cui_putStringAt(5, y += 2, buff);
-			cui_putStringAt(2, y += 1, "请输入课程序号:");
+			cui_putStringAt(2, y += 1, "请输入课程序号：");
 
 			ix = 5;
 			iy = y += 1;
@@ -224,21 +224,22 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 		CourseClass* ccs[100];
 		int ccslen = dc_searchCourseClasses(db, course, ccs);
 
+		// 打印所有对应的课程班级
 		if (ccslen) {
-			// 打印所有对应的课程班级
 			sprintf(buff, "%15s%20s", "教师", "教室");
 			cui_putStringAt(x, y += 2, buff);
 			for (int i = 0; i < ccslen; i++) {
 				if (!(ccs[i]))
 					continue;
+				// 下标、教师姓名、教室
 				sprintf(buff, "[%2d] %13s%20s", i, db->teachers[ccs[i]->teacherID].name, "W4508");
 				cui_putStringAt(x, y += 2, buff);
 				cui_strokeRect(x - 1, y - 1, 40, 3, 0);
 			}
+			cui_putStringAt(2, y += 3, "请输入课程班级序号:");
 		} else {
 			cui_putStringCenterAt(us_width / 2, y += 2, "没有对应的课程班级可供选择。", 0);
 		}
-		cui_putStringAt(2, y += 3, "请输入课程班级序号:");
 		ix = 5;
 		iy = y += 1;
 		cui_setCursorPos(ix, iy);
@@ -278,15 +279,16 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 						int res = stu_page_courseClassPreview(db, ccs[hisChoice]);
 
 						if (res) {
-							// 确认选择此课程
+							// TODO 确认选择此课程
 							CourseClass* cc = ccs[hisChoice];
 							// db, stu, course, cc
 							{  // 修改学生课程表
 								// 遍历课程的时间段们
 								for (int i = 0; i < cc->periods[0]; i++) {
 									int p = cc->periods[i + 1];	 // 时间段下标
-									int day = p / 7, cp = p % 7;
-									stu->classSheet[day][cp] = cc->id;	// 修改课程表
+									int day = p / 7;
+									int cp = p % 7;
+									stu->classSheet[day][cp] = cc->id;	// 修改课程表 对应位置 为课程班级id
 								}
 							}
 							{
@@ -326,16 +328,16 @@ int stu_page_courseClassPreview(Database* db, CourseClass* cc) {
 
 			cui_putStringCenterAt(us_width / 2, y += 1, ds_getCourseById(db, cc->course)->name, 0);
 			// 课程班级
-			sprintf(name, "课程班级: %s %d 班", tea->name, cc->id_local);
+			sprintf(name, "%s%3d班", tea->name, cc->id_local);
 			cui_putStringAt(x, y += 2, name);
 			// 教室
-			sprintf(buff, "教室: %s", cc->room);
+			sprintf(buff, "教室：%s", cc->room);
 			cui_putStringAt(x, y += 1, buff);
 			// 教师介绍
-			sprintf(buff, "教师简介: %s", tea->introduce);
+			sprintf(buff, "教师简介：%s", tea->introduce);
 			cui_putStringAt(x, y += 2, buff);
 			{  //  上课时间段（表格）
-				const int w = 14, h = 3;
+				const int w = 15, h = 2;
 				// 边框
 				// 一周 7 天
 				for (int day = 0; day < 7; day++) {
@@ -371,5 +373,41 @@ int stu_page_courseClassPreview(Database* db, CourseClass* cc) {
 					return 0;
 			}
 		}
+	}
+}
+
+//
+int stu_page_changePassword(Database* db, Student* stu) {
+	char buff[100];
+	char npsd1[32];
+	char npsd2[32];
+	char stayHere = 1;
+	while (stayHere) {
+		cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
+		cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
+		int x = 2, y = 0;
+		sprintf(buff, "正在修改 %s 同学的密码(*￣0￣)", stu->name);
+		cui_putStringCenterAt(us_width / 2, y += 1, buff, 0);
+
+		cui_putStringAt(x, y += 2, "请输入新密码:________________");
+		cui_moveCursor(-16, 0);
+		cui_setFontStyle(4);
+		cui_inputs(npsd1, 32, '*');
+		cui_setFontStyle(24);
+
+		cui_putStringAt(x, y += 2, "再次输入密码:________________");
+		cui_moveCursor(-16, 0);
+		cui_setFontStyle(4);
+		cui_inputs(npsd2, 32, '*');	 // 输入密码
+		cui_setFontStyle(24);
+
+		if (!strcmp(npsd1, npsd2)) {
+			// 若相等
+			stayHere = 0;
+
+			// 修改密码
+			dc_hash32(npsd1, 32, npsd2);
+			memcpy(stu->key, npsd2, 32);
+		};
 	}
 }
