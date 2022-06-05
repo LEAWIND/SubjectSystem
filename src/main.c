@@ -6,6 +6,8 @@ int test() {
 	return 0;
 }
 int main(int argc, char* argv[]){
+	// printf("\033[47m\033[30m");
+	system("color F0");
 	// return test();
 	if (argc > 1)
 		SetCurrentDirectory(argv[1]);
