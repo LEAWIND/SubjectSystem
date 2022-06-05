@@ -420,3 +420,26 @@ int dc_searchCourseClasses(Database* db, Course* course, CourseClass** result) {
 	}
 	return len;
 }
+// 根据 id 获取教师
+Teacher* ds_getTeacherById(Database* db, long long id) {
+	for (int i = 0; i < db->teacherCount; i++)
+		if (db->teachers[i].id == id)
+			return db->teachers + i;
+	return NULL;
+}
+
+// 根据 id 获取学生
+Student* ds_getStudentById(Database* db, long long id) {
+	for (int i = 0; i < db->studentCount; i++)
+		if (db->students[i].id == id)
+			return db->students + i;
+	return NULL;
+}
+
+// 根据 id 获取课程
+Course* ds_getCourseById(Database* db, long long id) {
+	for (int i = 0; i < db->courseCount; i++)
+		if (db->courses[i].id == id)
+			return db->courses + i;
+	return NULL;
+}

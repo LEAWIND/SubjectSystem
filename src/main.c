@@ -26,9 +26,11 @@ int main(int argc, char* argv[]){
 				startStudentModule(database);  // 学生
 				break;
 			case '2':
+				system("color F0");
 				startTeacherModule(database);  //教师
 				break;
 			case '3':
+				system("color F0");
 				startAdminModule(&database);	 // 管理员
 				break;
 			case '\033':  // Esc

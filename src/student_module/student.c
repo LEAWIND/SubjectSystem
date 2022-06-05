@@ -165,7 +165,8 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 					case '7':
 					case '8':
 					case '9':
-						inputBuff[inputLen++] = c;
+						if (inputLen < 10)
+							inputBuff[inputLen++] = c;
 						break;
 					case '\b':
 						if (inputLen) {
@@ -204,7 +205,10 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 // 选择课程班级
 int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 	char inputBuff[100];
+	memset(inputBuff, 0, 100);
 	int inlen = 0;
+	int ix, iy;
+
 	char buff[100];
 	char stayHere = 1;
 	char keepTyping = 1;
@@ -228,13 +232,17 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 			for (int i = 0; i < ccslen; i++) {
 				if (!(ccs[i]))
 					continue;
-				sprintf(buff, "%15s%20s", db->teachers[ccs[i]->teacherID].name, "W4508");
+				sprintf(buff, "[%2d] %13s%20s", i, db->teachers[ccs[i]->teacherID].name, "W4508");
 				cui_putStringAt(x, y += 2, buff);
 				cui_strokeRect(x - 1, y - 1, 40, 3, 0);
 			}
 		} else {
 			cui_putStringCenterAt(us_width / 2, y += 2, "没有对应的课程班级可供选择。", 0);
 		}
+		cui_putStringAt(2, y += 3, "请输入课程班级序号:");
+		ix = 5;
+		iy = y += 1;
+		cui_setCursorPos(ix, iy);
 
 		char c;
 		while (keepTyping) {
@@ -250,7 +258,8 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 				case '7':
 				case '8':
 				case '9':
-					inputBuff[inlen++] = c;
+					if (inlen < 10)
+						inputBuff[inlen++] = c;
 					break;
 				case '\b':
 					if (inlen) {
@@ -263,7 +272,11 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 					if (hisChoice >= ccslen) {
 						memset(inputBuff, 0, 100);
 						inlen = 0;
-						// cui_clearRect()
+						cui_clearRect(ix, iy, 10, 1);
+					} else if (inlen) {
+						keepTyping = 0;
+						stayHere = 0;
+						stu_page_courseClassPreview(db, ccs[hisChoice]);
 					}
 					break;
 				case '\033':
@@ -273,6 +286,7 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 				default:
 					break;
 			}
+			cui_putStringAt(ix, iy, inputBuff);
 		}
 	}
 	return 0;
@@ -280,4 +294,33 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 
 // 课程班级预览
 int stu_page_courseClassPreview(Database* db, CourseClass* cc) {
+	Teacher* tea = ds_getTeacherById(db, cc->teacherID);
+	if (!tea) {
+		getch();
+	}
+	char stayHere = 1;
+	while (stayHere) {
+		{  // render
+			char buff[100];
+			system("cls");
+			int x = 5;
+			int y = 0;
+
+			cui_putStringCenterAt(us_width / 2, y += 2, ds_getCourseById(db, cc->course)->name, 0);
+			sprintf(buff, "课程班级: %s %d 班", tea->name, cc->id_local);
+			cui_putStringAt(x, y += 2, buff);
+		}
+		{  // event
+			char c;
+			c = getch();
+			switch (c) {
+				case '\r':
+					// 确认选择
+					break;
+				case '\033':
+					stayHere = 0;
+					break;
+			}
+		}
+	}
 }
