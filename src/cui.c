@@ -103,27 +103,28 @@ void cui_clearRect(int x, int y, int w, int h) {
 
 // 绘制矩形边框
 void cui_strokeRect(int x, int y, int w, int h, char c) {
+	char cornetChar = '+';
 	// 移动光标
 	printf("\033[%d;%dH", 1 + y, 1 + x);
 	// 左上
-	putchar('*' | c);
+	putchar(cornetChar | c);
 	// 上
 	for (int i = 2; i < w; i++)
 		putchar('-' | c);
 	// 右上
-	putchar('*' | c);
+	putchar(cornetChar | c);
 	// 移动光标
 	printf("\033[%d;%dH", 2 + y, 1 + x);
 	// 左
 	for (int i = 2; i < h; i++)
 		printf("%c\033[1B\033[1D", '|' | c);
 	// 左下
-	putchar('*' | c);
+	putchar(cornetChar | c);
 	// 下
 	for (int i = 2; i < w; i++)
 		putchar('-' | c);
 	// 右下
-	putchar('*' | c);
+	putchar(cornetChar | c);
 	// 移动光标
 	printf("\033[%d;%dH", 2 + y, x + w);
 	// 右

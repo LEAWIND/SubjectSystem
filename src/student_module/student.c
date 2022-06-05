@@ -113,22 +113,30 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 			int y = 5;
 			// 列出本页所有课程
 			{
+				int x = 3;
+				cui_putStringAt(x + 0, y, "序号");
+				cui_putStringAt(x + 5, y, "课程名称");
+				cui_putStringAt(x + 50, y, "课程班级数量");
 				int j = pageIndex * ItemsPerPage;  // 本页第一条的下标
 				for (int i = 0; i < ItemsPerPage && j + i < db->courseCount; i++) {
 					Course* course = db->courses + j + i;
-					int x = 3;
 					y += 2;
-					sprintf(buff, "%d. %s", j + i, course->name);
+					sprintf(buff, "%3d. %s", j + i, course->name);
 					cui_putStringAt(x, y, buff);
-					cui_strokeRect(x - 1, y - 1, 40, 3, 0);
+					cui_strokeRect(x - 1, y - 1, 70, 3, 0);
+
+					sprintf(buff, "%2d", dc_searchCourseClasses(db, course, NULL));
+					cui_putStringAt(x + 50, y, buff);
+					cui_strokeRect(x - 1, y - 1, 70, 3, 0);
 				}
 			}
 			// 页数提示
 			sprintf(buff, "[%d/%d] 按 ',' 和 '.' 键翻页", pageIndex, db->courseCount / ItemsPerPage);
 			cui_putStringAt(5, y += 2, buff);
+			cui_putStringAt(2, y += 1, "请输入课程序号:");
 
 			ix = 5;
-			iy = y += 2;
+			iy = y += 1;
 			cui_setCursorPos(ix, iy);
 		}
 		{
@@ -143,7 +151,7 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 						keepTyping = 0;
 						break;
 					case '.':
-						pageIndex += pageIndex < db->courseCount / ItemsPerPage ? 1 : 0;
+						pageIndex += (pageIndex < (db->courseCount / ItemsPerPage)) ? 1 : 0;
 						keepTyping = 0;
 						break;
 					case '0':
@@ -162,13 +170,14 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 						if (inputLen) {
 							inputBuff[--inputLen] = '\0';
 							printf("\033[1D\033[1X");
-							cui_clearRect(ix, iy, 10, 1);
 						}
 						break;
 					case '\r':
 						sscanf(inputBuff, "%d", &hisChoice);
 						if (hisChoice >= db->courseCount) {
 							memset(inputBuff, 0, 100);
+							inputLen = 0;
+							cui_clearRect(ix, iy, 10, 1);
 						} else {
 							keepTyping = 0;
 						}
@@ -183,23 +192,45 @@ int stu_page_chooseCourse(Database* db, Student* stu) {
 				cui_putStringAt(ix, iy, inputBuff);
 			}
 			if (hisChoice >= 0) {
-				// TODO 选择的课程是 hisChoice
-				// 接下来选择课程班级
-				stu_page_chooseCourseClasses(db, stu, db->courses + hisChoice);
+				// 选择的课程是 hisChoice
+				stu_page_chooseCourseClasses(db, stu, db->courses + hisChoice);	 // 选择课程班级
 			}
 		}
 	}
 	return 0;
 }
 
+// 选择课程班级
 int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
+	char buff[100];
 	char stayHere = 1;
 	while (stayHere) {
 		{  // render
 			system("cls");
 			printf("欢迎 %s 同学", stu->name);
-			int y = 1;
-			cui_putStringCenterAt(us_width / 2, y, course->name, 0);
+			int x = us_width / 2 - 20;
+			int y = 0;
+			cui_putStringCenterAt(us_width / 2, y += 2, course->name, 0);
+
+			// 搜索所有对应的课程班级
+			CourseClass* ccs[100];
+			int ccslen = dc_searchCourseClasses(db, course, ccs);
+
+			if (ccslen) {
+				// 打印所有对应的课程班级
+
+				sprintf(buff, "%15s%20s", "教师", "教室");
+				cui_putStringAt(x, y += 2, buff);
+				for (int i = 0; i < ccslen; i++) {
+					if (!(ccs[i]))
+						continue;
+					sprintf(buff, "%15s%20s", db->teachers[ccs[i]->teacherID].name, "W4508");
+					cui_putStringAt(x, y += 2, buff);
+					cui_strokeRect(x - 1, y - 1, 40, 3, 0);
+				}
+			} else {
+				cui_putStringCenterAt(us_width / 2, y += 2, "没有对应的课程班级可供选择。", 0);
+			}
 		}
 		char c;
 		c = getch();
@@ -207,7 +238,13 @@ int stu_page_chooseCourseClasses(Database* db, Student* stu, Course* course) {
 			case '\033':
 				stayHere = 0;
 				break;
+			default:
+				break;
 		}
 	}
 	return 0;
+}
+
+// 课程班级预览
+int stu_page_courseClassPreview(Database* db, CourseClass* cc) {
 }

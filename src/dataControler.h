@@ -102,4 +102,13 @@ Student* dc_checkStudentLogin(Database db, long long account, char* passwd);
  */
 int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher** user);
 
+/**
+ * @brief 搜索 课程 对应的所有 课程班级
+ * @param db     数据库指针
+ * @param course 课程指针
+ * @param result 结果存放数组
+ * @return {int} 结果数量
+ */
+int dc_searchCourseClasses(Database* db, Course* course, CourseClass** result);
+
 #include "dataControler.c"

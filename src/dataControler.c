@@ -311,11 +311,8 @@ void dc_importRawData(Database* db, char* dirPath) {
 			for (int i = 0; i < db->courseCount; i++) {
 				fscanf(fp, "%lld", &(db->courses[i].id));  // 课程 ID
 				fscanf(fp, "%s", &(db->courses[i].name));  // 课程名称
-				// fscanf(fp, "%lld", &(db->courses[i].CourseClasses));  // 该课程对应的课程班级数量
-				// for (int j = 0; j < db->courses[i].CourseClasses[0]; j++)
-				// 	fscanf(fp, "%lld", db->courses[i].CourseClasses + j + 1);  // 课程班级
 				fscanf(fp, "%d", &(db->courses[i].availableTime));	// 可以选该课的学期
-				fscanf(fp, "%d", &(db->courses[i].college));		// 所属学院
+				fscanf(fp, "%s", &(db->courses[i].college));		// 所属学院
 				fscanf(fp, "%d", &(db->courses[i].point));			// 课程学分
 
 				// printf("%lld\n", db->courses[i].id);
@@ -393,4 +390,18 @@ int dc_checkTeacherLogin(Database db, long long account, char* passwd, Teacher**
 		}
 	}
 	return 0;
+}
+
+// 搜索 课程 对应的所有 课程班级
+int dc_searchCourseClasses(Database* db, Course* course, CourseClass** result) {
+	int len = 0;
+	for (int i = 0; i < db->courseCount; i++) {
+		CourseClass* cc = db->courseClasses + i;
+		if (cc->course == course->id) {
+			if (result)
+				result[len] = cc;
+			len++;
+		}
+	}
+	return len;
 }
