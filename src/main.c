@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 				startTeacherModule(database);  //教师
 				break;
 			case '3':
-				startAdminModule(database);	 // 管理员
+				startAdminModule(&database);	 // 管理员
 				break;
 			case '\033':  // Esc
 				printf("拜拜了您嘞\n");

@@ -77,9 +77,10 @@ void dc_importRawData(Database* db, char* dirPath);
  * @param db Database 结构体
  * @param account 账号
  * @param passwd 密码原文
+ * @parsm user 正在登入的管理员
  * @return 1:匹配成功|0:账号或密码错误
  */
-int dc_checkAdminLogin(Database db, long long account, char* passwd);
+int dc_checkAdminLogin(Database db, long long account, char* passwd, Admin ** user);
 
 /**
  * @brief 检查学生账号密码是否正确，如果正确则返回学生结构体地址

@@ -355,13 +355,17 @@ void dc_importRawData(Database* db, char* dirPath) {
 };
 
 // 检查管理员账号密码是否正确
-int dc_checkAdminLogin(Database db, long long account, char* passwd) {
+int dc_checkAdminLogin(Database db, long long account, char* passwd, Admin** user) {
 	unsigned char psd[HASH_LEN];
 	dc_hash32(passwd, 0, psd);
 	for (int i = 0; i < db.adminCount; i++) {
 		Admin adm = db.admins[i];
 		if (adm.id == account && !memcmp(psd, adm.key, HASH_LEN))
+		{
+			*user = &(db.admins[i]);
 			return 1;
+		}
+			
 	}
 	return 0;
 }

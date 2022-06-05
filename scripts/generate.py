@@ -8,6 +8,27 @@ availableId = 1
 mapMajor = {
     "建筑学院":["建筑系","城市规划系,建筑技术科学系"]
 }
+
+collegeNe = ["-1",
+    "中国语言文学系",
+    "体育教研部",
+    "信息科学技术学院",
+    "北京大学教务部",
+    "历史学系",
+    "城市与环境学院",
+    "外国语学院",
+    "工学院",
+    "心理与认知科学学院",
+    "教育学院",
+    "新闻与传播学院",
+    "物理学院",
+    "环境科学与工程学院",
+    "生命科学学院",
+    "社会学系",
+    "经济学院",
+    "英语语言文学系"
+]
+
 #生成课程信息
 def generateCouse():
     #可供使用的课程及学院对应表
@@ -20,7 +41,7 @@ def generateCouse():
 
     courses = []#用于保存可供使用的课程及学院对应表 (课程名称，所属学院，学分)
     collegs = []#学院
-    notACollege = ['北京大学中国社会科学调查中心', '国家发展研究院', '地球与空间科学学院', "现代农学院"]
+    notACollege = ['北京大学中国社会科学调查中心', '国家发展研究院', '地球与空间科学学院', "现代农学院", '']
 
     for rx in range(1,sh.nrows):
         courses.append(( \
@@ -44,7 +65,7 @@ def generateCouse():
         course.append(courses[i][0])#课程名称
         # course.append([])#所属的课程班级id   注：废除课程的课程班级属性
         course.append(random.randint(1, 8))#开课时间
-        course.append(courses[i][1])#所属学院
+        course.append(collegeNe.index(courses[i][1]))#所属学院 ===========================
         course.append(courses[i][2])#所需学分
         returnCourses.append(course)
     return returnCourses
@@ -74,6 +95,7 @@ def getNames():
         return namestxt
 #生成老师的信息
 def generateTeacher(names):
+    global availableId
     teachers = []
     for name in names:
         teacher = []
@@ -136,7 +158,7 @@ def connectAll(courses, students, teachers, admins, courseClasses, nums):
             if idx >= len(teachers):
                 idx = 0
 def outFile(path, ls, flag):
-    with open(path, 'w', encoding='utf8') as f:
+    with open(path, 'w', encoding='gbk') as f:
         f.write(str(len(ls)))
         f.write('\n')
         for student in ls:
