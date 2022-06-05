@@ -252,7 +252,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 			}
 			fclose(fp);
 		}
-		if (1) {
+		if (DEBUG_MODE && 1) {
 			printf("students.length = %d\n", db->studentCount);
 			for (int i = 0; i < db->studentCount; i++) {
 				Student* stu = db->students + i;
@@ -359,7 +359,7 @@ void dc_importRawData(Database* db, char* dirPath) {
 			fclose(fp);
 		}
 	}
-	if (0) {
+	if (DEBUG_MODE && 0) {
 		int summer = 0;
 		// ±éÀú¿Î³Ì
 		for (int i = 0; i < db->courseCount; i++) {
