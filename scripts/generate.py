@@ -97,10 +97,11 @@ def getNames():
 def generateTeacher(names):
     global availableId
     teachers = []
+    idx = 0
     for name in names:
         teacher = []
-        teacher.append("{0:0>8d}".format(availableId))  # 老师id
-        availableId += 1
+        teacher.append("{0:0>8d}".format(idx))  # 老师id
+        idx += 1
         teacher.append('123456')  # 密码
         teacher.append(name)  # 名字
         teacher.append('我是一个认真负责，教学经验丰富的老师')#介绍
