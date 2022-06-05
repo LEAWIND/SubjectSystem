@@ -75,6 +75,50 @@ void showCourses(Database *db, int page, int N)
 	}
 }
 
+int strFind(char *arr[], char *str, int len)
+{
+	int i = 0;
+	for(i = 0; i < len; i++)
+		if(!strcmp(arr[i], str)) return i;
+	return -1;//未找到
+}
+
+void addCourse(Database *db)
+{
+	char* neStartTime[] = {"大一上","大一下","大二上", "大二下","大三上","大三下","大四上", "大四下"};
+	cui_showCursor();
+	Course c;
+	printf("\n\n  请输入课程名称:");
+	scanf("%s", c.name);
+	printf("  请输入课程开课时间:");
+	char startTime[100];
+	scanf("%s", startTime);
+	int t = strFind(neStartTime, startTime, 8);
+	if(t == -1)
+	{
+		printf("开课时间有误！！！");
+		getch();
+		return;
+	}
+	c.availableTime = t;
+	printf("  请输入所属学院:");
+	char college[100];
+	scanf("%s", college);
+	t = strFind(colleges, college, 18);
+	if(t == -1)
+	{
+		printf("学院有误！！！");
+		getch();
+		return;
+	}
+	printf("  请输入学分:");
+	scanf("%s", &(c.point));
+	c.id = db->courseCount;
+	db->courses[db->courseCount++] = c;
+	printf("  创建成功！！！");
+	getch();
+}
+
 void manageCourse(Database* db)
 {	
 	int N = 10;//一页展示课程的数目
@@ -101,6 +145,7 @@ void manageCourse(Database* db)
 				stayHere = 0;
 				break;
 			case 49://添加课程
+				addCourse(db);
 				break;
 			case 50://删除课程
 				break;

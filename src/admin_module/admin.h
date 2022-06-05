@@ -30,4 +30,13 @@ void manageCourse(Database* db);
  * @author 陈华
  */
 void showCourses(Database *db, int page, int N);
+
+/**
+ * @brief 在arr中找到字符串str
+ * @param arr 被查找数组
+ * @param str 需要查找的字符串
+ * @return 若找到，返回下表，若未找到，返回-1
+ * @author 陈华
+ */
+int strFind(char *arr[], char *str, int len);
 #include "admin.c"
