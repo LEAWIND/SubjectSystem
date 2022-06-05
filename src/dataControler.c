@@ -368,8 +368,8 @@ void dc_importRawData(Database* db, char* dirPath) {
 			int ccslen = dc_searchCourseClasses(db, course, ccs);
 			// printf("课程: id=%3lld ccslen=[%2d] anme=%s\n", course->id, ccslen, course->name);
 		}
+		getch();
 	}
-	getch();
 };
 
 // 检查管理员账号密码是否正确

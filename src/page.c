@@ -39,7 +39,7 @@ void getVerificationCode(char verificationCode[], int n) {
 void page_login(long long* account, char* passwd, char* info) {
 	while (1) {
 		system("cls");
-		cui_setFontStyle(0);						   // 默认样式
+		// cui_setFontStyle(0);						   // 默认样式
 		cui_clearRect(0, 0, us_width, us_height);	   // 清空矩形区域
 		cui_strokeRect(0, 0, us_width, us_height, 0);  // 绘制边框
 
@@ -49,7 +49,7 @@ void page_login(long long* account, char* passwd, char* info) {
 
 		cui_putStringAt(3, y += 2, "账号:________________");
 		cui_moveCursor(-16, 0);
-		cui_setFontStyle(4);  // 带下划线
+		// cui_setFontStyle(4);  // 带下划线
 		char buff[50];
 		cui_inputs(buff, 49, 0);
 		sscanf(buff, "%lld", account);
